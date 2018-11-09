@@ -16,6 +16,8 @@ from numpy import arange, array, ones
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#
+# Copyright Jon Hill, University of York, jon.hill@york.ac.uk
 
 test_file_name1 = "tests/test_raster.asc"
 
