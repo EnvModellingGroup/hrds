@@ -26,22 +26,18 @@ class Interpolator(object):
         self.delta = delta
         self.val = val
         self.mask = mask
-        # cache points that need to be extrapolated
-        self.extrapolation_points = {}
 
     def set_mask(self, mask):
         self.mask = mask
-        # changing the mask invalidates the extrapolation cache
-        self.extrapolation_points = {}
 
-    def get_val(self, x):
-        yhat = ((point[0]-(delta[0]/2.0)-origin[0])/delta[0])
-        xhat = ((point[1]+(delta[1]/2.0)-origin[1])/delta[1])
+    def get_val(self, point):
+        yhat = ((point[0]-(self.delta[0]/2.0)-self.origin[0])/self.delta[0])
+        xhat = ((point[1]+(self.delta[1]/2.0)-self.origin[1])/self.delta[1])
         j = int(math.floor(yhat))
         i = int(math.floor(xhat))
         # this is not caught as an IndexError below, because of wrapping of negative indices
         if i < 0 or j < 0:
-            raise CoordinateError("Coordinate out of range", x, i, j)
+            raise CoordinateError("Coordinate out of range", point, i, j)
         alpha = (xhat) % 1.0
         beta = (yhat) % 1.0
         if alpha <= 0.5:
@@ -53,12 +49,10 @@ class Interpolator(object):
         else:
             neigh_j = j+1
         if neigh_i < 0 or neigh_j < 0:
-            raise CoordinateError("Coordinate out of range", x, i, j)
+            raise CoordinateError("Coordinate out of range", point, i, j)
         try:
             if self.mask is not None:
-
-                # case with a land mask
-
+                # case with a land mask - masks not yet implemented!
                 w00 = (1.0-alpha)*(1.0-beta)*self.mask[i, j]
                 w10 = alpha*(1.0-beta)*self.mask[i+1, j]
                 w01 = (1.0-alpha)*beta*self.mask[i, j+1]
@@ -75,16 +69,14 @@ class Interpolator(object):
                     raise CoordinateError("Probing point inside land mask", x, i, j)
 
             else:
-
                 # case without a land mask
-
                 if len(self.val.shape) == 2:
-                    value = ((1.0-beta)*((1.0-alpha)*val[i, j]+alpha*val[neigh_i, j]) +
-                            beta*((1.0-alpha)*val[i, neigh_j]+alpha*val[neigh_i, neigh_j]))
+                    value = ((1.0-beta)*((1.0-alpha)*self.val[i, j]+alpha*self.val[neigh_i, j]) +
+                            beta*((1.0-alpha)*self.val[i, neigh_j]+alpha*self.val[neigh_i, neigh_j]))
                 else:
                     raise NetCDFInterpolatorError("Field to interpolate, should have 2 dimensions")
         except IndexError:
-            raise CoordinateError("Coordinate out of range", x, i, j)
+            raise CoordinateError("Coordinate out of range", point, i, j)
         return value
 
 
@@ -113,12 +105,12 @@ class RasterInterpolator(object):
 
     """
     def __init__(self, filename):
-        self.ds = gdal.Open(filname)
+        self.ds = gdal.Open(filename)
         self.band = None
         self.mask = None
         self.interpolator = None
 
-    def GetExtent(gt,cols,rows):
+    def GetExtent(self,gt,cols,rows):
         """Return list of corner coordinates from a geotransform
 
             @type gt:   C{tuple/list}
@@ -145,73 +137,72 @@ class RasterInterpolator(object):
     def set_band(self, band_no=1):
         """Set the number of the band to be used. Usually 1, which is default"""
         self.band = band_no
-        raster = self.ds.getRasterBand(self.band)
+        raster = self.ds.GetRasterBand(self.band)
         self.val = np.flipud(np.array(raster.ReadAsArray()))
         cols = self.ds.RasterXSize
         rows = self.ds.RasterYSize
         transform = self.ds.GetGeoTransform()
-        extent = GetExtent(transform,cols,rows)
+        extent = self.GetExtent(transform,cols,rows)
         origin = np.amin(extent,axis=0)
         delta = [transform[1], -transform[5]]
         self.interpolator = Interpolator(origin, delta, self.val, self.mask)
 
     def get_val(self, x):
         """Interpolate the field chosen with set_field(). The order of the coordinates should correspond with the storage order in the file."""
-        if not hasattr(self, "interpolator"):
+        if (self.interpolator == None):
             raise RasterInterpolatorError("Should call set_band() before calling get_val()!")
         return self.interpolator.get_val(x)
 
 
 
-ds = gdal.Open('../tests/test_raster.asc')
-raster = ds.getRasterBand(1)
-val = np.flipud(np.array(raster.ReadAsArray()))
-point1 = [0.0, 0.0] # should error
-point2 = [1.5, 2] # should return 8
-point3 = [2.0, 2.99999] # should return 4.5
-point4 = [3,1] # should return 13.5
-point = point1
-cols = ds.RasterXSize
-rows = ds.RasterYSize
-
-transform = ds.GetGeoTransform()
-extent = GetExtent(transform,cols,rows)
-origin = np.amin(extent,axis=0)
-#origin = [transform[0], transform[3]]
-delta = [transform[1], -transform[5]]
-
-print origin, delta
-
-print val
-
-yhat = ((point[0]-(delta[0]/2.0)-origin[0])/delta[0])
-xhat = ((point[1]+(delta[1]/2.0)-origin[1])/delta[1])
-j = int(math.floor(yhat))
-i = int(math.floor(xhat))
-# this is not catched as an IndexError below, because of wrapping of negative indices
-if i < 0 or j < 0:
-    print "error in i, j: ", i, j
-    sys.exit()
-alpha = (xhat) % 1.0
-beta = (yhat) % 1.0
-if alpha <= 0.5:
-    neigh_i = i-1
-else:
-    neigh_i = i+1
-if beta < 0.5:
-    neigh_j = j-1
-else:
-    neigh_j = j+1
-if neigh_i < 0 or neigh_j < 0:
-    print "error in neigh_i, neigh_j: ", neigh_i, neigh_j
-    sys.exit()
-
-print i, j, xhat, yhat
-print alpha, beta
-print val[i,j], val[neigh_i,j], val[i,neigh_j], val[neigh_i,neigh_j]
-
-value = ((1.0-beta)*((1.0-alpha)*val[i, j]+alpha*val[neigh_i, j]) +
-        beta*((1.0-alpha)*val[i, neigh_j]+alpha*val[neigh_i, neigh_j]))
-
-print value
+#ds = gdal.Open('../tests/test_raster.asc')
+#raster = ds.getRasterBand(1)
+#val = np.flipud(np.array(raster.ReadAsArray()))
+#point1 = [0.0, 0.0] # should error
+#point2 = [1.5, 2] # should return 8
+#point3 = [2.0, 2.99999] # should return 4.5
+#point4 = [3,1] # should return 13.5
+#point = point1
+#cols = ds.RasterXSize
+#rows = ds.RasterYSize
+#
+#transform = ds.GetGeoTransform()
+#extent = GetExtent(transform,cols,rows)
+#origin = np.amin(extent,axis=0)
+##origin = [transform[0], transform[3]]
+#delta = [transform[1], -transform[5]]
+#
+#print origin, delta
+#
+#print val
+#
+#yhat = ((point[0]-(delta[0]/2.0)-origin[0])/delta[0])
+#xhat = ((point[1]+(delta[1]/2.0)-origin[1])/delta[1])
+#j = int(math.floor(yhat))
+#i = int(math.floor(xhat))
+## this is not catched as an IndexError below, because of wrapping of negative indices
+#if i < 0 or j < 0:
+#    print "error in i, j: ", i, j
+#    sys.exit()
+#alpha = (xhat) % 1.0
+#beta = (yhat) % 1.0
+#if alpha <= 0.5:
+#    neigh_i = i-1
+#else:
+#    neigh_i = i+1
+#if beta < 0.5:
+#    neigh_j = j-1
+#else:
+#    neigh_j = j+1
+#if neigh_i < 0 or neigh_j < 0:
+#    print "error in neigh_i, neigh_j: ", neigh_i, neigh_j
+#    sys.exit()
+#
+#print i, j, xhat, yhat
+#print alpha, beta
+#print val[i,j], val[neigh_i,j], val[i,neigh_j], val[neigh_i,neigh_j]
+#
+#value = ((1.0-beta)*((1.0-alpha)*val[i, j]+alpha*val[neigh_i, j]) +
+#        beta*((1.0-alpha)*val[i, neigh_j]+alpha*val[neigh_i, neigh_j]))
+#print value
 

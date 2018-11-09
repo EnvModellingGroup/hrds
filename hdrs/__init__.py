@@ -9,6 +9,6 @@ Python package for Hierarchical raster data sets. Main components are:
 
 """
 
-from .buffer import Buffer  # NOQA
-from .hdrs import *  # NOQA
+#from .buffer import Buffer  # NOQA
+#from .hdrs import *  # NOQA
 from .raster import RasterInterpolator  # NOQA
