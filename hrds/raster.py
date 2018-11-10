@@ -174,6 +174,13 @@ class RasterInterpolator(object):
         delta = [transform[1], -transform[5]]
         self.interpolator = Interpolator(origin, delta, self.val, self.mask)
 
+    def get_array(self):
+        """return the numpy array of values"""
+        if (self.interpolator is None):
+            raise RasterInterpolatorError("Should call set_band() "
+                                          "before calling get_array()!")
+        return self.val
+
     def get_val(self, x):
         """Interpolate the field chosen with set_field().
            The order of the coordinates should correspond
