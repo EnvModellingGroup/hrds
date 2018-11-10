@@ -1,5 +1,5 @@
 import unittest
-from hdrs.raster import RasterInterpolator, CoordinateError, RasterInterpolatorError
+from hrds.raster import RasterInterpolator, CoordinateError, RasterInterpolatorError
 import itertools
 import os
 from numpy import arange, array, ones

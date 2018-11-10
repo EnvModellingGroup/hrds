@@ -1,6 +1,7 @@
 import numpy as np
 from osgeo import gdal
 import math
+import sys
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -132,11 +133,14 @@ class RasterInterpolator(object):
     """
     def __init__(self, filename):
         self.ds = gdal.Open(filename)
+        if (self.ds is None):
+            print "Couldn't find your file. Exiting."
+            sys.exit(1)
         self.band = None
         self.mask = None
         self.interpolator = None
 
-    def get_extent(self, gt, cols, rows):
+    def get_extent(self):
         """Return list of corner coordinates from a geotransform
 
             @type gt:   C{tuple/list}
@@ -148,6 +152,10 @@ class RasterInterpolator(object):
             @rtype:    C{[float,...,float]}
             @return:   coordinates of each corner
         """
+        cols = self.ds.RasterXSize
+        rows = self.ds.RasterYSize
+        gt = self.ds.GetGeoTransform()
+
         ext = []
         xarr = [0, cols]
         yarr = [0, rows]
@@ -166,11 +174,9 @@ class RasterInterpolator(object):
         self.band = band_no
         raster = self.ds.GetRasterBand(self.band)
         self.val = np.flipud(np.array(raster.ReadAsArray()))
-        cols = self.ds.RasterXSize
-        rows = self.ds.RasterYSize
-        transform = self.ds.GetGeoTransform()
-        extent = self.get_extent(transform, cols, rows)
+        extent = self.get_extent()
         origin = np.amin(extent, axis=0)
+        transform = self.ds.GetGeoTransform()
         delta = [transform[1], -transform[5]]
         self.interpolator = Interpolator(origin, delta, self.val, self.mask)
 
