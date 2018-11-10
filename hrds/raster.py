@@ -110,7 +110,7 @@ class Interpolator(object):
 class RasterInterpolator(object):
     """Implements an object to interpolate values from a Raster-stored data set.
 
-        rci = NetCDFInterpolator('foo.tif')
+        rci = RasterInterpolator('foo.tif')
 
     Any GDAL supported raster format should be fine. The origin is assumed
     to be the lower-left corner (i.e. south west)
