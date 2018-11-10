@@ -21,13 +21,12 @@ from numpy import arange, array, ones
 
 test_file_name1 = "tests/test_raster.asc"
 
-class TestNetCDFInterpolator(unittest.TestCase):
-    """Tests the uptide.netcdf.NetCDFInterpolator class"""
+class TestRasterInterpolator(unittest.TestCase):
+    """Tests the hrds.raster.RasterInterpolator class"""
     def setUp(self):
         return
 
     def tearDown(self):
-        # don't remove them either (see above)
         return
     
     def test_simple_interpolation(self):
