@@ -136,7 +136,7 @@ class RasterInterpolator(object):
         self.mask = None
         self.interpolator = None
 
-    def GetExtent(self, gt, cols, rows):
+    def get_extent(self, gt, cols, rows):
         """Return list of corner coordinates from a geotransform
 
             @type gt:   C{tuple/list}
@@ -169,7 +169,7 @@ class RasterInterpolator(object):
         cols = self.ds.RasterXSize
         rows = self.ds.RasterYSize
         transform = self.ds.GetGeoTransform()
-        extent = self.GetExtent(transform, cols, rows)
+        extent = self.get_extent(transform, cols, rows)
         origin = np.amin(extent, axis=0)
         delta = [transform[1], -transform[5]]
         self.interpolator = Interpolator(origin, delta, self.val, self.mask)
