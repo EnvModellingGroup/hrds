@@ -21,10 +21,42 @@ from scipy.ndimage.morphology import distance_transform_edt
 
 # read in a raster and create the buffer from 0 at edge, to 1 at distance
 
+def write_raster(filename, array, dx, origin, proj):
+    dst_filename = filename
+    x_pixels = array.shape[0]
+    y_pixels = array.shape[1]     
+    x_min = origin[0][0]
+    y_max = origin[1][1]
+    wkt_projection = proj
+
+    driver = gdal.GetDriverByName('GTiff')
+    dataset = driver.Create(
+        dst_filename,
+        x_pixels,
+        y_pixels,
+        1,
+        gdal.GDT_Float32, )
+
+    print x_min, y_max, dx
+
+    dataset.SetGeoTransform((
+        x_min,       # 0
+        dx,          # 1
+        0,           # 2
+        y_max,       # 3
+        0,           # 4
+        -dx))  
+
+    dataset.SetProjection(wkt_projection)
+    dataset.GetRasterBand(1).WriteArray(array)
+    dataset.FlushCache()
+    return
+
 filename = "../tests/test_raster_large.tif"
 raster = RasterInterpolator(filename)
 raster.set_band()
 extent = raster.get_extent()
+
 
 # make a raster of the same extent, but with
 # square resolution which is dependant on distance buffer
@@ -49,4 +81,4 @@ dist = distance_transform_edt(dist)*dx
 dist = dist / distance
 dist[dist > 1] = 1.0
 
-print dist
+write_raster('test.tif',dist, dx, [llc,urc],raster.ds.GetProjection())
