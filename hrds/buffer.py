@@ -39,7 +39,7 @@ class CreateBuffer(object):
     Any GDAL-understood file format is supported for input or output.
 
     The array is stored at an 8-bit integer internally and converted to
-    a 16 bit float on writing.
+    a 32 bit float on writing.
     """
 
     def __init__(self, filename, distance, over=10.0):
@@ -50,7 +50,7 @@ class CreateBuffer(object):
         self.raster.set_band()
         self.extent = self.raster.get_extent()
 
-    def __write_raster__(filename, array, dx, origin, proj):
+    def __write_raster__(self, filename, array, dx, origin, proj):
         dst_filename = filename
         x_pixels = array.shape[0]
         y_pixels = array.shape[1]
@@ -64,7 +64,7 @@ class CreateBuffer(object):
             x_pixels,
             y_pixels,
             1,
-            gdal.GDT_Float16, )
+            gdal.GDT_Float32)
 
         dataset.SetGeoTransform((
             x_min,       # 0
