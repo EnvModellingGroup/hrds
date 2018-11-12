@@ -1,6 +1,5 @@
 import numpy as np
 from osgeo import gdal
-import math
 from raster import RasterInterpolator
 from scipy.ndimage.morphology import distance_transform_edt
 
@@ -21,40 +20,40 @@ from scipy.ndimage.morphology import distance_transform_edt
 
 # read in a raster and create the buffer from 0 at edge, to 1 at distance
 
-class CreateBuffer(object)
-    """Implements the creation of a distance buffer from the edge of 
-       a raster to the centre:
 
-       rbuff = CreateBuffer('myRaster.tif',10000.0)
+class CreateBuffer(object):
+    """Implements the creation of a distance buffer from the edge of
+    a raster to the centre:
 
-       Will create a buffer raster with the same extents as myRaster.tif
-       with a buffer that goes from 0 at the edge to 1.0 at a distance of 
-       10,000 units from the edge. The distance should be in the same 
-       units as the raster file.
+    rbuff = CreateBuffer('myRaster.tif',10000.0)
 
-       Once the object is made, write out the buffer using:
+    Will create a buffer raster with the same extents as myRaster.tif
+    with a buffer that goes from 0 at the edge to 1.0 at a distance of
+    10,000 units from the edge. The distance should be in the same
+    units as the raster file.
 
-       rbuff.make_buffer('output_buffer.tif')
+    Once the object is made, write out the buffer using:
 
-       Any GDAL-understood file format is supported for input or output.
+    rbuff.make_buffer('output_buffer.tif')
 
-       The array is stored at an 8-bit integer internally and converted to
-       a 16 bit float on writing. 
+    Any GDAL-understood file format is supported for input or output.
+
+    The array is stored at an 8-bit integer internally and converted to
+    a 16 bit float on writing.
     """
 
-    def __init__(self, filename, distance, over=10.0)
+    def __init__(self, filename, distance, over=10.0):
 
         self.distance = distance
         self.over = over
         self.raster = RasterInterpolator(filename)
-        raster.set_band()
-        self.extent = raster.get_extent()
-
+        self.raster.set_band()
+        self.extent = self.raster.get_extent()
 
     def __write_raster__(filename, array, dx, origin, proj):
         dst_filename = filename
         x_pixels = array.shape[0]
-        y_pixels = array.shape[1]     
+        y_pixels = array.shape[1]
         x_min = origin[0][0]
         y_max = origin[1][1]
         wkt_projection = proj
@@ -73,17 +72,17 @@ class CreateBuffer(object)
             0,           # 2
             y_max,       # 3
             0,           # 4
-            -dx))  
+            -dx))
 
         dataset.SetProjection(wkt_projection)
         dataset.GetRasterBand(1).WriteArray(array)
         dataset.FlushCache()
         return
 
-    def make_buffer(self, output_file)
-
+    def make_buffer(self, output_file):
         # make a raster of the same extent, but with
         # square resolution which is dependant on distance buffer
+
         dx = self.distance / self.over
         llc = self.extent[1]
         urc = self.extent[3]
@@ -92,9 +91,9 @@ class CreateBuffer(object)
         ncols = int((urc[1] - llc[1]) / dx) + 1
 
         # fill with edge value
-        dist = np.full((nrows,ncols), 0, dtype=np.uint8)
+        dist = np.full((nrows, ncols), 0, dtype=np.uint8)
         # then fill in the middle
-        dist[1:-1,1:-1] = 1
+        dist[1:-1, 1:-1] = 1
         # calc euclidian distance and convert to units
         dist = distance_transform_edt(dist) * dx
         # now make it 0 -> 1
@@ -102,5 +101,5 @@ class CreateBuffer(object)
         dist[dist > 1] = 1.0
 
         # create a suitable output filename
-        __write_raster__(output_file, dist, dx, [llc,urc], 
-                         self.raster.ds.GetProjection())
+        self.__write_raster__(output_file, dist, dx, [llc, urc],
+                              self.raster.ds.GetProjection())
