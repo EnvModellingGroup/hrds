@@ -21,64 +21,86 @@ from scipy.ndimage.morphology import distance_transform_edt
 
 # read in a raster and create the buffer from 0 at edge, to 1 at distance
 
-def write_raster(filename, array, dx, origin, proj):
-    dst_filename = filename
-    x_pixels = array.shape[0]
-    y_pixels = array.shape[1]     
-    x_min = origin[0][0]
-    y_max = origin[1][1]
-    wkt_projection = proj
+class CreateBuffer(object)
+    """Implements the creation of a distance buffer from the edge of 
+       a raster to the centre:
 
-    driver = gdal.GetDriverByName('GTiff')
-    dataset = driver.Create(
-        dst_filename,
-        x_pixels,
-        y_pixels,
-        1,
-        gdal.GDT_Float32, )
+       rbuff = CreateBuffer('myRaster.tif',10000.0)
 
-    print x_min, y_max, dx
+       Will create a buffer raster with the same extents as myRaster.tif
+       with a buffer that goes from 0 at the edge to 1.0 at a distance of 
+       10,000 units from the edge. The distance should be in the same 
+       units as the raster file.
 
-    dataset.SetGeoTransform((
-        x_min,       # 0
-        dx,          # 1
-        0,           # 2
-        y_max,       # 3
-        0,           # 4
-        -dx))  
+       Once the object is made, write out the buffer using:
 
-    dataset.SetProjection(wkt_projection)
-    dataset.GetRasterBand(1).WriteArray(array)
-    dataset.FlushCache()
-    return
+       rbuff.make_buffer('output_buffer.tif')
 
-filename = "../tests/test_raster_large.tif"
-raster = RasterInterpolator(filename)
-raster.set_band()
-extent = raster.get_extent()
+       Any GDAL-understood file format is supported for input or output.
+
+       The array is stored at an 8-bit integer internally and converted to
+       a 16 bit float on writing. 
+    """
+
+    def __init__(self, filename, distance, over=10.0)
+
+        self.distance = distance
+        self.over = over
+        self.raster = RasterInterpolator(filename)
+        raster.set_band()
+        self.extent = raster.get_extent()
 
 
-# make a raster of the same extent, but with
-# square resolution which is dependant on distance buffer
-distance = 1.5 # in same units are raster
-# we want 10 pixels to cover the distance, so...
-dx = distance / 10.0
-llc = extent[1]
-urc = extent[3]
-# note this changes our extent
-nrows = int((urc[0] - llc[0]) / dx) + 1
-ncols = int((urc[1] - llc[1]) / dx) + 1
+    def __write_raster__(filename, array, dx, origin, proj):
+        dst_filename = filename
+        x_pixels = array.shape[0]
+        y_pixels = array.shape[1]     
+        x_min = origin[0][0]
+        y_max = origin[1][1]
+        wkt_projection = proj
 
-print dx, llc, urc, nrows, ncols
+        driver = gdal.GetDriverByName('GTiff')
+        dataset = driver.Create(
+            dst_filename,
+            x_pixels,
+            y_pixels,
+            1,
+            gdal.GDT_Float16, )
 
-# fill with edge value
-dist = np.full((nrows,ncols),0,dtype=np.uint8)
-# then fill in the middle
-dist[1:-1,1:-1] = 1
-# calc euclidian distance and convert to units
-dist = distance_transform_edt(dist)*dx
-# now make it 0 -> 1
-dist = dist / distance
-dist[dist > 1] = 1.0
+        dataset.SetGeoTransform((
+            x_min,       # 0
+            dx,          # 1
+            0,           # 2
+            y_max,       # 3
+            0,           # 4
+            -dx))  
 
-write_raster('test.tif',dist, dx, [llc,urc],raster.ds.GetProjection())
+        dataset.SetProjection(wkt_projection)
+        dataset.GetRasterBand(1).WriteArray(array)
+        dataset.FlushCache()
+        return
+
+    def make_buffer(self, output_file)
+
+        # make a raster of the same extent, but with
+        # square resolution which is dependant on distance buffer
+        dx = self.distance / self.over
+        llc = self.extent[1]
+        urc = self.extent[3]
+        # note this changes our extent
+        nrows = int((urc[0] - llc[0]) / dx) + 1
+        ncols = int((urc[1] - llc[1]) / dx) + 1
+
+        # fill with edge value
+        dist = np.full((nrows,ncols), 0, dtype=np.uint8)
+        # then fill in the middle
+        dist[1:-1,1:-1] = 1
+        # calc euclidian distance and convert to units
+        dist = distance_transform_edt(dist) * dx
+        # now make it 0 -> 1
+        dist = dist / self.distance
+        dist[dist > 1] = 1.0
+
+        # create a suitable output filename
+        __write_raster__(output_file, dist, dx, [llc,urc], 
+                         self.raster.ds.GetProjection())
