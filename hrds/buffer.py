@@ -70,7 +70,7 @@ class CreateBuffer(object):
             x_min,       # 0
             dx,          # 1
             0,           # 2
-            y_max,       # 3
+            y_max+dx,    # 3
             0,           # 4
             -dx))
 
