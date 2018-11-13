@@ -50,24 +50,27 @@ class Interpolator(object):
         self.mask = mask
 
     def get_val(self, point):
-        yhat = ((point[0]-(self.delta[0]/2.0)-self.origin[0])/self.delta[0])
+        yhat = ((point[0]+(self.delta[0]/2.0)-self.origin[0])/self.delta[0])
         xhat = ((point[1]+(self.delta[1]/2.0)-self.origin[1])/self.delta[1])
-        j = int(math.floor(yhat))
-        i = int(math.floor(xhat))
+        j = int(math.floor(yhat))-1
+        i = int(math.floor(xhat))-1
+        print xhat, yhat, i, j, self.val[i][j], self.origin
         # this is not caught as an IndexError below, because of wrapping of
         # negative indices
         if i < 0 or j < 0:
             raise CoordinateError("Coordinate out of range", point, i, j)
         alpha = (xhat) % 1.0
         beta = (yhat) % 1.0
-        if alpha <= 0.5:
-            neigh_i = i-1
-        else:
-            neigh_i = i+1
-        if beta < 0.5:
-            neigh_j = j-1
-        else:
-            neigh_j = j+1
+        neigh_i = i+1
+        neigh_j = j+1
+        #if alpha <= 0.5:
+        #    neigh_i = i-1
+        #else:
+        #    neigh_i = i+1
+        #if beta < 0.5:
+        #    neigh_j = j-1
+        #else:
+        #    neigh_j = j+1
         if neigh_i < 0 or neigh_j < 0:
             raise CoordinateError("Coordinate out of range", point, i, j)
         try:
