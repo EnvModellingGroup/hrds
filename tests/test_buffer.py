@@ -1,5 +1,5 @@
 import unittest
-from hrds.buffer import CreateBuffer
+from hrds.raster_buffer import CreateBuffer
 from hrds.raster import RasterInterpolator, CoordinateError, RasterInterpolatorError
 import os
 
