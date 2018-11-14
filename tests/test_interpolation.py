@@ -45,12 +45,14 @@ class TestRasterInterpolator(unittest.TestCase):
         point3 = [2.0, 3.0] # should return 4.5
         point4 = [3,1] # should return 13.5
         point5 = [1.999999, 2.999999] # should return nearly 4.5
+        point6 = [0.5, 0.5] # should return 13 (llc)
         self.assertRaises(RasterInterpolatorError, rci.get_val, point2)
         rci.set_band()        
         self.assertEqual(rci.get_val(point2),8.0)
         self.assertAlmostEqual(rci.get_val(point3),4.5)
         self.assertAlmostEqual(rci.get_val(point5),4.5,5)
         self.assertEqual(rci.get_val(point4),13.5)
+        self.assertEqual(rci.get_val(point6),13)
         self.assertRaises(CoordinateError,rci.get_val, point1)
 
     def test_point_in(self):

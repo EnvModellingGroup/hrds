@@ -135,6 +135,7 @@ class RasterInterpolator(object):
         self.mask = None
         self.interpolator = None
         self.extent = None
+        self.dx = 0.0
 
     def get_extent(self):
         """Return list of corner coordinates from a geotransform
@@ -173,8 +174,8 @@ class RasterInterpolator(object):
         self.extent = self.get_extent()
         origin = np.amin(self.extent, axis=0)
         transform = self.ds.GetGeoTransform()
-        delta = [transform[1], -transform[5]]
-        self.interpolator = Interpolator(origin, delta, self.val, self.mask)
+        self.dx = [transform[1], -transform[5]]
+        self.interpolator = Interpolator(origin, self.dx, self.val, self.mask)
 
     def get_array(self):
         """return the numpy array of values"""
@@ -194,10 +195,10 @@ class RasterInterpolator(object):
 
     def point_in(self, point):
         # does this point occur in the raster?
-        llc = np.amin(self.extent, axis=0)
-        urc = np.amax(self.extent, axis=0)
-        if ((point[0] < urc[0] and point[0] > llc[0]) and
-           (point[1] < urc[1] and point[1] > llc[1])):
+        llc = np.amin(self.extent, axis=0)+(self.dx[0]/2)
+        urc = np.amax(self.extent, axis=0)-(self.dx[1]/2)
+        if ((point[0] <= urc[0] and point[0] >= llc[0]) and
+           (point[1] <= urc[1] and point[1] >= llc[1])):
                 return True
         else:
                 return False
