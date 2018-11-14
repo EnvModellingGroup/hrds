@@ -82,21 +82,21 @@ class RealDataTest(unittest.TestCase):
 """
         points = ([823862., 5782011.],
                   [839323., 5782408.],
-                  #[858947., 5782606.],
+                  [853000., 5782804.],                  
+                  [858947., 5782606.],
                   [866083., 5783201.],
-                  #[889870., 5784787.],
+                  [889870., 5784787.],
                   [949138., 5782408.],
                   )
         expected = [-21.21704,
-                    -24.0, # estimate
-                    #-43.1108,
-                    -49.0, # estimate
+                    -23.7, # estimate
+                    -43.1108,
+                    -50.0, # estimate
                     -48.12579,
-                    #-41.1196,
+                    -41.1196,
                     -22.189]
-        #self.assertEqual(bathy.get_val(points[2]), expected[2])
         for p,e in zip(points, expected):
-            self.assertAlmostEqual(bathy.get_val(p),e,delta=2)
+            self.assertAlmostEqual(bathy.get_val(p),e,delta=0.75)
 
     
 

@@ -78,6 +78,31 @@ class TestRasterInterpolator(unittest.TestCase):
         self.assertTrue(rci.point_in(point4))
         self.assertFalse(rci.point_in(point5))
 
+    def test_real_data(self):
+        """Using gebco cut out to test interpolation
+        """
+        raster_file = "tests/real_data/gebco_uk.tif"
+        rci = RasterInterpolator(raster_file)
+        rci.set_band()
+        points = ([823862., 5782011.],
+                  [839323., 5782408.],
+                  [853000., 5782804.],
+                  [858947., 5782606.],
+                  [866083., 5783201.],
+                  [889870., 5784787.],
+                  [949138., 5782408.],
+                  )
+        expected = [-21.22,
+                    -24.03,
+                    -38.03,
+                    -46.72,
+                    -40.01,
+                    -32.13,
+                    -22.19]
+        for p,e in zip(points, expected):
+            self.assertAlmostEqual(rci.get_val(p),e,delta=0.75)
+        
+
 
 if __name__ == '__main__':
     unittest.main()
