@@ -2,6 +2,7 @@ import numpy as np
 from osgeo import gdal
 from raster import RasterInterpolator
 from scipy.ndimage.morphology import distance_transform_edt
+from math import ceil
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -52,10 +53,10 @@ class CreateBuffer(object):
 
     def __write_raster__(self, filename, array, dx, origin, proj):
         dst_filename = filename
-        x_pixels = array.shape[0]
-        y_pixels = array.shape[1]
+        x_pixels = array.shape[1]
+        y_pixels = array.shape[0]
         x_min = origin[0][0]
-        y_max = origin[1][1]
+        y_max = origin[0][1] + dx*y_pixels + dx
         wkt_projection = proj
 
         driver = gdal.GetDriverByName('GTiff')
@@ -70,7 +71,7 @@ class CreateBuffer(object):
             x_min,       # 0
             dx,          # 1
             0,           # 2
-            y_max+dx,    # 3
+            y_max,       # 3
             0,           # 4
             -dx))
 
@@ -87,11 +88,11 @@ class CreateBuffer(object):
         llc = self.extent[1]
         urc = self.extent[3]
         # note this changes our extent
-        nrows = int((urc[0] - llc[0]) / dx) + 1
-        ncols = int((urc[1] - llc[1]) / dx) + 1
+        nrows = int(ceil((urc[0] - llc[0]) / dx))
+        ncols = int(ceil((urc[1] - llc[1]) / dx))
 
         # fill with edge value
-        dist = np.full((nrows, ncols), 0, dtype=np.uint8)
+        dist = np.full((ncols, nrows), 0, dtype=np.uint8)
         # then fill in the middle
         dist[1:-1, 1:-1] = 1
         # calc euclidian distance and convert to units

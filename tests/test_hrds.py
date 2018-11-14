@@ -43,13 +43,14 @@ class TestHRDS(unittest.TestCase):
         """
         bathy = HRDS(base_raster, rasters=(layer1, layer2), distances=(7, 5))
         bathy.set_bands()
-        points = ([1,1], # 1
+        points = ([5,5], # 1
                   [40,50], # 3
                   [28,32], # 2
-                  [13.5, 20], # 1.5
-                  [32.5, 45], # 2.5
+                  [13.85, 20], # 1.5
+                  [32.75, 45], # 2.5
                   )
         expected = [1.0, 3.0, 2.0, 1.5, 2.5]
+        self.assertEqual(bathy.get_val(points[4]), expected[4])
         for p,e in zip(points, expected):
             self.assertEqual(bathy.get_val(p),e)
 

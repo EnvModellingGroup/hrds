@@ -46,7 +46,7 @@ class TestBufferCreator(unittest.TestCase):
             Finally, test that the file is written and readable
             """
         rbuff = CreateBuffer(test_file_name1, 1.5)
-        point1 = [0.15, 4.0] # should return <0.15 (resolution)
+        point1 = [0.15, 3.85] # should return <0.15 (resolution)
         point2 = [1.7, 2] # should be 1
         point3 = [2, 2] # should be 1
         point4 = [0.825, 2] #should be 0.5
