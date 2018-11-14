@@ -28,7 +28,7 @@ class TestBufferCreator(unittest.TestCase):
 
     def tearDown(self):
         # remove temp file
-        #os.remove(temp_file)
+        os.remove(temp_file)
         return
     
     def test_simple_distance(self):
