@@ -55,5 +55,50 @@ class TestHRDS(unittest.TestCase):
         for p,e in zip(points, expected):
             self.assertEqual(bathy.get_val(p),e)
 
+#@unittest.skip("Skipping this by default. 
+#                Uses proprietary data.")
+class RealDataTest(unittest.TestCase):
+
+    def test_real_world(self):
+        """ Mix of GEBCO, EMODnet and Marine Digimap just off the
+        Norfolk/Suffolk coast.
+        Projected to UTM 30, so everything in m.
+        """
+        bathy = HRDS("tests/real_data/gebco_uk.tif", 
+                     rasters=("tests/real_data/emod_utm.tif", 
+                              "tests/real_data/marine_digimap.tif"), 
+                     distances=(10000, 5000))
+        bathy.set_bands()
+        """
+        Our data:
+        X          Y      emod_utm  gebco_uk  marine_dig   ID
+        823862.	5782011.           -21.21704                1
+        839323.	5782408.  -25.4705 -24.032                  2
+        853000.	5782804.  -43.1108 -38.03058                3
+        858947.	5782606.  -50.5894 -46.71868   -52.03551    4
+        866083.	5783201.  -43.4241 -40.0147    -48.12579    5
+        889870.	5784787.  -41.1196 -32.12536                6
+        949138.	5782408.           -22.1890                 7
+"""
+        points = ([823862., 5782011.],
+                  [839323., 5782408.],
+                  #[858947., 5782606.],
+                  [866083., 5783201.],
+                  #[889870., 5784787.],
+                  [949138., 5782408.],
+                  )
+        expected = [-21.21704,
+                    -24.0, # estimate
+                    #-43.1108,
+                    -49.0, # estimate
+                    -48.12579,
+                    #-41.1196,
+                    -22.189]
+        #self.assertEqual(bathy.get_val(points[2]), expected[2])
+        for p,e in zip(points, expected):
+            self.assertAlmostEqual(bathy.get_val(p),e,delta=2)
+
+    
+
 if __name__ == '__main__':
     unittest.main()
