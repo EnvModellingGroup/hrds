@@ -53,6 +53,28 @@ class TestRasterInterpolator(unittest.TestCase):
         self.assertEqual(rci.get_val(point4),13.5)
         self.assertRaises(CoordinateError,rci.get_val, point1)
 
+    def test_point_in(self):
+        """ Very simple test with a raster object like thus:
+             1  2  3  4
+             5  6  7  8
+             9  10 11 12
+             13 14 15 16
+            
+            LLC is 0,0 and upper right is 4,4. 
+            we ask for point in, outside and on boundary
+            """
+        rci = RasterInterpolator(test_file_name1)
+        point1 = [0.0, 0.0] # should return False
+        point2 = [2.0, 2.0] # should return True
+        point3 = [-1.0, -1.0] # should return False
+        point4 = [0.5, 0.5] # should return True
+        point5 = [0.0001, 0.0001] # False - outside first cell centre
+        rci.set_band()
+        self.assertFalse(rci.point_in(point1))
+        self.assertTrue(rci.point_in(point2))
+        self.assertFalse(rci.point_in(point3))
+        self.assertTrue(rci.point_in(point4))
+        self.assertFalse(rci.point_in(point5))
 
 
 if __name__ == '__main__':

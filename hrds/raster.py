@@ -54,7 +54,6 @@ class Interpolator(object):
         xhat = ((point[1]+(self.delta[1]/2.0)-self.origin[1])/self.delta[1])
         j = int(math.floor(yhat))-1
         i = int(math.floor(xhat))-1
-        print xhat, yhat, i, j, self.val[i][j], self.origin
         # this is not caught as an IndexError below, because of wrapping of
         # negative indices
         if i < 0 or j < 0:
@@ -63,14 +62,6 @@ class Interpolator(object):
         beta = (yhat) % 1.0
         neigh_i = i+1
         neigh_j = j+1
-        #if alpha <= 0.5:
-        #    neigh_i = i-1
-        #else:
-        #    neigh_i = i+1
-        #if beta < 0.5:
-        #    neigh_j = j-1
-        #else:
-        #    neigh_j = j+1
         if neigh_i < 0 or neigh_j < 0:
             raise CoordinateError("Coordinate out of range", point, i, j)
         try:
@@ -143,6 +134,7 @@ class RasterInterpolator(object):
         self.band = None
         self.mask = None
         self.interpolator = None
+        self.extent = None
 
     def get_extent(self):
         """Return list of corner coordinates from a geotransform
@@ -178,8 +170,8 @@ class RasterInterpolator(object):
         self.band = band_no
         raster = self.ds.GetRasterBand(self.band)
         self.val = np.flipud(np.array(raster.ReadAsArray()))
-        extent = self.get_extent()
-        origin = np.amin(extent, axis=0)
+        self.extent = self.get_extent()
+        origin = np.amin(self.extent, axis=0)
         transform = self.ds.GetGeoTransform()
         delta = [transform[1], -transform[5]]
         self.interpolator = Interpolator(origin, delta, self.val, self.mask)
@@ -199,3 +191,13 @@ class RasterInterpolator(object):
             raise RasterInterpolatorError("Should call set_band() "
                                           "before calling get_val()!")
         return self.interpolator.get_val(x)
+
+    def point_in(self, point):
+        # does this point occur in the raster?
+        llc = np.amin(self.extent, axis=0)
+        urc = np.amax(self.extent, axis=0)
+        if ((point[0] < urc[0] and point[0] > llc[0]) and
+           (point[1] < urc[1] and point[1] > llc[1])):
+                return True
+        else:
+                return False
