@@ -43,7 +43,7 @@ class CreateBuffer(object):
     a 32 bit float on writing.
     """
 
-    def __init__(self, filename, distance, over=10.0):
+    def __init__(self, filename, distance, over=None):
 
         self.distance = distance
         self.over = over
@@ -56,7 +56,7 @@ class CreateBuffer(object):
         x_pixels = array.shape[1]
         y_pixels = array.shape[0]
         x_min = origin[0][0]
-        y_max = origin[0][1] + dx*y_pixels + dx
+        y_max = origin[0][1] + dx[1]*y_pixels
         wkt_projection = proj
 
         driver = gdal.GetDriverByName('GTiff')
@@ -69,11 +69,11 @@ class CreateBuffer(object):
 
         dataset.SetGeoTransform((
             x_min,       # 0
-            dx,          # 1
+            dx[0],       # 1
             0,           # 2
             y_max,       # 3
             0,           # 4
-            -dx))
+            -dx[1]))
 
         dataset.SetProjection(wkt_projection)
         dataset.GetRasterBand(1).WriteArray(array)
@@ -84,19 +84,24 @@ class CreateBuffer(object):
         # make a raster of the same extent, but with
         # square resolution which is dependant on distance buffer
 
-        dx = self.distance / self.over
+        if self.over is None:
+            transform = self.raster.ds.GetGeoTransform()
+            dx = [transform[1], -transform[5]]
+        else:
+            dx = [self.distance / self.over, self.distance / self.over]
+        
         llc = self.extent[1]
         urc = self.extent[3]
-        # note this changes our extent
-        nrows = int(ceil((urc[0] - llc[0]) / dx))
-        ncols = int(ceil((urc[1] - llc[1]) / dx))
+        # note this changes our extent if "over" is set
+        nrows = int(ceil((urc[0] - llc[0]) / dx[0]))
+        ncols = int(ceil((urc[1] - llc[1]) / dx[1]))
 
         # fill with edge value
         dist = np.full((ncols, nrows), 0, dtype=np.uint8)
         # then fill in the middle
         dist[1:-1, 1:-1] = 1
         # calc euclidian distance and convert to units
-        dist = distance_transform_edt(dist) * dx
+        dist = distance_transform_edt(dist) * (np.linalg.norm(dx))
         # now make it 0 -> 1
         dist = dist / self.distance
         dist[dist > 1] = 1.0
