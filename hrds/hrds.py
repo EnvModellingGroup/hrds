@@ -23,7 +23,7 @@ import itertools
 # create a heirachy of rasters to pull data from, smoothly blending between them
 
 
-class createHeirachy(object):
+class HRDS(object):
 
     def __init__(baseRaster, rasters=None, distances=None, buffers=None):
         """ baseRaster is the low res raster filename across whole domain.
@@ -53,7 +53,7 @@ class createHeirachy(object):
             for r in buffers:
                 self.buffer_stack.append(RasterInterpolator(r))
 
-    def set_band(bands=None):
+    def set_bands(bands=None):
 
         if bands is None:
             baseRaster.set_band()
@@ -74,25 +74,24 @@ class createHeirachy(object):
 
     def get_val(point):
         # the actual meat of this code!
-
         # determine if we're in any of the rasters in the list, 
         # starting from the last one
-        for i, r,b in itertools.izip(range(length(self.raster_stack):-1:-1),
+        for i, r,b in itertools.izip(range(len(self.raster_stack),-1,-1),
                                      reversed(self.raster_stack), 
                                      reversed(self.buffer_stack)):
             if r.point_in(point):
                 # if so, check the buffer value
-                if b.get_val(point) == 1.0
+                if b.get_val(point) == 1.0:
                     return r.get_val(point)
                 else:
                     for rr in reversed(self.raster_stack[i:]):
                         # if not, find the next raster we're in, inc. the base
                         if rr.point_in(point):
-                            val = r.get_val(point)*b.get_val(point) + 
+                            val = r.get_val(point)*b.get_val(point) + \
                                   rr.get_val(point)*(b.get_val(point)-1)
                             return val
                     # if we get here, there is no other layer, so use base raster
-                    val = r.get_val(point)*b.get_val(point) + 
+                    val = r.get_val(point)*b.get_val(point) + \
                           self.baseRaster.get_val(point)*(b.get_val(point)-1)
                     return val
                   
