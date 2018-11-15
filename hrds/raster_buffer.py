@@ -34,14 +34,20 @@ class CreateBuffer(object):
     10,000 units from the edge. The distance should be in the same
     units as the raster file.
 
+    You can also specify the "resolution" of your buffer using the 'over'
+    argument. Using '10' would use ten units resolve the buffer from 
+    edge to distance (e.g. is distance was 1.5, and over was 10, your output
+    buffer would have a dx of 0.15). This will probably alter the extents 
+    of your buffer raster such that it no longer matches the actual raster,
+    so proceed with caution. It may however, be useful if your input raster
+    has very high resolution and you want to prevent multiple large raster
+    files.
+
     Once the object is made, write out the buffer using:
 
     rbuff.make_buffer('output_buffer.tif')
 
     Any GDAL-understood file format is supported for input or output.
-
-    The array is stored at an 8-bit integer internally and converted to
-    a 32 bit float on writing.
     """
 
     def __init__(self, filename, distance, over=None):
@@ -98,7 +104,7 @@ class CreateBuffer(object):
         ncols = int(ceil((urc[1] - llc[1]) / dx[1]))
 
         # fill with edge value
-        dist = np.full((ncols, nrows), 0, dtype=np.uint8)
+        dist = np.full((ncols, nrows), 0.0)
         # then fill in the middle
         dist[1:-1, 1:-1] = 1
         # calc euclidian distance and convert to 0 -> 1 scale

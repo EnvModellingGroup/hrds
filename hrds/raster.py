@@ -135,8 +135,8 @@ class RasterInterpolator(object):
     def __init__(self, filename):
         self.ds = gdal.Open(filename)
         if (self.ds is None):
-            print("Couldn't find your file. Exiting.")
-            sys.exit(1)
+            raise RasterInterpolatorError("Couldn't find your 
+                      raster file: "+ filename +". Exiting.")
         self.band = None
         self.mask = None
         self.interpolator = None
