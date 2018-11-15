@@ -76,3 +76,8 @@ and the output from the above code.
 ![input](https://github.com/EnvModellingGroup/hdrs/blob/master/docs/original_bathy_data.png)
 ![output](https://github.com/EnvModellingGroup/hdrs/blob/master/docs/blended_bathy_data.png)
 
+Community
+-----------
+
+We welcome suggestions for future improvements, bug reports and other issues via the issue tracker. Anyone wishing to contribute code should contact Jon Hill (jon.hill@york.ac.uk) to discuss.
+
