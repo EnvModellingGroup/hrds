@@ -1,8 +1,9 @@
 import numpy as np
 from osgeo import gdal
-from raster import RasterInterpolator
+from .raster import RasterInterpolator
 from scipy.ndimage.morphology import distance_transform_edt
 from math import ceil
+from __future__ import print_function
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by

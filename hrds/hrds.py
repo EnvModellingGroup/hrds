@@ -1,7 +1,11 @@
-from raster import RasterInterpolator
-from raster_buffer import CreateBuffer
+from .raster import RasterInterpolator
+from .raster_buffer import CreateBuffer
 import os
-import itertools
+try:
+    from itertools import izip as zip
+except ImportError: # will be 3.x series
+    pass
+from __future__ import print_function
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -80,9 +84,9 @@ class HRDS(object):
         # the actual meat of this code!
         # determine if we're in any of the rasters in the list,
         # starting from the last one
-        for i, r, b in itertools.izip(range(0, len(self.raster_stack)+1),
-                                      self.raster_stack,
-                                      self.buffer_stack):
+        for i, r, b in zip(range(0, len(self.raster_stack)+1),
+                           self.raster_stack,
+                           self.buffer_stack):
             if r.point_in(point):
                 # if so, check the buffer value
                 if b.get_val(point) == 1.0:

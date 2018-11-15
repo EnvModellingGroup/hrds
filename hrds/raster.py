@@ -2,6 +2,7 @@ import numpy as np
 from osgeo import gdal
 import math
 import sys
+from __future__ import print_function
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -129,7 +130,7 @@ class RasterInterpolator(object):
     def __init__(self, filename):
         self.ds = gdal.Open(filename)
         if (self.ds is None):
-            print "Couldn't find your file. Exiting."
+            print("Couldn't find your file. Exiting.")
             sys.exit(1)
         self.band = None
         self.mask = None
