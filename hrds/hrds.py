@@ -1,3 +1,4 @@
+from __future__ import print_function
 from .raster import RasterInterpolator
 from .raster_buffer import CreateBuffer
 import os
@@ -5,7 +6,6 @@ try:
     from itertools import izip as zip
 except ImportError: # will be 3.x series
     pass
-from __future__ import print_function
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,7 +27,27 @@ from __future__ import print_function
 
 
 class HRDS(object):
+    """The main HRDS class. Create a raster stack and initlaise:
 
+    bathy = HRDS("gebco_uk.tif", 
+             rasters=("emod_utm.tif", 
+                      "marine_digimap.tif"), 
+             distances=(10000, 5000))
+    bathy.set_bands()
+
+    The first argument is the base raster filename. `rasters` is a list 
+    of raster filenames, with corresponding `distances` over which to
+    create the buffer.
+
+    If is possible to supply the buffer rasters directly (e.g. if you want 
+    to use different distances on each edge of your raster, or some other 
+    such thing)
+
+    Once set up, you can ask for data at any point:
+    
+    bathy.get_val(100,100)
+
+        """
     def __init__(self, baseRaster, rasters=None, distances=None, buffers=None):
         """ baseRaster is the low res raster filename across whole domain.
         rasters is a list of filenames of the other rasters in priority order.
