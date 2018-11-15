@@ -69,11 +69,11 @@ class CreateBuffer(object):
 
         dataset.SetGeoTransform((
             x_min,       # 0
-            dx[0],       # 1
+            dx[1],       # 1
             0,           # 2
             y_max,       # 3
             0,           # 4
-            -dx[1]))
+            -dx[0]))
 
         dataset.SetProjection(wkt_projection)
         dataset.GetRasterBand(1).WriteArray(array)
@@ -100,10 +100,8 @@ class CreateBuffer(object):
         dist = np.full((ncols, nrows), 0, dtype=np.uint8)
         # then fill in the middle
         dist[1:-1, 1:-1] = 1
-        # calc euclidian distance and convert to units
-        dist = distance_transform_edt(dist) * (np.linalg.norm(dx))
-        # now make it 0 -> 1
-        dist = dist / self.distance
+        # calc euclidian distance and convert to 0 -> 1 scale
+        dist = distance_transform_edt(dist,sampling=[dx[0],dx[1]]) / self.distance
         dist[dist > 1] = 1.0
 
         # create a suitable output filename

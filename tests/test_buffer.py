@@ -28,7 +28,7 @@ class TestBufferCreator(unittest.TestCase):
 
     def tearDown(self):
         # remove temp file
-        #os.remove(temp_file)
+        os.remove(temp_file)
         return
     
     def test_simple_distance(self):
@@ -46,15 +46,43 @@ class TestBufferCreator(unittest.TestCase):
             Finally, test that the file is written and readable
             """
         rbuff = CreateBuffer(test_file_name1, 1.5)
-        point1 = [0.15, 3.85] # should return <0.15 (resolution)
+        point1 = [0.2, 3.85] # should return <0.2 (resolution)
         point2 = [1.7, 2] # should be 1
         point3 = [2, 2] # should be 1
-        point4 = [0.635, 2] #should be 0.5
+        point4 = [0.85, 2] #should be 0.5
         rbuff.make_buffer(temp_file)
         # we now read in the buffer using the rasterinterpolator class
         rci = RasterInterpolator(temp_file)
         rci.set_band()
-        self.assertLess(rci.get_val(point1),0.15)
+        self.assertAlmostEqual(rci.get_val(point1),0.0, delta=0.03)
+        self.assertEqual(rci.get_val(point2),1.0)
+        self.assertEqual(rci.get_val(point3),1.0)
+        self.assertAlmostEqual(rci.get_val(point4),0.5,delta=0.03)
+    
+    def test_simple_distance_setres(self):
+        """ Very simple test with a raster object like thus:
+             1  2  3  4
+             5  6  7  8
+             9  10 11 12
+             13 14 15 16
+            (on a 10x10 grid, not 4x4 as above...only so much space 
+            in comments!)
+            
+            LLC is 0,0 and upper right is 4,4. (hence dx is 0.2)
+            The data are stored in cell centres and we ask for a few coords.
+            We check that the value is 1 at the distance, 0 at the boundary.
+            Finally, test that the file is written and readable
+            """
+        rbuff = CreateBuffer(test_file_name1, 1.5, over=30)
+        point1 = [0.03, 3.85] # should return ~0
+        point2 = [1.65, 2] # should be 1
+        point3 = [2, 2] # should be 1
+        point4 = [0.76, 2] #should be ~0.5
+        rbuff.make_buffer(temp_file)
+        # we now read in the buffer using the rasterinterpolator class
+        rci = RasterInterpolator(temp_file)
+        rci.set_band()
+        self.assertAlmostEqual(rci.get_val(point1),0.0, delta=0.01)
         self.assertEqual(rci.get_val(point2),1.0)
         self.assertEqual(rci.get_val(point3),1.0)
         self.assertAlmostEqual(rci.get_val(point4),0.5,delta=0.01)

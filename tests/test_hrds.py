@@ -47,16 +47,14 @@ class TestHRDS(unittest.TestCase):
         points = ([5,5], # 1
                   [40,50], # 3
                   [28,32], # 2
-                  [13.85, 20], # 1.5
-                  [32.75, 45], # 2.5
+                  [13.5, 20], # 1.5
+                  [32.5, 45], # 2.5
                   )
         expected = [1.0, 3.0, 2.0, 1.5, 2.5]
-        self.assertEqual(bathy.get_val(points[4]), expected[4])
         for p,e in zip(points, expected):
-            self.assertEqual(bathy.get_val(p),e)
+            self.assertAlmostEqual(bathy.get_val(p),e,delta=0.1)
 
-#@unittest.skip("Skipping this by default. 
-#                Uses proprietary data.")
+@unittest.skip("Skipping this by default. Uses proprietary data.")
 class RealDataTest(unittest.TestCase):
 
     def test_real_world(self):
