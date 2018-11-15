@@ -89,7 +89,7 @@ class CreateBuffer(object):
             dx = [transform[1], -transform[5]]
         else:
             dx = [self.distance / self.over, self.distance / self.over]
-        
+
         llc = self.extent[1]
         urc = self.extent[3]
         # note this changes our extent if "over" is set
@@ -101,7 +101,8 @@ class CreateBuffer(object):
         # then fill in the middle
         dist[1:-1, 1:-1] = 1
         # calc euclidian distance and convert to 0 -> 1 scale
-        dist = distance_transform_edt(dist,sampling=[dx[0],dx[1]]) / self.distance
+        dist = distance_transform_edt(dist, sampling=[dx[0], dx[1]])
+        dist = dist / self.distance
         dist[dist > 1] = 1.0
 
         # create a suitable output filename
