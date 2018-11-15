@@ -73,10 +73,20 @@ for i, (xy) in enumerate(mesh2d.coordinates.dat.data):
 File('bathy.pvd').write(bathymetry2d)
 ```
 
-These images show the original data in QGIS (note the "edges" between rasters
-and the output from the above code.
+These images show the original data in QGIS (note the "edges" between rasters,
+higlighted by the arrows in the right 
+hand close-up). The figure also shows the buffer regions created around the 
+two higher resolution datasets (bottom left).
+
 
 ![Input data](https://github.com/EnvModellingGroup/hdrs/blob/master/docs/original_bathy_data_sml.png)
+
+After running the code above, we produce this blended dataset. The mesh is shown in the 
+lower left, with a close-up on the right. Mesh varied in resolution from 
+2000m to 50m. Note the three bathymetric highs (yellow) near the Gebco label above
+are smoothed in the buffer region and there is no longer the obvious line
+between the Gebco data and the EMod data.
+
 ![Blended bathymetry data on the multiscale mesh](https://github.com/EnvModellingGroup/hdrs/blob/master/docs/blended_rasters_with_mesh_sml.png)
 
 Community
