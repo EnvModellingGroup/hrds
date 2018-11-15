@@ -72,16 +72,17 @@ class HRDS(object):
         if created already. In this case, don't supply distances.
         """
 
-        if distances not None:
+        if distances is None:
+            if len(rasters) != len(buffers):
+                raise HRDSError("You have "+str(len(rasters)) + 
+                                "rasters and " +str(len(buffers)) +
+                                "buffers. They should match")
+        else:
             if len(rasters) != len(distances):
                 raise HRDSError("You have "+str(len(rasters)) + 
                                 "rasters and " +str(len(distances)) +
                                 "distances. They should match")
-        else:
-            if (len(rasters) != len(buffers):
-                raise HRDSError("You have "+str(len(rasters)) + 
-                                "rasters and " +str(len(buffers)) +
-                                "buffers. They should match")
+
         self.baseRaster = RasterInterpolator(baseRaster)
         self.raster_stack = []
         for r in rasters:
