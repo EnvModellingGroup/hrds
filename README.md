@@ -1,3 +1,4 @@
+
 ![logo](https://github.com/EnvModellingGroup/hdrs/blob/master/docs/logo_small.png)
 
 About hrds
@@ -7,6 +8,8 @@ different resolutions.
 You can request a point and hrds will return a value based on
 the highest resolution dataset (as defined by the user) available at that point, blending
 datasets in a buffer region to ensure consistancy.
+
+[![Build Status](https://travis-ci.org/EnvModellingGroup/hdrs.svg?branch=master)](https://travis-ci.org/EnvModellingGroup/hdrs)
 
 Prerequisites
 ---------------
