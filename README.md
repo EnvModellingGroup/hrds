@@ -13,7 +13,7 @@ Prerequisites
 * python 2.7 or 3.
 * numpy
 * scipy
-* osgeo.gdal to read and write raster data
+* osgeo.gdal (pygdal) to read and write raster data
 
 To install pygdal, install the libgdal-dev packages and binaries, e.g.
 
@@ -35,6 +35,11 @@ pip install pygdal==2.1.3
 
 To use this in your Firedrake environment, remember to do the last step after
 activating the Firedrake environment.
+
+You can install HRDS using the standard:
+```bash
+python setup.py install
+```
 
 Functionality
 ---------------
@@ -64,3 +69,10 @@ for i, (xy) in enumerate(mesh2d.coordinates.dat.data):
     bvector[i] = bathy.get_val(xy)
 File('bathy.pvd').write(bathymetry2d)
 ```
+
+These images show the original data in QGIS (note the "edges" between rasters
+and the output from the above code.
+
+![input](https://github.com/EnvModellingGroup/hdrs/blob/master/docs/original_bathy_data.png)
+![output](https://github.com/EnvModellingGroup/hdrs/blob/master/docs/blended_bathy_data.png)
+
