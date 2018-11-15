@@ -76,8 +76,8 @@ File('bathy.pvd').write(bathymetry2d)
 These images show the original data in QGIS (note the "edges" between rasters
 and the output from the above code.
 
-![input](https://github.com/EnvModellingGroup/hdrs/blob/master/docs/original_bathy_data.png)
-![output](https://github.com/EnvModellingGroup/hdrs/blob/master/docs/blended_bathy_data.png)
+![Input data](https://github.com/EnvModellingGroup/hdrs/blob/master/docs/original_bathy_data_sml.png)
+![Blended bathymetry data on the multiscale mesh](https://github.com/EnvModellingGroup/hdrs/blob/master/docs/blended_rasters_with_mesh_sml.png)
 
 Community
 -----------
