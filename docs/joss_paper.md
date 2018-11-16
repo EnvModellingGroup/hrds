@@ -17,17 +17,17 @@ bibliography: papers.bib
 
 # Summary
 
-Multiscale modelling of geophysical domains requires data to set up initial conditions
+Multi-scale modelling of geophysical domains requires data to set up initial conditions
 such as bathymetry or topography. These data are typically in the form of GIS
 rasters and can be derived from a number of sources. Typically, a single
-data source is used which has a fixed spatial resolution. However, in multiscale
+data source is used which has a fixed spatial resolution. However, in multi-scale
 models, e.g. [Martin-Short2015], the spatial scale of the model can vary by four or 
 more orders of magnitude, e.g. from kilometre- to sub-metre-scale. In order to
 use the high resolution data set in the area of highest model resolution one
 must blend this limited-area highest resolution data with a wider area coarse
 resolution dataset. A choice therefore has to be made to either sacrifice some 
 resolution or create a very large data file. For a wide region zooming into 
-metre-scale processes this data file could be terrabytes in size when resampled 
+metre-scale processes this data file could be terabytes in size when re-sampled 
 at the resolution of the highest resolution dataset. This problem is particularly
 acute when using GIS tools such as ```qmesh``` [Avdis2018] to generate meshes from 
 contours or other derivatives of the raster data.
