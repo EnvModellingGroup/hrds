@@ -17,14 +17,15 @@ bibliography: papers.bib
 
 # Summary
 
-Multi-scale modelling of geophysical domains requires data to set up initial conditions
-such as bathymetry or topography. These data are typically in the form of GIS
-rasters and can be derived from a number of sources. Typically, a single
-data source is used which has a fixed spatial resolution. However, in multi-scale
-models, e.g. [Martin-Short2015], the spatial scale of the model can vary by four or 
+Multi-scale modelling of geophysical domains requires data, such as bathymetry 
+or topography to set up the initial conditions. These data are typically in the form of GIS
+rasters and can be derived from a number of sources. A single
+data source is commonly used which has a fixed spatial resolution. 
+However, in multi-scale models, e.g. [Martin-Short2015], the spatial 
+scale of the model can vary by four or 
 more orders of magnitude, e.g. from kilometre- to sub-metre-scale. In order to
-use the high resolution data set in the area of highest model resolution one
-must blend this limited-area highest resolution data with a wider area coarse
+use the high resolution data set in the area of highest model resolution this 
+limited-area highest resolution data must be blended with a wider area coarse
 resolution dataset. A choice therefore has to be made to either sacrifice some 
 resolution or create a very large data file. For a wide region zooming into 
 metre-scale processes this data file could be terabytes in size when re-sampled 
@@ -45,7 +46,7 @@ priority order (typically increasing in resolution) along with a corresponding l
 of buffer distances. ``HRDS`` then calculates the linear buffers and stores these 
 as rasters. The user can then request data at an arbitrary point which is
 calculated via bilinear interpolation. There are limitations in this approach 
-in that rasters cannot be partially overlapped: all but the base raster must 
+in that rasters cannot be partially overlapped, all but the base raster must 
 be entirely contained within another raster. This may be resolved in future
 versions.
 
