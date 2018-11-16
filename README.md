@@ -3,11 +3,11 @@
 
 About hrds
 ===========
-hrds is a python package for obtaining points from a set of raster at 
+hrds is a python package for obtaining points from a set of rasters at 
 different resolutions.
 You can request a point and hrds will return a value based on
 the highest resolution dataset (as defined by the user) available at that point, blending
-datasets in a buffer region to ensure consistancy.
+datasets in a buffer region to ensure consistency.
 
 [![Build Status](https://travis-ci.org/EnvModellingGroup/hdrs.svg?branch=master)](https://travis-ci.org/EnvModellingGroup/hdrs)
 
