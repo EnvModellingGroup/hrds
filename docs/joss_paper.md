@@ -12,7 +12,7 @@ affiliations:
  - name: Department of Environment and Geography, University of York, UK
    index: 1
 date: 15 November 2018
-bibliography: paper.bib
+bibliography: papers.bib
 ---
 
 # Summary
