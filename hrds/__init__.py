@@ -24,6 +24,6 @@ Python package for Hierarchical raster data sets. Main components are:
 
 """
 
-from .raster import RasterInterpolator  # NOQA
-from .raster_buffer import CreateBuffer #NOQA
-from .hrds import HRDS
+from .raster import RasterInterpolator   # NOQA
+from .raster_buffer import CreateBuffer  # NOQA
+from .hrds import HRDS                   # NOQA

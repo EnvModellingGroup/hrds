@@ -35,9 +35,9 @@ class CreateBuffer(object):
     units as the raster file.
 
     You can also specify the "resolution" of your buffer using the 'over'
-    argument. Using '10' would use ten units resolve the buffer from 
+    argument. Using '10' would use ten units resolve the buffer from
     edge to distance (e.g. is distance was 1.5, and over was 10, your output
-    buffer would have a dx of 0.15). This will probably alter the extents 
+    buffer would have a dx of 0.15). This will probably alter the extents
     of your buffer raster such that it no longer matches the actual raster,
     so proceed with caution. It may however, be useful if your input raster
     has very high resolution and you want to prevent multiple large raster
