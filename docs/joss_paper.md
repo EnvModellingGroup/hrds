@@ -1,5 +1,5 @@
 ---
-title: 'HRDS: A Python package for heiarachical raster datasets'
+title: 'HRDS: A Python package for hierarchical raster datasets'
 tags:
   - Python
   - numerical modelling
