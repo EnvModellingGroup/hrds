@@ -132,7 +132,8 @@ $ head output.xyz
 These images show the original data in QGIS (note the "edges" between rasters,
 higlighted by the arrows in the right 
 hand close-up). The figure also shows the buffer regions created around the 
-two higher resolution datasets (bottom left).
+two higher resolution datasets (bottom left). The red line is the boundary of the
+mesh used (see figure below).
 
 
 ![Input data](https://github.com/EnvModellingGroup/hdrs/blob/master/docs/original_bathy_data_sml.png)
