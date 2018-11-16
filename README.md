@@ -73,6 +73,62 @@ for i, (xy) in enumerate(mesh2d.coordinates.dat.data):
 File('bathy.pvd').write(bathymetry2d)
 ```
 
+This example loads in an XYZ file and obtains data at each point, 
+replacing the Z value with that from HRDS.
+
+```python
+from hrds import HRDS
+
+points = []
+with open("test.xyz",'r') as f:
+    for line in f:
+        row = line.split()
+        # grab X and Y
+        points.append([float(row[0]), float(row[1])])
+
+bathy = HRDS("gebco_uk.tif", 
+             rasters=("emod_utm.tif", 
+                      "marine_digimap.tif"), 
+             distances=(10000, 5000))
+bathy.set_bands()
+
+with open("output.xyz","w") as f:
+    for p in points:
+        f.write(str(p[0])+"\t"+str(p[1])+"\t"+str(bathy.get_val(p))+"\n")
+
+```
+
+This will turn this:
+```bash
+$ head test.xyz 
+778000 5960000 0
+778000 5955006.00490137 0
+778000 5950012.00980273 0
+778000 5945018.0147041 0
+778000 5940024.01960546 0
+778000 5935030.02450683 0
+778000 5930036.02940819 0
+778000 5925042.03430956 0
+778000 5920048.03921092 0
+778000 5915054.04411229 0
+```
+
+into this:
+
+```bash
+$ head output.xyz 
+778000.0	5960000.0	-23.2977278648
+778000.0	5955006.0049	-16.3622326359
+778000.0	5950012.0098	-17.8316399298
+778000.0	5945018.0147	-12.1837755526
+778000.0	5940024.01961	-17.2785563521
+778000.0	5935030.02451	-13.0309790235
+778000.0	5930036.02941	-11.081550282
+778000.0	5925042.03431	-8.37494903047
+778000.0	5920048.03921	-18.8159019752
+778000.0	5915054.04411	-17.9226424001
+```
+
 These images show the original data in QGIS (note the "edges" between rasters,
 higlighted by the arrows in the right 
 hand close-up). The figure also shows the buffer regions created around the 
