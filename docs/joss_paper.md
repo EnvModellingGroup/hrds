@@ -21,7 +21,7 @@ Multi-scale modelling of geophysical domains requires data, such as bathymetry
 or topography to set up the initial conditions. These data are typically in the form of GIS
 rasters and can be derived from a number of sources. A single
 data source is commonly used which has a fixed spatial resolution. 
-However, in multi-scale models, e.g. [Martin-Short2015], the spatial 
+However, in multi-scale models, e.g. [@Martin-Short2015], the spatial 
 scale of the model can vary by four or 
 more orders of magnitude, e.g. from kilometre- to sub-metre-scale. In order to
 use the high resolution data set in the area of highest model resolution this 
@@ -30,12 +30,12 @@ resolution dataset. A choice therefore has to be made to either sacrifice some
 resolution or create a very large data file. For a wide region zooming into 
 metre-scale processes this data file could be terabytes in size when re-sampled 
 at the resolution of the highest resolution dataset. This problem is particularly
-acute when using GIS tools such as ```qmesh``` [Avdis2018] to generate meshes from 
+acute when using GIS tools such as ```qmesh``` [@Avdis2018] to generate meshes from 
 contours or other derivatives of the raster data.
 
 ``HRDS`` is a solution to this problem as it allows a user to extract data 
 from an arbitrary point from a stack of rasters, each of which can have different
-extents and resolutions. ```HRDS``` is based on the ```GDAL``` library [GDALOGR2018]
+extents and resolutions. ```HRDS``` is based on the ```GDAL``` library [@GDALOGR2018]
 so can load all common raster formats. As these rasters are unlikely to 
 agree on the topographic/bathymetric height where they overlap, a linear distance 
 buffer is created to smoothly
