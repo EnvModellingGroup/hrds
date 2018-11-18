@@ -54,7 +54,8 @@ class TestHRDS(unittest.TestCase):
         for p,e in zip(points, expected):
             self.assertAlmostEqual(bathy.get_val(p),e,delta=0.1)
 
-@unittest.skip("Skipping this by default. Uses proprietary data.")
+@unittest.skipUnless(os.path.isfile("tests/real_data/gebco_uk.tif"),
+                 "Skipping as proprietary data missing.")
 class RealDataTest(unittest.TestCase):
 
     def test_real_world(self):
