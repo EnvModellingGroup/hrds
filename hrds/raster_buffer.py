@@ -108,7 +108,9 @@ class CreateBuffer(object):
         # then fill in the middle, 
         # except where there is no data 
         dist[1:-1, 1:-1] = 1
-        dist[ self.raster.get_array == self.raster.ds.GetNoDataValue() ] = 0
+        orig_raster = self.raster.get_array()
+        nodata = self.raster.nodata
+        dist[ orig_raster == nodata ] = 0
         # calc euclidian distance and convert to 0 -> 1 scale
         dist = distance_transform_edt(dist, sampling=[dx[0], dx[1]])
         dist = dist / self.distance
