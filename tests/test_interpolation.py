@@ -78,7 +78,8 @@ class TestRasterInterpolator(unittest.TestCase):
         self.assertTrue(rci.point_in(point4))
         self.assertFalse(rci.point_in(point5))
 
-    @unittest.skip("Skipping this by default. Uses proprietary data.")
+    @unittest.skipUnless(os.path.isfile("tests/real_data/gebco_uk.tif"),
+                         "Skipping as proprietary data missing.")
     def test_real_data(self):
         """Using gebco cut out to test interpolation
         """
