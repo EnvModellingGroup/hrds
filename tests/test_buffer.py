@@ -19,6 +19,7 @@ import os
 # Copyright Jon Hill, University of York, jon.hill@york.ac.uk
 
 test_file_name1 = "tests/test_raster_large.tif"
+test_file_name2 = "tests/test_raster_nodata_centre.tif"
 temp_file = "temp.tif"
 
 class TestBufferCreator(unittest.TestCase):
@@ -86,6 +87,33 @@ class TestBufferCreator(unittest.TestCase):
         self.assertEqual(rci.get_val(point2),1.0)
         self.assertEqual(rci.get_val(point3),1.0)
         self.assertAlmostEqual(rci.get_val(point4),0.5,delta=0.01)
+
+    def test_simple_distance_nan(self):
+        """ Very simple test with a raster object like thus:
+             1  2  3  4
+             5  6  7  8
+             9  NAN NAN 12
+             13 14 15 16
+            (on a 20x20 grid, not 4x4 as above...only so much space 
+            in comments!). The slightly-left-of-centre has been 
+            replaced by NaN
+            
+            LLC is 0,0 and upper right is 4,4. (hence dx is 0.2)
+            The data are stored in cell centres and we ask for a few coords.
+            We check that the value is 1 at the distance, 0 at the boundary
+            and, for this test, the value is 0 in the centre.
+            """
+        rbuff = CreateBuffer(test_file_name2, 1.0)
+        point1 = [0.2, 3.85] # should return ~0
+        point2 = [0.7, 2] # should be 0.4
+        point3 = [1.7, 2] # should be 0 (in the centre)
+        rbuff.make_buffer(temp_file)
+        # we now read in the buffer using the rasterinterpolator class
+        rci = RasterInterpolator(temp_file)
+        rci.set_band()
+        self.assertAlmostEqual(rci.get_val(point1),0.0, delta=0.03)
+        self.assertAlmostEqual(rci.get_val(point2),0.4, delta=0.03)
+        self.assertEqual(rci.get_val(point3),0.0)
 
 if __name__ == '__main__':
     unittest.main()
