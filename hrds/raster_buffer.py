@@ -105,8 +105,15 @@ class CreateBuffer(object):
 
         # fill with edge value
         dist = np.full((ncols, nrows), 0.0)
-        # then fill in the middle
+        # then fill in the middle,
+        # except where there is no data
         dist[1:-1, 1:-1] = 1
+        if self.over is None:
+            orig_raster = self.raster.get_array()
+            nodata = self.raster.nodata
+            # TODO this will only work if dist and orig_raster
+            # are the same size
+            dist[orig_raster == nodata] = 0
         # calc euclidian distance and convert to 0 -> 1 scale
         dist = distance_transform_edt(dist, sampling=[dx[0], dx[1]])
         dist = dist / self.distance

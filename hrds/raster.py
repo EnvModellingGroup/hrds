@@ -151,6 +151,7 @@ class RasterInterpolator(object):
         self.interpolator = None
         self.extent = None
         self.dx = 0.0
+        self.nodata = None
 
     def get_extent(self):
         """Return list of corner coordinates from a geotransform
@@ -185,6 +186,7 @@ class RasterInterpolator(object):
            Usually 1, which is default"""
         self.band = band_no
         raster = self.ds.GetRasterBand(self.band)
+        self.nodata = raster.GetNoDataValue()
         self.val = np.flipud(np.array(raster.ReadAsArray()))
         self.extent = self.get_extent()
         origin = np.amin(self.extent, axis=0)
