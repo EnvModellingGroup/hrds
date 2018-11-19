@@ -105,12 +105,12 @@ class Interpolator(object):
             raise CoordinateError("Coordinate out of range", point, i, j)
 
         if self.minmax is not None:
-            if minmax[0] is not None:
-                if value < minmax[0]:
-                    value = minmax[0]
-            if minmax[1] is not None:
-                if value > minmax[1]:
-                    value = minmax[1]
+            if self.minmax[0] is not None:
+                if value < self.minmax[0]:
+                    value = self.minmax[0]
+            if self.minmax[1] is not None:
+                if value > self.minmax[1]:
+                    value = self.minmax[1]
 
         return value
 
@@ -141,7 +141,7 @@ class RasterInterpolator(object):
     calls of set_band().
 
     """
-    def __init__(self, filename):
+    def __init__(self, filename, minmax=None):
         self.ds = gdal.Open(filename)
         if (self.ds is None):
             raise RasterInterpolatorError("Couldn't find your raster file:" +
@@ -152,6 +152,7 @@ class RasterInterpolator(object):
         self.extent = None
         self.dx = 0.0
         self.nodata = None
+        self.minmax = minmax
 
     def get_extent(self):
         """Return list of corner coordinates from a geotransform
@@ -192,7 +193,7 @@ class RasterInterpolator(object):
         origin = np.amin(self.extent, axis=0)
         transform = self.ds.GetGeoTransform()
         self.dx = [transform[1], -transform[5]]
-        self.interpolator = Interpolator(origin, self.dx, self.val, self.mask)
+        self.interpolator = Interpolator(origin, self.dx, self.val, self.mask, self.minmax)
 
     def get_array(self):
         """return the numpy array of values"""
