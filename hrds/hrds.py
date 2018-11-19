@@ -38,12 +38,27 @@ class HRDS(object):
     bathy = HRDS("gebco_uk.tif",
              rasters=("emod_utm.tif",
                       "marine_digimap.tif"),
-             distances=(10000, 5000))
+             distances=(10000, 5000),
+             minmax=None)
     bathy.set_bands()
 
     The first argument is the base raster filename. `rasters` is a list
     of raster filenames, with corresponding `distances` over which to
-    create the buffer. Distances are in the same units as the rasters.
+    create the buffer. Distances are in the same units as the rasters. 
+    The min/max argument allows you to specify a minimum or maximum (or both!)
+    value when returning data. This is useful for ocean simulations
+    where you want a minimum depth to prevent "drying". To set this, do:
+
+    bathy = HRDS("gebco_uk.tif",
+             rasters=("emod_utm.tif",
+                      "marine_digimap.tif"),
+             distances=(10000, 5000),
+             minmax=[[None,-5],[None,-3],[None,None]])
+
+    which would set a maximum depth of -5m on the gebco data (-ve = below
+    sea level, +ve above), maximum of -3m on the emod data and no limits
+    on the marine_digimap data. You must supply the same number of min-max
+    pairs are there are total rasters.
 
     If is possible to supply the buffer rasters directly (e.g. if you want
     to use different distances on each edge of your raster, or some other
@@ -63,7 +78,8 @@ class HRDS(object):
     bathy.get_val(100,100)
 
         """
-    def __init__(self, baseRaster, rasters=None, distances=None, buffers=None):
+    def __init__(self, baseRaster, rasters=None, distances=None,
+                 buffers=None, minmax=None):
         """ baseRaster is the low res raster filename across whole domain.
         rasters is a list of filenames of the other rasters in priority order.
         distances is the distance to create a buffer (in same units as
@@ -83,10 +99,23 @@ class HRDS(object):
                                 "rasters and "+str(len(distances)) +
                                 "distances. They should match")
 
-        self.baseRaster = RasterInterpolator(baseRaster)
+        if minmax is not None:
+            if len(rasters)+1 != len(minmax):
+                raise HRDSError("Please supply same number of minmax values" +
+                                "as the total number of rasters, inc. base." +
+                                "You gave me: "+str(len(minmax))+" min/max" +
+                                "and I expected: "+str(len(rasters)+1))
+
+        if minmax is None:
+            self.baseRaster = RasterInterpolator(baseRaster)
+        else:
+            self.baseRaster = RasterInterpolator(baseRaster, minmax[0])
         self.raster_stack = []
-        for r in rasters:
-            self.raster_stack.append(RasterInterpolator(r))
+        for i, r in enumerate(rasters):
+            if minmax is None:
+                self.raster_stack.append(RasterInterpolator(r))
+            else:
+                self.raster_stack.append(RasterInterpolator(r, minmax[i+1]))
         self.buffer_stack = []
         if buffers is None:
             for r, d in zip(rasters, distances):

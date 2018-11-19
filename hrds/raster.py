@@ -45,11 +45,12 @@ class Interpolator(object):
     may switch bands and hence have to reload the val data.
     """
 
-    def __init__(self, origin, delta, val, mask=None):
+    def __init__(self, origin, delta, val, mask=None, minmax=None):
         self.origin = origin
         self.delta = delta
         self.val = val
         self.mask = mask
+        self.minmax = minmax
 
     def set_mask(self, mask):
         self.mask = mask
@@ -102,6 +103,15 @@ class Interpolator(object):
                                                   "should have 2 dimensions")
         except IndexError:
             raise CoordinateError("Coordinate out of range", point, i, j)
+
+        if self.minmax is not None:
+            if minmax[0] is not None:
+                if value < minmax[0]:
+                    value = minmax[0]
+            if minmax[1] is not None:
+                if value > minmax[1]:
+                    value = minmax[1]
+
         return value
 
 
@@ -196,7 +206,8 @@ class RasterInterpolator(object):
         if (self.interpolator is None):
             raise RasterInterpolatorError("Should call set_band() "
                                           "before calling get_val()!")
-        return self.interpolator.get_val(x)
+        val = self.interpolator.get_val(x)        
+        return val
 
     def point_in(self, point):
         # does this point occur in the raster?
