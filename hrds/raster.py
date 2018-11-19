@@ -193,7 +193,8 @@ class RasterInterpolator(object):
         origin = np.amin(self.extent, axis=0)
         transform = self.ds.GetGeoTransform()
         self.dx = [transform[1], -transform[5]]
-        self.interpolator = Interpolator(origin, self.dx, self.val, self.mask, self.minmax)
+        self.interpolator = Interpolator(origin, self.dx, self.val,
+                                         self.mask, self.minmax)
 
     def get_array(self):
         """return the numpy array of values"""
@@ -209,7 +210,7 @@ class RasterInterpolator(object):
         if (self.interpolator is None):
             raise RasterInterpolatorError("Should call set_band() "
                                           "before calling get_val()!")
-        val = self.interpolator.get_val(x)        
+        val = self.interpolator.get_val(x)
         return val
 
     def point_in(self, point):

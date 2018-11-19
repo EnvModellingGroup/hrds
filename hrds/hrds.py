@@ -44,10 +44,11 @@ class HRDS(object):
 
     The first argument is the base raster filename. `rasters` is a list
     of raster filenames, with corresponding `distances` over which to
-    create the buffer. Distances are in the same units as the rasters. 
-    The min/max argument allows you to specify a minimum or maximum (or both!)
-    value when returning data. This is useful for ocean simulations
-    where you want a minimum depth to prevent "drying". To set this, do:
+    create the buffer. Distances are in the same units as the rasters.
+    The min/max argument allows you to specify a minimum or maximum
+    (or both!) values when returning data. This is useful for ocean
+    simulations where you want a minimum depth to prevent "drying".
+    To set this, do:
 
     bathy = HRDS("gebco_uk.tif",
              rasters=("emod_utm.tif",
