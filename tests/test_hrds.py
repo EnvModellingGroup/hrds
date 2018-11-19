@@ -97,6 +97,50 @@ class RealDataTest(unittest.TestCase):
         for p,e in zip(points, expected):
             self.assertAlmostEqual(bathy.get_val(p),e,delta=0.75)
 
+
+@unittest.skipUnless(os.path.isfile("tests/real_data/gebco_uk.tif"),
+                 "Skipping as proprietary data missing.")
+class RealDataTest(unittest.TestCase):
+
+    def test_real_world_limit(self):
+        """ Mix of GEBCO, EMODnet and Marine Digimap just off the
+        Norfolk/Suffolk coast.
+        Projected to UTM 30, so everything in m.
+        """
+        bathy = HRDS("tests/real_data/gebco_uk.tif", 
+                     rasters=("tests/real_data/emod_utm.tif", 
+                              "tests/real_data/marine_digimap.tif"), 
+                     distances=(10000, 5000),
+                     minmax=[[None,-25],[None,-30],[None,None]])
+        bathy.set_bands()
+        """
+        Our data:
+        X          Y      emod_utm  gebco_uk  marine_dig   ID
+        823862.	5782011.           -21.21704                1
+        839323.	5782408.  -25.4705 -24.032                  2
+        853000.	5782804.  -43.1108 -38.03058                3
+        858947.	5782606.  -50.5894 -46.71868   -52.03551    4
+        866083.	5783201.  -43.4241 -40.0147    -48.12579    5
+        889870.	5784787.  -41.1196 -32.12536                6
+        949138.	5782408.           -22.1890                 7
+"""
+        points = ([823862., 5782011.],
+                  [839323., 5782408.],
+                  [853000., 5782804.],                  
+                  [858947., 5782606.],
+                  [866083., 5783201.],
+                  [889870., 5784787.],
+                  [949138., 5782408.],
+                  )
+        expected = [-25.0,  # -21.21704 - limited!
+                    -25.5, # estimate and partially limited
+                    -43.1108,
+                    -50.0, # estimate
+                    -48.12579,
+                    -41.1196,
+                    -25.0] #-22.189 - limited
+        for p,e in zip(points, expected):
+            self.assertAlmostEqual(bathy.get_val(p),e,delta=0.75)
     
 
 if __name__ == '__main__':
