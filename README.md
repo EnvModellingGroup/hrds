@@ -1,7 +1,6 @@
 
 ![logo](https://github.com/EnvModellingGroup/hdrs/blob/master/docs/logo_small.png)
 
-Current release: [![DOI](https://zenodo.org/badge/155502078.svg)](https://zenodo.org/badge/latestdoi/155502078)
 
 About hrds
 ===========
@@ -12,6 +11,9 @@ the highest resolution dataset (as defined by the user) available at that point,
 datasets in a buffer region to ensure consistency.
 
 [![Build Status](https://travis-ci.org/EnvModellingGroup/hdrs.svg?branch=master)](https://travis-ci.org/EnvModellingGroup/hdrs)
+
+Current release:
+[![DOI](https://zenodo.org/badge/155502078.svg)](https://zenodo.org/badge/latestdoi/155502078)
 
 Prerequisites
 ---------------
