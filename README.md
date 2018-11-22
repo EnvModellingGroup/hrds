@@ -1,6 +1,8 @@
 
 ![logo](https://github.com/EnvModellingGroup/hdrs/blob/master/docs/logo_small.png)
 
+Current release: [![DOI](https://zenodo.org/badge/155502078.svg)](https://zenodo.org/badge/latestdoi/155502078)
+
 About hrds
 ===========
 hrds is a python package for obtaining points from a set of rasters at 
