@@ -30,17 +30,18 @@ To install pygdal, install the libgdal-dev packages and binaries, e.g.
 sudo apt-get install libgdal-dev gdal-bin
 ```
 
-Then check which version is installed:
+To install pygdal, we neeed to check which version of gdal is installed:
 ```bash
 gdal-config --version
 ```
 
-Install using pip, the correct version. Note you may need to 
-increase the minor version number, e.g. from 2.1.3 to 2.1.3.3
+Install using pip, using the correct version as gleaned from the command above. Note you may need to 
+increase the minor version number, e.g. from 2.1.3 to 2.1.3.3.
 
 ```bash
-pip install pygdal==2.1.3
+pip install pygdal==2.1.3.3
 ```
+Replace 2.1.3.3 with the output from the ``gdal-config`` command.
 
 To use this in your Firedrake environment, remember to do the last step after
 activating the Firedrake environment.
