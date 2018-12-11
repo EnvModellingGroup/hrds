@@ -22,6 +22,8 @@ Prerequisites
 * scipy
 * osgeo.gdal (pygdal) to read and write raster data
 
+These instruction assume a Debian-based Linux. HDRS should work on other systems, but is currently untested.
+
 To install pygdal, install the libgdal-dev packages and binaries, e.g.
 
 ```bash
