@@ -1,0 +1,907 @@
+<!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
+<qgis projectname="" version="2.18.16">
+  <title></title>
+  <autotransaction active="0"/>
+  <evaluateDefaultValues active="0"/>
+  <layer-tree-group expanded="1" checked="Qt::Checked" name="">
+    <customproperties/>
+    <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Checked" id="coastline20181213083740159" source="/home/jh1889/work/software/hrds/tests/real_data/coastline.shp" name="coastline">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Checked" id="sample_points20181213083628148" source="/home/jh1889/work/software/hrds/tests/real_data/sample_points.shp" name="sample_points">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer expanded="0" providerKey="gdal" checked="Qt::Checked" id="distance20181213085559825" source="/home/jh1889/work/software/hrds/tests/real_data/distance.tif" name="distance">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer expanded="0" providerKey="gdal" checked="Qt::Checked" id="inspire_data20181213082636100" source="/home/jh1889/work/software/hrds/tests/real_data/inspire_data.tif" name="inspire_data">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer expanded="1" providerKey="gdal" checked="Qt::Checked" id="high_res_raster20181213085340653" source="/home/jh1889/work/software/hrds/tests/real_data/high_res_raster.tif" name="high_res_raster">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Checked" id="high_res_area20181213083857007" source="/home/jh1889/work/software/hrds/tests/real_data/high_res_area.shp" name="high_res_area">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer expanded="1" providerKey="gdal" checked="Qt::Checked" id="emod_utm20181213082733124" source="/home/jh1889/work/software/hrds/tests/real_data/emod_utm.tif" name="emod_utm">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer expanded="1" providerKey="gdal" checked="Qt::Checked" id="gebco_uk20181213082803073" source="/home/jh1889/work/software/hrds/tests/real_data/gebco_uk.tif" name="gebco_uk">
+      <customproperties/>
+    </layer-tree-layer>
+  </layer-tree-group>
+  <relations/>
+  <mapcanvas>
+    <units>meters</units>
+    <extent>
+      <xmin>812558.46020574553404003</xmin>
+      <ymin>5804469.25792895536869764</ymin>
+      <xmax>856657.48660893423948437</xmax>
+      <ymax>5874262.59411488752812147</ymax>
+    </extent>
+    <rotation>0</rotation>
+    <projections>1</projections>
+    <destinationsrs>
+      <spatialrefsys>
+        <proj4>+proj=utm +zone=30 +datum=WGS84 +units=m +no_defs</proj4>
+        <srsid>3114</srsid>
+        <srid>32630</srid>
+        <authid>EPSG:32630</authid>
+        <description>WGS 84 / UTM zone 30N</description>
+        <projectionacronym>utm</projectionacronym>
+        <ellipsoidacronym>WGS84</ellipsoidacronym>
+        <geographicflag>false</geographicflag>
+      </spatialrefsys>
+    </destinationsrs>
+    <rendermaptile>0</rendermaptile>
+    <layer_coordinate_transform_info>
+      <layer_coordinate_transform destAuthId="EPSG:32630" srcAuthId="EPSG:32630" srcDatumTransform="-1" destDatumTransform="-1" layerid="emod_utm20181213082733124"/>
+      <layer_coordinate_transform destAuthId="EPSG:32630" srcAuthId="EPSG:32631" srcDatumTransform="-1" destDatumTransform="-1" layerid="157243210520181213081431299"/>
+      <layer_coordinate_transform destAuthId="EPSG:32630" srcAuthId="EPSG:32630" srcDatumTransform="-1" destDatumTransform="-1" layerid="distance20181213085422514"/>
+      <layer_coordinate_transform destAuthId="EPSG:32630" srcAuthId="EPSG:32630" srcDatumTransform="-1" destDatumTransform="-1" layerid="sampling_points20181213083354506"/>
+      <layer_coordinate_transform destAuthId="EPSG:32630" srcAuthId="EPSG:32630" srcDatumTransform="-1" destDatumTransform="-1" layerid="gebco_uk20181213082803073"/>
+      <layer_coordinate_transform destAuthId="EPSG:32630" srcAuthId="EPSG:32630" srcDatumTransform="-1" destDatumTransform="-1" layerid="sample_points20181213083628148"/>
+      <layer_coordinate_transform destAuthId="EPSG:32630" srcAuthId="EPSG:32630" srcDatumTransform="-1" destDatumTransform="-1" layerid="inspire_data20181213082636100"/>
+      <layer_coordinate_transform destAuthId="EPSG:32630" srcAuthId="EPSG:32630" srcDatumTransform="-1" destDatumTransform="-1" layerid="hi_res20181213084122851"/>
+      <layer_coordinate_transform destAuthId="EPSG:32630" srcAuthId="EPSG:32630" srcDatumTransform="-1" destDatumTransform="-1" layerid="emod_utm220181213082238450"/>
+      <layer_coordinate_transform destAuthId="EPSG:32630" srcAuthId="EPSG:4326" srcDatumTransform="-1" destDatumTransform="-1" layerid="D4_201820181213081527329"/>
+      <layer_coordinate_transform destAuthId="EPSG:32630" srcAuthId="EPSG:32630" srcDatumTransform="-1" destDatumTransform="-1" layerid="gebco_uk220181213082522828"/>
+      <layer_coordinate_transform destAuthId="EPSG:32630" srcAuthId="EPSG:32630" srcDatumTransform="-1" destDatumTransform="-1" layerid="high_res_raster20181213085340653"/>
+      <layer_coordinate_transform destAuthId="EPSG:32630" srcAuthId="EPSG:32630" srcDatumTransform="-1" destDatumTransform="-1" layerid="distance20181213085559825"/>
+      <layer_coordinate_transform destAuthId="EPSG:32630" srcAuthId="EPSG:32630" srcDatumTransform="-1" destDatumTransform="-1" layerid="gebco_uk20181213081419786"/>
+      <layer_coordinate_transform destAuthId="EPSG:32630" srcAuthId="EPSG:32630" srcDatumTransform="-1" destDatumTransform="-1" layerid="high_res_area20181213083857007"/>
+      <layer_coordinate_transform destAuthId="EPSG:32630" srcAuthId="EPSG:32630" srcDatumTransform="-1" destDatumTransform="-1" layerid="distance220181213084904987"/>
+      <layer_coordinate_transform destAuthId="EPSG:32630" srcAuthId="EPSG:25831" srcDatumTransform="-1" destDatumTransform="-1" layerid="32801810620181213081449177"/>
+      <layer_coordinate_transform destAuthId="EPSG:32630" srcAuthId="EPSG:32630" srcDatumTransform="-1" destDatumTransform="-1" layerid="emod_utm20181213082126531"/>
+      <layer_coordinate_transform destAuthId="EPSG:32630" srcAuthId="EPSG:32630" srcDatumTransform="-1" destDatumTransform="-1" layerid="distance320181213085024970"/>
+      <layer_coordinate_transform destAuthId="EPSG:32630" srcAuthId="EPSG:32630" srcDatumTransform="-1" destDatumTransform="-1" layerid="coastline20181213083740159"/>
+      <layer_coordinate_transform destAuthId="EPSG:32630" srcAuthId="EPSG:32630" srcDatumTransform="-1" destDatumTransform="-1" layerid="emod_utm20181213081731028"/>
+      <layer_coordinate_transform destAuthId="EPSG:32630" srcAuthId="EPSG:4326" srcDatumTransform="-1" destDatumTransform="-1" layerid="30777090420181213081437296"/>
+      <layer_coordinate_transform destAuthId="EPSG:32630" srcAuthId="EPSG:32630" srcDatumTransform="-1" destDatumTransform="-1" layerid="hi_res20181213084234239"/>
+    </layer_coordinate_transform_info>
+  </mapcanvas>
+  <layer-tree-canvas>
+    <custom-order enabled="0">
+      <item>inspire_data20181213082636100</item>
+      <item>emod_utm20181213082733124</item>
+      <item>gebco_uk20181213082803073</item>
+      <item>sample_points20181213083628148</item>
+      <item>coastline20181213083740159</item>
+      <item>high_res_area20181213083857007</item>
+      <item>high_res_raster20181213085340653</item>
+      <item>distance20181213085559825</item>
+    </custom-order>
+  </layer-tree-canvas>
+  <legend updateDrawingOrder="true">
+    <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="coastline" showFeatureCount="0">
+      <filegroup open="true" hidden="false">
+        <legendlayerfile isInOverview="0" layerid="coastline20181213083740159" visible="1"/>
+      </filegroup>
+    </legendlayer>
+    <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="sample_points" showFeatureCount="0">
+      <filegroup open="true" hidden="false">
+        <legendlayerfile isInOverview="0" layerid="sample_points20181213083628148" visible="1"/>
+      </filegroup>
+    </legendlayer>
+    <legendlayer drawingOrder="-1" open="false" checked="Qt::Checked" name="distance" showFeatureCount="0">
+      <filegroup open="false" hidden="false">
+        <legendlayerfile isInOverview="0" layerid="distance20181213085559825" visible="1"/>
+      </filegroup>
+    </legendlayer>
+    <legendlayer drawingOrder="-1" open="false" checked="Qt::Checked" name="inspire_data" showFeatureCount="0">
+      <filegroup open="false" hidden="false">
+        <legendlayerfile isInOverview="0" layerid="inspire_data20181213082636100" visible="1"/>
+      </filegroup>
+    </legendlayer>
+    <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="high_res_raster" showFeatureCount="0">
+      <filegroup open="true" hidden="false">
+        <legendlayerfile isInOverview="0" layerid="high_res_raster20181213085340653" visible="1"/>
+      </filegroup>
+    </legendlayer>
+    <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="high_res_area" showFeatureCount="0">
+      <filegroup open="true" hidden="false">
+        <legendlayerfile isInOverview="0" layerid="high_res_area20181213083857007" visible="1"/>
+      </filegroup>
+    </legendlayer>
+    <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="emod_utm" showFeatureCount="0">
+      <filegroup open="true" hidden="false">
+        <legendlayerfile isInOverview="0" layerid="emod_utm20181213082733124" visible="1"/>
+      </filegroup>
+    </legendlayer>
+    <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="gebco_uk" showFeatureCount="0">
+      <filegroup open="true" hidden="false">
+        <legendlayerfile isInOverview="0" layerid="gebco_uk20181213082803073" visible="1"/>
+      </filegroup>
+    </legendlayer>
+  </legend>
+  <projectlayers>
+    <maplayer simplifyAlgorithm="0" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" readOnly="0" geometry="Line" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
+      <id>coastline20181213083740159</id>
+      <datasource>./coastline.shp</datasource>
+      <keywordList>
+        <value></value>
+      </keywordList>
+      <layername>coastline</layername>
+      <srs>
+        <spatialrefsys>
+          <proj4>+proj=utm +zone=30 +datum=WGS84 +units=m +no_defs</proj4>
+          <srsid>3114</srsid>
+          <srid>32630</srid>
+          <authid>EPSG:32630</authid>
+          <description>WGS 84 / UTM zone 30N</description>
+          <projectionacronym>utm</projectionacronym>
+          <ellipsoidacronym>WGS84</ellipsoidacronym>
+          <geographicflag>false</geographicflag>
+        </spatialrefsys>
+      </srs>
+      <provider encoding="System">ogr</provider>
+      <vectorjoins/>
+      <layerDependencies/>
+      <expressionfields/>
+      <map-layer-style-manager current="">
+        <map-layer-style name=""/>
+      </map-layer-style-manager>
+      <edittypes>
+        <edittype widgetv2type="TextEdit" name="id">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="PhysID">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+      </edittypes>
+      <renderer-v2 forceraster="0" symbollevels="0" type="singleSymbol" enableorderby="0">
+        <symbols>
+          <symbol alpha="1" clip_to_extent="1" type="line" name="0">
+            <layer pass="0" class="SimpleLine" locked="0">
+              <prop k="capstyle" v="square"/>
+              <prop k="customdash" v="5;2"/>
+              <prop k="customdash_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="customdash_unit" v="MM"/>
+              <prop k="draw_inside_polygon" v="0"/>
+              <prop k="joinstyle" v="bevel"/>
+              <prop k="line_color" v="157,71,146,255"/>
+              <prop k="line_style" v="solid"/>
+              <prop k="line_width" v="0.26"/>
+              <prop k="line_width_unit" v="MM"/>
+              <prop k="offset" v="0"/>
+              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="offset_unit" v="MM"/>
+              <prop k="use_custom_dash" v="0"/>
+              <prop k="width_map_unit_scale" v="0,0,0,0,0,0"/>
+            </layer>
+          </symbol>
+        </symbols>
+        <rotation/>
+        <sizescale scalemethod="diameter"/>
+      </renderer-v2>
+      <labeling type="simple"/>
+      <customproperties/>
+      <blendMode>0</blendMode>
+      <featureBlendMode>0</featureBlendMode>
+      <layerTransparency>0</layerTransparency>
+      <displayfield>id</displayfield>
+      <label>0</label>
+      <labelattributes>
+        <label fieldname="" text="Label"/>
+        <family fieldname="" name="Noto Sans"/>
+        <size fieldname="" units="pt" value="12"/>
+        <bold fieldname="" on="0"/>
+        <italic fieldname="" on="0"/>
+        <underline fieldname="" on="0"/>
+        <strikeout fieldname="" on="0"/>
+        <color fieldname="" red="0" blue="0" green="0"/>
+        <x fieldname=""/>
+        <y fieldname=""/>
+        <offset x="0" y="0" units="pt" yfieldname="" xfieldname=""/>
+        <angle fieldname="" value="0" auto="0"/>
+        <alignment fieldname="" value="center"/>
+        <buffercolor fieldname="" red="255" blue="255" green="255"/>
+        <buffersize fieldname="" units="pt" value="1"/>
+        <bufferenabled fieldname="" on=""/>
+        <multilineenabled fieldname="" on=""/>
+        <selectedonly on=""/>
+      </labelattributes>
+      <annotationform></annotationform>
+      <aliases>
+        <alias field="id" index="0" name=""/>
+        <alias field="PhysID" index="1" name=""/>
+      </aliases>
+      <excludeAttributesWMS/>
+      <excludeAttributesWFS/>
+      <attributeactions default="-1"/>
+      <attributetableconfig actionWidgetStyle="dropDown" sortExpression="" sortOrder="1835363917">
+        <columns/>
+      </attributetableconfig>
+      <editform></editform>
+      <editforminit/>
+      <editforminitcodesource>0</editforminitcodesource>
+      <editforminitfilepath></editforminitfilepath>
+      <editforminitcode><![CDATA[]]></editforminitcode>
+      <featformsuppress>0</featformsuppress>
+      <editorlayout>generatedlayout</editorlayout>
+      <widgets/>
+      <conditionalstyles>
+        <rowstyles/>
+        <fieldstyles/>
+      </conditionalstyles>
+      <defaults>
+        <default field="id" expression=""/>
+        <default field="PhysID" expression=""/>
+      </defaults>
+      <previewExpression></previewExpression>
+    </maplayer>
+    <maplayer minimumScale="inf" maximumScale="1e+08" type="raster" hasScaleBasedVisibilityFlag="0">
+      <extent>
+        <xmin>802438</xmin>
+        <ymin>5832948</ymin>
+        <xmax>848288</xmax>
+        <ymax>5869898</ymax>
+      </extent>
+      <id>distance20181213085559825</id>
+      <datasource>./distance.tif</datasource>
+      <keywordList>
+        <value></value>
+      </keywordList>
+      <layername>distance</layername>
+      <srs>
+        <spatialrefsys>
+          <proj4>+proj=utm +zone=30 +datum=WGS84 +units=m +no_defs</proj4>
+          <srsid>3114</srsid>
+          <srid>32630</srid>
+          <authid>EPSG:32630</authid>
+          <description>WGS 84 / UTM zone 30N</description>
+          <projectionacronym>utm</projectionacronym>
+          <ellipsoidacronym>WGS84</ellipsoidacronym>
+          <geographicflag>false</geographicflag>
+        </spatialrefsys>
+      </srs>
+      <customproperties>
+        <property key="embeddedWidgets/count" value="0"/>
+        <property key="identify/format" value="Value"/>
+      </customproperties>
+      <provider>gdal</provider>
+      <noData>
+        <noDataList bandNo="1" useSrcNoData="0"/>
+      </noData>
+      <map-layer-style-manager current="">
+        <map-layer-style name=""/>
+      </map-layer-style-manager>
+      <pipe>
+        <rasterrenderer opacity="1" alphaBand="-1" classificationMax="20000" classificationMinMaxOrigin="User" band="1" classificationMin="0" type="singlebandpseudocolor">
+          <rasterTransparency/>
+          <rastershader>
+            <colorrampshader colorRampType="INTERPOLATED" clip="0">
+              <item alpha="255" value="0" label="0" color="#000004"/>
+              <item alpha="255" value="392.16" label="392.16" color="#02020c"/>
+              <item alpha="255" value="784.31" label="784.31" color="#050417"/>
+              <item alpha="255" value="1176.5" label="1176.5" color="#0a0722"/>
+              <item alpha="255" value="1568.6" label="1568.6" color="#10092d"/>
+              <item alpha="255" value="1960.8" label="1960.8" color="#160b39"/>
+              <item alpha="255" value="2352.9" label="2352.9" color="#1e0c45"/>
+              <item alpha="255" value="2745.1" label="2745.1" color="#260c51"/>
+              <item alpha="255" value="3137.3" label="3137.3" color="#2f0a5b"/>
+              <item alpha="255" value="3529.4" label="3529.4" color="#380962"/>
+              <item alpha="255" value="3921.6" label="3921.6" color="#400a67"/>
+              <item alpha="255" value="4313.7" label="4313.7" color="#490b6a"/>
+              <item alpha="255" value="4705.9" label="4705.9" color="#510e6c"/>
+              <item alpha="255" value="5098" label="5098" color="#59106e"/>
+              <item alpha="255" value="5490.2" label="5490.2" color="#61136e"/>
+              <item alpha="255" value="5882.4" label="5882.4" color="#69166e"/>
+              <item alpha="255" value="6274.5" label="6274.5" color="#71196e"/>
+              <item alpha="255" value="6666.7" label="6666.7" color="#781c6d"/>
+              <item alpha="255" value="7058.8" label="7058.8" color="#801f6c"/>
+              <item alpha="255" value="7451" label="7451" color="#88226a"/>
+              <item alpha="255" value="7843.1" label="7843.1" color="#902568"/>
+              <item alpha="255" value="8235.3" label="8235.3" color="#982766"/>
+              <item alpha="255" value="8627.5" label="8627.5" color="#a02a63"/>
+              <item alpha="255" value="9019.6" label="9019.6" color="#a82e5f"/>
+              <item alpha="255" value="9411.8" label="9411.8" color="#b0315b"/>
+              <item alpha="255" value="9803.9" label="9803.9" color="#b73557"/>
+              <item alpha="255" value="10196" label="10196" color="#bf3952"/>
+              <item alpha="255" value="10588" label="10588" color="#c63d4d"/>
+              <item alpha="255" value="10980" label="10980" color="#cc4248"/>
+              <item alpha="255" value="11373" label="11373" color="#d34743"/>
+              <item alpha="255" value="11765" label="11765" color="#d94d3d"/>
+              <item alpha="255" value="12157" label="12157" color="#df5337"/>
+              <item alpha="255" value="12549" label="12549" color="#e45a31"/>
+              <item alpha="255" value="12941" label="12941" color="#e9612b"/>
+              <item alpha="255" value="13333" label="13333" color="#ed6925"/>
+              <item alpha="255" value="13726" label="13726" color="#f1711f"/>
+              <item alpha="255" value="14118" label="14118" color="#f47918"/>
+              <item alpha="255" value="14510" label="14510" color="#f78212"/>
+              <item alpha="255" value="14902" label="14902" color="#f98b0b"/>
+              <item alpha="255" value="15294" label="15294" color="#fa9407"/>
+              <item alpha="255" value="15686" label="15686" color="#fb9d07"/>
+              <item alpha="255" value="16078" label="16078" color="#fca60c"/>
+              <item alpha="255" value="16471" label="16471" color="#fcb014"/>
+              <item alpha="255" value="16863" label="16863" color="#fbba1f"/>
+              <item alpha="255" value="17255" label="17255" color="#fac42a"/>
+              <item alpha="255" value="17647" label="17647" color="#f8cd37"/>
+              <item alpha="255" value="18039" label="18039" color="#f6d746"/>
+              <item alpha="255" value="18431" label="18431" color="#f4e156"/>
+              <item alpha="255" value="18824" label="18824" color="#f2ea69"/>
+              <item alpha="255" value="19216" label="19216" color="#f2f27d"/>
+              <item alpha="255" value="19608" label="19608" color="#f5f992"/>
+              <item alpha="255" value="20000" label="20000" color="#fcffa4"/>
+            </colorrampshader>
+          </rastershader>
+        </rasterrenderer>
+        <brightnesscontrast brightness="0" contrast="0"/>
+        <huesaturation colorizeGreen="128" colorizeOn="0" colorizeRed="255" colorizeBlue="128" grayscaleMode="0" saturation="0" colorizeStrength="100"/>
+        <rasterresampler maxOversampling="2"/>
+      </pipe>
+      <blendMode>0</blendMode>
+    </maplayer>
+    <maplayer minimumScale="0" maximumScale="1e+08" type="raster" hasScaleBasedVisibilityFlag="0">
+      <extent>
+        <xmin>808429.8093123669968918</xmin>
+        <ymin>5840084.478069799952209</ymin>
+        <xmax>833032.54483368585351855</xmax>
+        <ymax>5863310.19481194019317627</ymax>
+      </extent>
+      <id>emod_utm20181213082733124</id>
+      <datasource>./emod_utm.tif</datasource>
+      <keywordList>
+        <value></value>
+      </keywordList>
+      <layername>emod_utm</layername>
+      <srs>
+        <spatialrefsys>
+          <proj4>+proj=utm +zone=30 +datum=WGS84 +units=m +no_defs</proj4>
+          <srsid>3114</srsid>
+          <srid>32630</srid>
+          <authid>EPSG:32630</authid>
+          <description>WGS 84 / UTM zone 30N</description>
+          <projectionacronym>utm</projectionacronym>
+          <ellipsoidacronym>WGS84</ellipsoidacronym>
+          <geographicflag>false</geographicflag>
+        </spatialrefsys>
+      </srs>
+      <customproperties>
+        <property key="identify/format" value="Value"/>
+      </customproperties>
+      <provider>gdal</provider>
+      <noData>
+        <noDataList bandNo="1" useSrcNoData="1"/>
+      </noData>
+      <map-layer-style-manager current="">
+        <map-layer-style name=""/>
+      </map-layer-style-manager>
+      <pipe>
+        <rasterrenderer gradient="BlackToWhite" opacity="1" alphaBand="-1" type="singlebandgray" grayBand="1">
+          <rasterTransparency/>
+          <contrastEnhancement>
+            <minValue>-40.315990966796875</minValue>
+            <maxValue>-1.909852050781247</maxValue>
+            <algorithm>StretchToMinimumMaximum</algorithm>
+          </contrastEnhancement>
+        </rasterrenderer>
+        <brightnesscontrast brightness="0" contrast="0"/>
+        <huesaturation colorizeGreen="128" colorizeOn="0" colorizeRed="255" colorizeBlue="128" grayscaleMode="0" saturation="0" colorizeStrength="100"/>
+        <rasterresampler maxOversampling="2"/>
+      </pipe>
+      <blendMode>0</blendMode>
+    </maplayer>
+    <maplayer minimumScale="0" maximumScale="1e+08" type="raster" hasScaleBasedVisibilityFlag="0">
+      <extent>
+        <xmin>802438.73269053909461945</xmin>
+        <ymin>5832951.12068320997059345</ymin>
+        <xmax>848280.97031597339082509</xmax>
+        <ymax>5869898.59578430652618408</ymax>
+      </extent>
+      <id>gebco_uk20181213082803073</id>
+      <datasource>./gebco_uk.tif</datasource>
+      <keywordList>
+        <value></value>
+      </keywordList>
+      <layername>gebco_uk</layername>
+      <srs>
+        <spatialrefsys>
+          <proj4>+proj=utm +zone=30 +datum=WGS84 +units=m +no_defs</proj4>
+          <srsid>3114</srsid>
+          <srid>32630</srid>
+          <authid>EPSG:32630</authid>
+          <description>WGS 84 / UTM zone 30N</description>
+          <projectionacronym>utm</projectionacronym>
+          <ellipsoidacronym>WGS84</ellipsoidacronym>
+          <geographicflag>false</geographicflag>
+        </spatialrefsys>
+      </srs>
+      <customproperties>
+        <property key="identify/format" value="Value"/>
+      </customproperties>
+      <provider>gdal</provider>
+      <noData>
+        <noDataList bandNo="1" useSrcNoData="1"/>
+      </noData>
+      <map-layer-style-manager current="">
+        <map-layer-style name=""/>
+      </map-layer-style-manager>
+      <pipe>
+        <rasterrenderer gradient="BlackToWhite" opacity="1" alphaBand="-1" type="singlebandgray" grayBand="1">
+          <rasterTransparency/>
+          <contrastEnhancement>
+            <minValue>-31.632944450378417</minValue>
+            <maxValue>12.556981422424315</maxValue>
+            <algorithm>StretchToMinimumMaximum</algorithm>
+          </contrastEnhancement>
+        </rasterrenderer>
+        <brightnesscontrast brightness="0" contrast="0"/>
+        <huesaturation colorizeGreen="128" colorizeOn="0" colorizeRed="255" colorizeBlue="128" grayscaleMode="0" saturation="0" colorizeStrength="100"/>
+        <rasterresampler maxOversampling="2"/>
+      </pipe>
+      <blendMode>0</blendMode>
+    </maplayer>
+    <maplayer simplifyAlgorithm="0" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" readOnly="0" geometry="Polygon" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
+      <id>high_res_area20181213083857007</id>
+      <datasource>./high_res_area.shp</datasource>
+      <keywordList>
+        <value></value>
+      </keywordList>
+      <layername>high_res_area</layername>
+      <srs>
+        <spatialrefsys>
+          <proj4>+proj=utm +zone=30 +datum=WGS84 +units=m +no_defs</proj4>
+          <srsid>3114</srsid>
+          <srid>32630</srid>
+          <authid>EPSG:32630</authid>
+          <description>WGS 84 / UTM zone 30N</description>
+          <projectionacronym>utm</projectionacronym>
+          <ellipsoidacronym>WGS84</ellipsoidacronym>
+          <geographicflag>false</geographicflag>
+        </spatialrefsys>
+      </srs>
+      <provider encoding="System">ogr</provider>
+      <vectorjoins/>
+      <layerDependencies/>
+      <expressionfields/>
+      <map-layer-style-manager current="">
+        <map-layer-style name=""/>
+      </map-layer-style-manager>
+      <edittypes>
+        <edittype widgetv2type="TextEdit" name="id">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+      </edittypes>
+      <renderer-v2 forceraster="0" symbollevels="0" type="singleSymbol" enableorderby="0">
+        <symbols>
+          <symbol alpha="1" clip_to_extent="1" type="fill" name="0">
+            <layer pass="0" class="SimpleFill" locked="0">
+              <prop k="border_width_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="color" v="249,181,138,255"/>
+              <prop k="joinstyle" v="bevel"/>
+              <prop k="offset" v="0,0"/>
+              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="offset_unit" v="MM"/>
+              <prop k="outline_color" v="0,0,0,255"/>
+              <prop k="outline_style" v="solid"/>
+              <prop k="outline_width" v="0.26"/>
+              <prop k="outline_width_unit" v="MM"/>
+              <prop k="style" v="solid"/>
+            </layer>
+          </symbol>
+        </symbols>
+        <rotation/>
+        <sizescale scalemethod="diameter"/>
+      </renderer-v2>
+      <labeling type="simple"/>
+      <customproperties/>
+      <blendMode>0</blendMode>
+      <featureBlendMode>0</featureBlendMode>
+      <layerTransparency>0</layerTransparency>
+      <displayfield>id</displayfield>
+      <label>0</label>
+      <labelattributes>
+        <label fieldname="" text="Label"/>
+        <family fieldname="" name="Noto Sans"/>
+        <size fieldname="" units="pt" value="12"/>
+        <bold fieldname="" on="0"/>
+        <italic fieldname="" on="0"/>
+        <underline fieldname="" on="0"/>
+        <strikeout fieldname="" on="0"/>
+        <color fieldname="" red="0" blue="0" green="0"/>
+        <x fieldname=""/>
+        <y fieldname=""/>
+        <offset x="0" y="0" units="pt" yfieldname="" xfieldname=""/>
+        <angle fieldname="" value="0" auto="0"/>
+        <alignment fieldname="" value="center"/>
+        <buffercolor fieldname="" red="255" blue="255" green="255"/>
+        <buffersize fieldname="" units="pt" value="1"/>
+        <bufferenabled fieldname="" on=""/>
+        <multilineenabled fieldname="" on=""/>
+        <selectedonly on=""/>
+      </labelattributes>
+      <annotationform></annotationform>
+      <aliases>
+        <alias field="id" index="0" name=""/>
+      </aliases>
+      <excludeAttributesWMS/>
+      <excludeAttributesWFS/>
+      <attributeactions default="-1"/>
+      <attributetableconfig actionWidgetStyle="dropDown" sortExpression="" sortOrder="1835363840">
+        <columns/>
+      </attributetableconfig>
+      <editform></editform>
+      <editforminit/>
+      <editforminitcodesource>0</editforminitcodesource>
+      <editforminitfilepath></editforminitfilepath>
+      <editforminitcode><![CDATA[]]></editforminitcode>
+      <featformsuppress>0</featformsuppress>
+      <editorlayout>generatedlayout</editorlayout>
+      <widgets/>
+      <conditionalstyles>
+        <rowstyles/>
+        <fieldstyles/>
+      </conditionalstyles>
+      <defaults>
+        <default field="id" expression=""/>
+      </defaults>
+      <previewExpression></previewExpression>
+    </maplayer>
+    <maplayer minimumScale="inf" maximumScale="1e+08" type="raster" hasScaleBasedVisibilityFlag="0">
+      <extent>
+        <xmin>802438</xmin>
+        <ymin>5832948</ymin>
+        <xmax>848288</xmax>
+        <ymax>5869898</ymax>
+      </extent>
+      <id>high_res_raster20181213085340653</id>
+      <datasource>./high_res_raster.tif</datasource>
+      <keywordList>
+        <value></value>
+      </keywordList>
+      <layername>high_res_raster</layername>
+      <srs>
+        <spatialrefsys>
+          <proj4>+proj=utm +zone=30 +datum=WGS84 +units=m +no_defs</proj4>
+          <srsid>3114</srsid>
+          <srid>32630</srid>
+          <authid>EPSG:32630</authid>
+          <description>WGS 84 / UTM zone 30N</description>
+          <projectionacronym>utm</projectionacronym>
+          <ellipsoidacronym>WGS84</ellipsoidacronym>
+          <geographicflag>false</geographicflag>
+        </spatialrefsys>
+      </srs>
+      <customproperties>
+        <property key="embeddedWidgets/count" value="0"/>
+        <property key="identify/format" value="Value"/>
+      </customproperties>
+      <provider>gdal</provider>
+      <noData>
+        <noDataList bandNo="1" useSrcNoData="0"/>
+      </noData>
+      <map-layer-style-manager current="">
+        <map-layer-style name=""/>
+      </map-layer-style-manager>
+      <pipe>
+        <rasterrenderer gradient="BlackToWhite" opacity="1" alphaBand="0" type="singlebandgray" grayBand="1">
+          <rasterTransparency/>
+          <contrastEnhancement>
+            <minValue>0</minValue>
+            <maxValue>1</maxValue>
+            <algorithm>StretchToMinimumMaximum</algorithm>
+          </contrastEnhancement>
+        </rasterrenderer>
+        <brightnesscontrast brightness="0" contrast="0"/>
+        <huesaturation colorizeGreen="128" colorizeOn="0" colorizeRed="255" colorizeBlue="128" grayscaleMode="0" saturation="0" colorizeStrength="100"/>
+        <rasterresampler maxOversampling="2"/>
+      </pipe>
+      <blendMode>0</blendMode>
+    </maplayer>
+    <maplayer minimumScale="inf" maximumScale="1e+08" type="raster" hasScaleBasedVisibilityFlag="0">
+      <extent>
+        <xmin>821810.08102816808968782</xmin>
+        <ymin>5848082.58346287813037634</ymin>
+        <xmax>822987.90486360155045986</xmax>
+        <ymax>5849552.90803832001984119</ymax>
+      </extent>
+      <id>inspire_data20181213082636100</id>
+      <datasource>./inspire_data.tif</datasource>
+      <keywordList>
+        <value></value>
+      </keywordList>
+      <layername>inspire_data</layername>
+      <srs>
+        <spatialrefsys>
+          <proj4>+proj=utm +zone=30 +datum=WGS84 +units=m +no_defs</proj4>
+          <srsid>3114</srsid>
+          <srid>32630</srid>
+          <authid>EPSG:32630</authid>
+          <description>WGS 84 / UTM zone 30N</description>
+          <projectionacronym>utm</projectionacronym>
+          <ellipsoidacronym>WGS84</ellipsoidacronym>
+          <geographicflag>false</geographicflag>
+        </spatialrefsys>
+      </srs>
+      <customproperties>
+        <property key="embeddedWidgets/count" value="0"/>
+        <property key="identify/format" value="Value"/>
+      </customproperties>
+      <provider>gdal</provider>
+      <noData>
+        <noDataList bandNo="1" useSrcNoData="1"/>
+      </noData>
+      <map-layer-style-manager current="">
+        <map-layer-style name=""/>
+      </map-layer-style-manager>
+      <pipe>
+        <rasterrenderer opacity="1" alphaBand="0" classificationMax="0" classificationMinMaxOrigin="User" band="1" classificationMin="-50" type="singlebandpseudocolor">
+          <rasterTransparency/>
+          <rastershader>
+            <colorrampshader colorRampType="INTERPOLATED" clip="0">
+              <item alpha="255" value="-50" label="-50" color="#000004"/>
+              <item alpha="255" value="-49" label="-49" color="#02020c"/>
+              <item alpha="255" value="-48" label="-48" color="#050417"/>
+              <item alpha="255" value="-47.1" label="-47.1" color="#0a0722"/>
+              <item alpha="255" value="-46.1" label="-46.1" color="#10092d"/>
+              <item alpha="255" value="-45.1" label="-45.1" color="#160b39"/>
+              <item alpha="255" value="-44.1" label="-44.1" color="#1e0c45"/>
+              <item alpha="255" value="-43.1" label="-43.1" color="#260c51"/>
+              <item alpha="255" value="-42.2" label="-42.2" color="#2f0a5b"/>
+              <item alpha="255" value="-41.2" label="-41.2" color="#380962"/>
+              <item alpha="255" value="-40.2" label="-40.2" color="#400a67"/>
+              <item alpha="255" value="-39.2" label="-39.2" color="#490b6a"/>
+              <item alpha="255" value="-38.2" label="-38.2" color="#510e6c"/>
+              <item alpha="255" value="-37.3" label="-37.3" color="#59106e"/>
+              <item alpha="255" value="-36.3" label="-36.3" color="#61136e"/>
+              <item alpha="255" value="-35.3" label="-35.3" color="#69166e"/>
+              <item alpha="255" value="-34.3" label="-34.3" color="#71196e"/>
+              <item alpha="255" value="-33.3" label="-33.3" color="#781c6d"/>
+              <item alpha="255" value="-32.4" label="-32.4" color="#801f6c"/>
+              <item alpha="255" value="-31.4" label="-31.4" color="#88226a"/>
+              <item alpha="255" value="-30.4" label="-30.4" color="#902568"/>
+              <item alpha="255" value="-29.4" label="-29.4" color="#982766"/>
+              <item alpha="255" value="-28.4" label="-28.4" color="#a02a63"/>
+              <item alpha="255" value="-27.5" label="-27.5" color="#a82e5f"/>
+              <item alpha="255" value="-26.5" label="-26.5" color="#b0315b"/>
+              <item alpha="255" value="-25.5" label="-25.5" color="#b73557"/>
+              <item alpha="255" value="-24.5" label="-24.5" color="#bf3952"/>
+              <item alpha="255" value="-23.5" label="-23.5" color="#c63d4d"/>
+              <item alpha="255" value="-22.5" label="-22.5" color="#cc4248"/>
+              <item alpha="255" value="-21.6" label="-21.6" color="#d34743"/>
+              <item alpha="255" value="-20.6" label="-20.6" color="#d94d3d"/>
+              <item alpha="255" value="-19.6" label="-19.6" color="#df5337"/>
+              <item alpha="255" value="-18.6" label="-18.6" color="#e45a31"/>
+              <item alpha="255" value="-17.6" label="-17.6" color="#e9612b"/>
+              <item alpha="255" value="-16.7" label="-16.7" color="#ed6925"/>
+              <item alpha="255" value="-15.7" label="-15.7" color="#f1711f"/>
+              <item alpha="255" value="-14.7" label="-14.7" color="#f47918"/>
+              <item alpha="255" value="-13.7" label="-13.7" color="#f78212"/>
+              <item alpha="255" value="-12.7" label="-12.7" color="#f98b0b"/>
+              <item alpha="255" value="-11.8" label="-11.8" color="#fa9407"/>
+              <item alpha="255" value="-10.8" label="-10.8" color="#fb9d07"/>
+              <item alpha="255" value="-9.8" label="-9.8" color="#fca60c"/>
+              <item alpha="255" value="-8.82" label="-8.82" color="#fcb014"/>
+              <item alpha="255" value="-7.84" label="-7.84" color="#fbba1f"/>
+              <item alpha="255" value="-6.86" label="-6.86" color="#fac42a"/>
+              <item alpha="255" value="-5.88" label="-5.88" color="#f8cd37"/>
+              <item alpha="255" value="-4.9" label="-4.9" color="#f6d746"/>
+              <item alpha="255" value="-3.92" label="-3.92" color="#f4e156"/>
+              <item alpha="255" value="-2.94" label="-2.94" color="#f2ea69"/>
+              <item alpha="255" value="-1.96" label="-1.96" color="#f2f27d"/>
+              <item alpha="255" value="-0.98" label="-0.98" color="#f5f992"/>
+              <item alpha="255" value="0" label="0" color="#fcffa4"/>
+            </colorrampshader>
+          </rastershader>
+        </rasterrenderer>
+        <brightnesscontrast brightness="0" contrast="0"/>
+        <huesaturation colorizeGreen="128" colorizeOn="0" colorizeRed="255" colorizeBlue="128" grayscaleMode="0" saturation="0" colorizeStrength="100"/>
+        <rasterresampler maxOversampling="2"/>
+      </pipe>
+      <blendMode>0</blendMode>
+    </maplayer>
+    <maplayer simplifyAlgorithm="0" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" readOnly="0" geometry="Point" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
+      <id>sample_points20181213083628148</id>
+      <datasource>./sample_points.shp</datasource>
+      <keywordList>
+        <value></value>
+      </keywordList>
+      <layername>sample_points</layername>
+      <srs>
+        <spatialrefsys>
+          <proj4>+proj=utm +zone=30 +datum=WGS84 +units=m +no_defs</proj4>
+          <srsid>3114</srsid>
+          <srid>32630</srid>
+          <authid>EPSG:32630</authid>
+          <description>WGS 84 / UTM zone 30N</description>
+          <projectionacronym>utm</projectionacronym>
+          <ellipsoidacronym>WGS84</ellipsoidacronym>
+          <geographicflag>false</geographicflag>
+        </spatialrefsys>
+      </srs>
+      <provider encoding="System">ogr</provider>
+      <vectorjoins/>
+      <layerDependencies/>
+      <expressionfields/>
+      <map-layer-style-manager current="">
+        <map-layer-style name=""/>
+      </map-layer-style-manager>
+      <edittypes>
+        <edittype widgetv2type="TextEdit" name="emod_utm">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="gebco_uk">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="inspire_da">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+      </edittypes>
+      <renderer-v2 forceraster="0" symbollevels="0" type="singleSymbol" enableorderby="0">
+        <symbols>
+          <symbol alpha="1" clip_to_extent="1" type="marker" name="0">
+            <layer pass="0" class="SimpleMarker" locked="0">
+              <prop k="angle" v="0"/>
+              <prop k="color" v="157,212,98,255"/>
+              <prop k="horizontal_anchor_point" v="1"/>
+              <prop k="joinstyle" v="bevel"/>
+              <prop k="name" v="circle"/>
+              <prop k="offset" v="0,0"/>
+              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="offset_unit" v="MM"/>
+              <prop k="outline_color" v="0,0,0,255"/>
+              <prop k="outline_style" v="solid"/>
+              <prop k="outline_width" v="0"/>
+              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="outline_width_unit" v="MM"/>
+              <prop k="scale_method" v="diameter"/>
+              <prop k="size" v="2"/>
+              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="size_unit" v="MM"/>
+              <prop k="vertical_anchor_point" v="1"/>
+            </layer>
+          </symbol>
+        </symbols>
+        <rotation/>
+        <sizescale scalemethod="diameter"/>
+      </renderer-v2>
+      <labeling type="simple"/>
+      <customproperties/>
+      <blendMode>0</blendMode>
+      <featureBlendMode>0</featureBlendMode>
+      <layerTransparency>0</layerTransparency>
+      <displayfield>emod_utm</displayfield>
+      <label>0</label>
+      <labelattributes>
+        <label fieldname="" text="Label"/>
+        <family fieldname="" name="Noto Sans"/>
+        <size fieldname="" units="pt" value="12"/>
+        <bold fieldname="" on="0"/>
+        <italic fieldname="" on="0"/>
+        <underline fieldname="" on="0"/>
+        <strikeout fieldname="" on="0"/>
+        <color fieldname="" red="0" blue="0" green="0"/>
+        <x fieldname=""/>
+        <y fieldname=""/>
+        <offset x="0" y="0" units="pt" yfieldname="" xfieldname=""/>
+        <angle fieldname="" value="0" auto="0"/>
+        <alignment fieldname="" value="center"/>
+        <buffercolor fieldname="" red="255" blue="255" green="255"/>
+        <buffersize fieldname="" units="pt" value="1"/>
+        <bufferenabled fieldname="" on=""/>
+        <multilineenabled fieldname="" on=""/>
+        <selectedonly on=""/>
+      </labelattributes>
+      <annotationform></annotationform>
+      <aliases>
+        <alias field="emod_utm" index="0" name=""/>
+        <alias field="gebco_uk" index="1" name=""/>
+        <alias field="inspire_da" index="2" name=""/>
+      </aliases>
+      <excludeAttributesWMS/>
+      <excludeAttributesWFS/>
+      <attributeactions default="-1"/>
+      <attributetableconfig actionWidgetStyle="dropDown" sortExpression="" sortOrder="-146228288">
+        <columns>
+          <column width="-1" hidden="0" type="field" name="emod_utm"/>
+          <column width="-1" hidden="0" type="field" name="gebco_uk"/>
+          <column width="-1" hidden="0" type="field" name="inspire_da"/>
+          <column width="-1" hidden="1" type="actions"/>
+        </columns>
+      </attributetableconfig>
+      <editform></editform>
+      <editforminit/>
+      <editforminitcodesource>0</editforminitcodesource>
+      <editforminitfilepath></editforminitfilepath>
+      <editforminitcode><![CDATA[]]></editforminitcode>
+      <featformsuppress>0</featformsuppress>
+      <editorlayout>generatedlayout</editorlayout>
+      <widgets/>
+      <conditionalstyles>
+        <rowstyles/>
+        <fieldstyles/>
+      </conditionalstyles>
+      <defaults>
+        <default field="emod_utm" expression=""/>
+        <default field="gebco_uk" expression=""/>
+        <default field="inspire_da" expression=""/>
+      </defaults>
+      <previewExpression>COALESCE( "emod_utm", '&lt;NULL>' )</previewExpression>
+    </maplayer>
+  </projectlayers>
+  <properties>
+    <Measurement>
+      <DistanceUnits type="QString"></DistanceUnits>
+      <AreaUnits type="QString"></AreaUnits>
+    </Measurement>
+    <SpatialRefSys>
+      <ProjectCRSProj4String type="QString">+proj=longlat +datum=WGS84 +no_defs</ProjectCRSProj4String>
+      <ProjectCrs type="QString">EPSG:4326</ProjectCrs>
+      <ProjectCRSID type="int">3452</ProjectCRSID>
+      <ProjectionsEnabled type="int">1</ProjectionsEnabled>
+    </SpatialRefSys>
+    <Paths>
+      <Absolute type="bool">false</Absolute>
+    </Paths>
+    <Gui>
+      <SelectionColorBluePart type="int">0</SelectionColorBluePart>
+      <CanvasColorGreenPart type="int">255</CanvasColorGreenPart>
+      <CanvasColorRedPart type="int">255</CanvasColorRedPart>
+      <SelectionColorRedPart type="int">255</SelectionColorRedPart>
+      <SelectionColorAlphaPart type="int">255</SelectionColorAlphaPart>
+      <SelectionColorGreenPart type="int">255</SelectionColorGreenPart>
+      <CanvasColorBluePart type="int">255</CanvasColorBluePart>
+    </Gui>
+    <Digitizing>
+      <DefaultSnapToleranceUnit type="int">2</DefaultSnapToleranceUnit>
+      <LayerSnappingList type="QStringList">
+        <value>sample_points20181213083628148</value>
+        <value>coastline20181213083740159</value>
+        <value>high_res_area20181213083857007</value>
+      </LayerSnappingList>
+      <LayerSnappingEnabledList type="QStringList">
+        <value>disabled</value>
+        <value>disabled</value>
+        <value>disabled</value>
+      </LayerSnappingEnabledList>
+      <SnappingMode type="QString">current_layer</SnappingMode>
+      <AvoidIntersectionsList type="QStringList"/>
+      <LayerSnappingToleranceUnitList type="QStringList">
+        <value>2</value>
+        <value>2</value>
+        <value>2</value>
+      </LayerSnappingToleranceUnitList>
+      <LayerSnapToList type="QStringList">
+        <value>to_vertex_and_segment</value>
+        <value>to_vertex_and_segment</value>
+        <value>to_vertex_and_segment</value>
+      </LayerSnapToList>
+      <DefaultSnapType type="QString">off</DefaultSnapType>
+      <DefaultSnapTolerance type="double">1000</DefaultSnapTolerance>
+      <LayerSnappingToleranceList type="QStringList">
+        <value>0.000000</value>
+        <value>0.000000</value>
+        <value>0.000000</value>
+      </LayerSnappingToleranceList>
+    </Digitizing>
+    <PositionPrecision>
+      <DecimalPlaces type="int">2</DecimalPlaces>
+      <Automatic type="bool">true</Automatic>
+    </PositionPrecision>
+    <Legend>
+      <filterByMap type="bool">false</filterByMap>
+    </Legend>
+  </properties>
+  <visibility-presets/>
+</qgis>
