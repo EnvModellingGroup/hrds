@@ -21,7 +21,7 @@ Multi-scale modelling of geophysical domains requires data, such as bathymetry
 or topography to set up the initial conditions. These data are typically in the form of GIS
 rasters and can be derived from a number of sources. A single
 data source is commonly used which has a fixed spatial resolution. 
-However, in multi-scale models, e.g. [@Martin-Short2015], the spatial 
+However, in multiscale models, e.g. [@Martin-Short2015], the spatial 
 scale of the model can vary by four or 
 more orders of magnitude, e.g. from kilometre- to sub-metre-scale. In order to
 use the high resolution data set in the area of highest model resolution this 
@@ -46,13 +46,12 @@ priority order (typically increasing in resolution) along with a corresponding l
 of buffer distances. ``HRDS`` then calculates the linear buffers and stores these 
 as rasters. The user can then request data at an arbitrary point which is
 calculated via bilinear interpolation. There are limitations in this approach 
-in that rasters cannot be partially overlapped, all but the base raster must 
+in that rasters cannot be partially overlapped; all but the base raster must 
 be entirely contained within another raster. This may be resolved in future
 versions.
 
-This software solves a particular problem when using multiscale numerical models, 
-in that in using high resolution meshes, high resoution data is required, but for 
-spatially limited regions. By blending a heirachy of data sources, ```HRDS``` overcomes
+This software solves a particular problem when using multiscale numerical models which use high resolution meshes: high resolution spatial data is required, but only for 
+spatially limited regions. By blending a hierarchy of data sources, ```HRDS``` overcomes
 this problem and enables multiscale numerical problems to use spatially appropriate
 data to be used with minimal effort.
 

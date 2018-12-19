@@ -59,41 +59,49 @@ class TestHRDS(unittest.TestCase):
 class RealDataTest(unittest.TestCase):
 
     def test_real_world(self):
-        """ Mix of GEBCO, EMODnet and Marine Digimap just off the
-        Norfolk/Suffolk coast.
+        """ Mix of GEBCO, EMODnet and UK Gov just off the
+        Norfolk coast.
         Projected to UTM 30, so everything in m.
         """
         bathy = HRDS("tests/real_data/gebco_uk.tif", 
                      rasters=("tests/real_data/emod_utm.tif", 
-                              "tests/real_data/marine_digimap.tif"), 
-                     distances=(10000, 5000))
+                              "tests/real_data/inspire_data.tif"), 
+                     distances=(700, 200))
         bathy.set_bands()
         """
         Our data:
-        X          Y      emod_utm  gebco_uk  marine_dig   ID
-        823862.	5782011.           -21.21704                1
-        839323.	5782408.  -25.4705 -24.032                  2
-        853000.	5782804.  -43.1108 -38.03058                3
-        858947.	5782606.  -50.5894 -46.71868   -52.03551    4
-        866083.	5783201.  -43.4241 -40.0147    -48.12579    5
-        889870.	5784787.  -41.1196 -32.12536                6
-        949138.	5782408.           -22.1890                 7
+        X	Y	emod_utm  gebco_uk  inspire_da
+        842996.	5848009.     	  -21.318	
+        834009.	5848207.	  -25.289	
+        832856.	5848273. -32.76	  -28.598	
+        828840.	5848306. -5.884	  -13.466	
+        823178.	5848503. -18.13	  -13.215	
+        822941.	5848511. -17.56	  -11.241  -14.554
+        822762.	5848285. -5.517	  -11.241	
+        822634.	5848528. -6.757	  -11.241  -8.316
+        822447.	5848684. -9.098	  -11.241  -10.60
+
 """
-        points = ([823862., 5782011.],
-                  [839323., 5782408.],
-                  [853000., 5782804.],                  
-                  [858947., 5782606.],
-                  [866083., 5783201.],
-                  [889870., 5784787.],
-                  [949138., 5782408.],
+        points = ([842996., 5848009.],
+                  [834009., 5848207.],
+                  [832856., 5848273.],                  
+                  [828840., 5848306.],
+                  [823178., 5848503.],
+                  [822941., 5848511.],
+                  [822762., 5848285.],
+                  [822634., 5848528.],
+                  [822447., 5848684.],
                   )
-        expected = [-21.21704,
-                    -23.7, # estimate
-                    -43.1108,
-                    -50.0, # estimate
-                    -48.12579,
-                    -41.1196,
-                    -22.189]
+        expected = [-25.0,  # -21.318 - limited!
+                    -25.289,
+                    -28.6,  # in the buffer, so mostly gebco
+                    -5.884, 
+                    -18.13,
+                    -17.0, # in hi-res area, but mostly emod
+                    -5.517
+                    -8.316, # hi res are only
+                    -10.60, # as above
+                    ]
         for p,e in zip(points, expected):
             self.assertAlmostEqual(bathy.get_val(p),e,delta=0.75)
 
@@ -103,42 +111,50 @@ class RealDataTest(unittest.TestCase):
 class RealDataTest(unittest.TestCase):
 
     def test_real_world_limit(self):
-        """ Mix of GEBCO, EMODnet and Marine Digimap just off the
-        Norfolk/Suffolk coast.
+        """ Mix of GEBCO, EMODnet and UK Gov data just off the
+        Norfolk coast.
         Projected to UTM 30, so everything in m.
         """
         bathy = HRDS("tests/real_data/gebco_uk.tif", 
                      rasters=("tests/real_data/emod_utm.tif", 
-                              "tests/real_data/marine_digimap.tif"), 
-                     distances=(10000, 5000),
-                     minmax=[[None,-25],[None,-30],[None,None]])
+                              "tests/real_data/inspire_data.tif"), 
+                     distances=(700, 200),
+                     minmax=[[None,-25],[None,-10],[None,None]])
         bathy.set_bands()
         """
         Our data:
-        X          Y      emod_utm  gebco_uk  marine_dig   ID
-        823862.	5782011.           -21.21704                1
-        839323.	5782408.  -25.4705 -24.032                  2
-        853000.	5782804.  -43.1108 -38.03058                3
-        858947.	5782606.  -50.5894 -46.71868   -52.03551    4
-        866083.	5783201.  -43.4241 -40.0147    -48.12579    5
-        889870.	5784787.  -41.1196 -32.12536                6
-        949138.	5782408.           -22.1890                 7
+        X	Y	emod_utm  gebco_uk  inspire_da
+        842996.	5848009.     	  -21.318	
+        834009.	5848207.	  -25.289	
+        832856.	5848273. -32.76	  -28.598	
+        828840.	5848306. -5.884	  -13.466	
+        823178.	5848503. -18.13	  -13.215	
+        822941.	5848511. -17.56	  -11.241  -14.554
+        822762.	5848285. -5.517	  -11.241	
+        822634.	5848528. -6.757	  -11.241  -8.316
+        822447.	5848684. -9.098	  -11.241  -10.60
+
 """
-        points = ([823862., 5782011.],
-                  [839323., 5782408.],
-                  [853000., 5782804.],                  
-                  [858947., 5782606.],
-                  [866083., 5783201.],
-                  [889870., 5784787.],
-                  [949138., 5782408.],
+        points = ([842996., 5848009.],
+                  [834009., 5848207.],
+                  [832856., 5848273.],                  
+                  [828840., 5848306.],
+                  [823178., 5848503.],
+                  [822941., 5848511.],
+                  [822762., 5848285.],
+                  [822634., 5848528.],
+                  [822447., 5848684.],
                   )
-        expected = [-25.0,  # -21.21704 - limited!
-                    -25.5, # estimate and partially limited
-                    -43.1108,
-                    -50.0, # estimate
-                    -48.12579,
-                    -41.1196,
-                    -25.0] #-22.189 - limited
+        expected = [-25.0,  # -21.318 - limited!
+                    -25.289,
+                    -28.6,  # in the buffer, so mostly gebco
+                    -10, # -5.884 so limited! 
+                    -18.13,
+                    -17.0, # in hi-res area, but mostly emod
+                    -10, #5.517, limited
+                    -8.316, # hi res are only
+                    -10.60, # as above
+                    ]
         for p,e in zip(points, expected):
             self.assertAlmostEqual(bathy.get_val(p),e,delta=0.75)
     
