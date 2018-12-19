@@ -102,17 +102,20 @@ class TestBufferCreator(unittest.TestCase):
             The data are stored in cell centres and we ask for a few coords.
             We check that the value is 1 at the distance, 0 at the boundary
             and, for this test, the value is 0 in the centre.
+
+            The NaNs are in the centre, so the buffer is expanded by one pixel
+            automatically to prevent interpolation issues
             """
         rbuff = CreateBuffer(test_file_name2, 1.0)
         point1 = [0.2, 3.85] # should return ~0
-        point2 = [0.7, 2] # should be 0.4
+        point2 = [0.7, 2] # should be 0.2
         point3 = [1.7, 2] # should be 0 (in the centre)
         rbuff.make_buffer(temp_file)
         # we now read in the buffer using the rasterinterpolator class
         rci = RasterInterpolator(temp_file)
         rci.set_band()
         self.assertAlmostEqual(rci.get_val(point1),0.0, delta=0.03)
-        self.assertAlmostEqual(rci.get_val(point2),0.4, delta=0.03)
+        self.assertAlmostEqual(rci.get_val(point2),0.2, delta=0.03)
         self.assertEqual(rci.get_val(point3),0.0)
 
 if __name__ == '__main__':

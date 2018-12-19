@@ -110,6 +110,8 @@ class CreateBuffer(object):
         # make a raster of the same extent, but with
         # square resolution which is dependant on distance buffer
 
+        llc = self.extent[1]
+        urc = self.extent[3]
         if self.over is None:
             transform = self.raster.ds.GetGeoTransform()
             dx = [transform[1], -transform[5]]
@@ -121,8 +123,6 @@ class CreateBuffer(object):
             nrows = int(ceil((urc[0] - llc[0]) / dx[0]))
             ncols = int(ceil((urc[1] - llc[1]) / dx[1]))
 
-        llc = self.extent[1]
-        urc = self.extent[3]
 
         # fill with edge value
         dist = np.full((ncols, nrows), 0.0)
@@ -135,11 +135,13 @@ class CreateBuffer(object):
             # TODO this will only work if dist and orig_raster
             # are the same size
             dist[orig_raster == nodata] = 0
-            # we now extend this mask
-            mask = np.full((ncols,nrows),False)
-            mask[dist == 0] = True
-            mask = self.extend_mask(mask, 2)
-            dist[mask] = 0
+            # we now extend this mask - we only need to do this, if the 
+            # no data occurs (i.e. no contiguous data)
+            if (nodata in orig_raster):
+                mask = np.full((ncols,nrows),False)
+                mask[dist == 0] = True
+                mask = self.extend_mask(mask, 1)
+                dist[mask] = 0
         # calc euclidian distance and convert to 0 -> 1 scale
         dist = distance_transform_edt(dist, sampling=[dx[0], dx[1]])
         dist = dist / self.distance
