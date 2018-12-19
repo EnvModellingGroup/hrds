@@ -65,7 +65,7 @@ class RealDataTest(unittest.TestCase):
         """
         bathy = HRDS("tests/real_data/gebco_uk.tif", 
                      rasters=("tests/real_data/emod_utm.tif", 
-                              "tests/real_data/marine_digimap.tif"), 
+                              "tests/real_data/inspire_data.tif"), 
                      distances=(10000, 5000))
         bathy.set_bands()
         """
@@ -109,7 +109,7 @@ class RealDataTest(unittest.TestCase):
         """
         bathy = HRDS("tests/real_data/gebco_uk.tif", 
                      rasters=("tests/real_data/emod_utm.tif", 
-                              "tests/real_data/marine_digimap.tif"), 
+                              "tests/real_data/inspire_data.tif"), 
                      distances=(10000, 5000),
                      minmax=[[None,-25],[None,-30],[None,None]])
         bathy.set_bands()
