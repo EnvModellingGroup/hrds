@@ -136,50 +136,17 @@ $ head output.xyz
 778000.0	5915054.04411	-17.9226424001
 ```
 
-These images show the original data in QGIS (note the "edges" between rasters,
-higlighted by the arrows in the right 
-hand close-up). The figure also shows the buffer regions created around the 
-two higher resolution datasets (bottom left). The red line is the boundary of the
-mesh used (see figure below).
+These images show the original data in QGIS in the top right, with each data set using a different colour scheme (GEBCO - green-blue; EMOD - grey; UK Gov - plasma - highlighted by the black rectangle).The red line is the boundary of the mesh used (see figure below). Both the EMOD and UK Gov data has NODATA areas, which are shown as transparent here, hence the curved left edge of the EMOD data.  The figure also shows the buffer regions created around the two higher resolution datasets (top left), with black showing that data isn't used to white where it is 100% used. The effect of NODATA is clear here. The bottom panel shows a close-up of the UK Gov data with the buffer overlayed as a transparancy from white (not used) to black (100% UK Gov). The coloured polygon is the area of the high resolution mesh (see below).
 
-![Input data](https://github.com/EnvModellingGroup/hdrs/blob/master/docs/original_bathy_data_sml.png)
+![Input data](https://github.com/EnvModellingGroup/hdrs/blob/master/docs/raster_data_sml.png)
 
-After running the code above, we produce this blended dataset. The mesh is shown in the 
-lower left, with a close-up on the right. Mesh varied in resolution from 
-2000m to 50m. Note the three bathymetric highs (yellow) near the GEBCO label above
-are smoothed in the buffer region and there is no longer the obvious line
-between the GEBCO data and the EMod data.
+After running the code above, we produce this blended dataset. Note the coarse mesh used here - it's not realistic for a model simulation!
 
-![Blended bathymetry data on the multiscale mesh](https://github.com/EnvModellingGroup/hdrs/blob/master/docs/blended_rasters_with_mesh_sml.png)
+![Blended bathymetry data on the multiscale mesh](https://github.com/EnvModellingGroup/hdrs/blob/master/docs/mesh_bathy_all.png)
 
-Data availability: Due to licensing, these data cannot be distributied with HRDS. GEBCO can be downloaded here. EMod can be obtained here. Both are available free of charge. The highest resolution data is available from [OceanWise] (https://www.oceanwise.eu/) but charges apply (your institution may have access via Digimap). 
+If we then zoom-in to the high resolution area we can see the high resolution UK Giv data being used and with no obvious lines between datasets.
 
-The extents of these data are given below in both UTM Zone 30N and Lat/lon.
-
-GEBCO:
-```
-Upper Left  (  766859.683, 5978004.171) (  1d 3'38.34"E, 53d52'54.13"N)
-Lower Left  (  766859.683, 5744003.495) (  0d52' 9.27"E, 51d46'59.32"N)
-Upper Right ( 1097334.321, 5978004.171) (  6d 2'21.77"E, 53d36'29.76"N)
-Lower Right ( 1097334.321, 5744003.495) (  5d37' 6.72"E, 51d31'46.24"N)
-```
-EMod:
-```
-Upper Left  (  837967.380, 5856534.579) (  2d 0'32.89"E, 52d45' 9.73"N)
-Lower Left  (  837967.380, 5757658.491) (  1d54'35.70"E, 51d52' 1.52"N)
-Upper Right (  921603.168, 5856534.579) (  3d14'29.46"E, 52d41'38.60"N)
-Lower Right (  921603.168, 5757658.491) (  3d 7' 5.60"E, 51d48'36.98"N)
-Center      (  879785.274, 5807096.535) (  2d34'10.17"E, 52d16'57.50"N)
-```
-OceanWise:
-```
-Upper Left  (  858372.882, 5814203.705) (  2d15'52.30"E, 52d21'38.28"N)
-Lower Left  (  858372.882, 5772942.941) (  2d13'15.51"E, 51d59'28.40"N)
-Upper Right (  873215.438, 5814203.705) (  2d28'53.42"E, 52d21' 2.66"N)
-Lower Right (  873215.438, 5772942.941) (  2d26'10.25"E, 51d58'53.25"N)
-```
-
-Place these rasters inside the test/real_data directory as per the filenames in ``test_hrds.py`` and the extended tests will also be run. These are not run by the continuous integration.
+![Blended bathymetry data on the multiscale mesh](https://github.com/EnvModellingGroup/hdrs/blob/master/docs/mesh_bathy.png)
 
 Community
 -----------
