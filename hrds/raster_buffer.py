@@ -87,23 +87,23 @@ class CreateBuffer(object):
         dataset.FlushCache()
         return
 
-
     def extend_mask(self, array, iterations):
         # function to extend a mask array.
         # Taken from: http://www.siafoo.net/snippet/82
         # Copyright 2007 Regents University of California
         # Written by David Isaacson under BSD licence
-        yLen,xLen = array.shape
+        yLen, xLen = array.shape
         output = array.copy()
         for i in range(iterations):
             for y in range(yLen):
                 for x in range(xLen):
-                    if (y > 0        and array[y-1,x]) or \
-                       (y < yLen - 1 and array[y+1,x]) or \
-                       (x > 0        and array[y,x-1]) or \
-                       (x < xLen - 1 and array[y,x+1]): output[y,x] = True
+                    if (y > 0 and array[y-1, x]) or \
+                       (y < yLen - 1 and array[y+1, x]) or \
+                       (x > 0 and array[y, x-1]) or \
+                       (x < xLen - 1 and array[y, x+1]):
+                        output[y, x] = True
             array = output.copy()
-    
+
         return output
 
     def make_buffer(self, output_file):
@@ -123,7 +123,6 @@ class CreateBuffer(object):
             nrows = int(ceil((urc[0] - llc[0]) / dx[0]))
             ncols = int(ceil((urc[1] - llc[1]) / dx[1]))
 
-
         # fill with edge value
         dist = np.full((ncols, nrows), 0.0)
         # then fill in the middle,
@@ -135,10 +134,10 @@ class CreateBuffer(object):
             # TODO this will only work if dist and orig_raster
             # are the same size
             dist[orig_raster == nodata] = 0
-            # we now extend this mask - we only need to do this, if the 
+            # we now extend this mask - we only need to do this, if the
             # no data occurs (i.e. no contiguous data)
             if (nodata in orig_raster):
-                mask = np.full((ncols,nrows),False)
+                mask = np.full((ncols, nrows), False)
                 mask[dist == 0] = True
                 mask = self.extend_mask(mask, 1)
                 dist[mask] = 0
