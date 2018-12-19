@@ -4,16 +4,16 @@ sys.path.insert(0,"../../")
 from hrds import HRDS
 
 points = []
-with open("test.xyz",'r') as f:
+with open("test_mesh.csv",'r') as f:
     for line in f:
-        row = line.split()
+        row = line.split(",")
         # grab X and Y
         points.append([float(row[0]), float(row[1])])
 
 bathy = HRDS("gebco_uk.tif", 
              rasters=("emod_utm.tif", 
-                      "marine_digimap.tif"), 
-             distances=(10000, 5000))
+                      "inspire_data.tif"), 
+             distances=(700, 200))
 bathy.set_bands()
 
 print len(points)

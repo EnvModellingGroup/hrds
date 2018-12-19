@@ -65,15 +65,15 @@ import sys
 sys.path.insert(0,"../../")
 from hrds import HRDS
 
-mesh2d = Mesh('test.msh') # mesh file
+mesh2d = Mesh('test_mesh.msh') # mesh file
 
 P1_2d = FunctionSpace(mesh2d, 'CG', 1)
 bathymetry2d = Function(P1_2d, name="bathymetry")
 bvector = bathymetry2d.dat.data
 bathy = HRDS("gebco_uk.tif", 
              rasters=("emod_utm.tif", 
-                      "marine_digimap.tif"), 
-             distances=(10000, 5000))
+                      "inspire_data.tif"), 
+             distances=(700, 200))
 bathy.set_bands()
 for i, (xy) in enumerate(mesh2d.coordinates.dat.data):
     bvector[i] = bathy.get_val(xy)
@@ -84,56 +84,60 @@ This example loads in an XYZ file and obtains data at each point,
 replacing the Z value with that from HRDS.
 
 ```python
+import sys
+sys.path.insert(0,"../../")
+
 from hrds import HRDS
 
 points = []
-with open("test.xyz",'r') as f:
+with open("test_mesh.csv",'r') as f:
     for line in f:
-        row = line.split()
+        row = line.split(",")
         # grab X and Y
         points.append([float(row[0]), float(row[1])])
 
 bathy = HRDS("gebco_uk.tif", 
              rasters=("emod_utm.tif", 
-                      "marine_digimap.tif"), 
-             distances=(10000, 5000))
+                      "inspire_data.tif"), 
+             distances=(700, 200))
 bathy.set_bands()
+
+print len(points)
 
 with open("output.xyz","w") as f:
     for p in points:
         f.write(str(p[0])+"\t"+str(p[1])+"\t"+str(bathy.get_val(p))+"\n")
-
 ```
 
 This will turn this:
 ```bash
-$ head test.xyz 
-778000 5960000 0
-778000 5955006.00490137 0
-778000 5950012.00980273 0
-778000 5945018.0147041 0
-778000 5940024.01960546 0
-778000 5935030.02450683 0
-778000 5930036.02940819 0
-778000 5925042.03430956 0
-778000 5920048.03921092 0
-778000 5915054.04411229 0
+$ head test_mesh.csv 
+805390.592314,5864132.9269,0
+805658.162910036,5862180.30440542,0
+805925.733505999,5860227.68191137,0
+806193.304101986,5858275.05941714,0
+806460.874698054,5856322.43692232,0
+806728.445294035,5854369.81442814,0
+806996.015889997,5852417.19193409,0
+807263.586486046,5850464.56943942,0
+807531.157082069,5848511.94694493,0
+807798.727678031,5846559.32445088,0
 ```
 
 into this:
 
 ```bash
 $ head output.xyz 
-778000.0	5960000.0	-23.2977278648
-778000.0	5955006.0049	-16.3622326359
-778000.0	5950012.0098	-17.8316399298
-778000.0	5945018.0147	-12.1837755526
-778000.0	5940024.01961	-17.2785563521
-778000.0	5935030.02451	-13.0309790235
-778000.0	5930036.02941	-11.081550282
-778000.0	5925042.03431	-8.37494903047
-778000.0	5920048.03921	-18.8159019752
-778000.0	5915054.04411	-17.9226424001
+805390.592314	5864132.9269	-10.821567728305235
+805658.16291	5862180.30441	2.721575532084955
+805925.733506	5860227.68191	2.528217188012767
+806193.304102	5858275.05942	3.1063558741547865
+806460.874698	5856322.43692	5.470234157891056
+806728.445294	5854369.81443	1.382685066254607
+806996.01589	5852417.19193	1.8997482922322515
+807263.586486	5850464.56944	4.0836843606647335
+807531.157082	5848511.94694	-2.39508079759155
+807798.727678	5846559.32445	-2.401006071401176
 ```
 
 These images show the original data in QGIS in the top right, with each data set using a different colour scheme (GEBCO - green-blue; EMOD - grey; UK Gov - plasma - highlighted by the black rectangle).The red line is the boundary of the mesh used (see figure below). Both the EMOD and UK Gov data has NODATA areas, which are shown as transparent here, hence the curved left edge of the EMOD data.  The figure also shows the buffer regions created around the two higher resolution datasets (top left), with black showing that data isn't used to white where it is 100% used. The effect of NODATA is clear here. The bottom panel shows a close-up of the UK Gov data with the buffer overlayed as a transparancy from white (not used) to black (100% UK Gov). The coloured polygon is the area of the high resolution mesh (see below).
