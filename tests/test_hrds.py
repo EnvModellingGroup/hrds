@@ -33,8 +33,8 @@ class TestHRDS(unittest.TestCase):
 
     def tearDown(self):
         # remove buffer files created
-        os.remove("layer1_buffer.tif")
-        os.remove("layer2_buffer.tif")
+        os.remove(os.path.join(test_dir, "layer1_buffer.tif"))
+        os.remove(os.path.join(test_dir, "layer2_buffer.tif"))
         return
 
     def test_simple_rasters(self):
