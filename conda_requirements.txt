@@ -1,0 +1,7 @@
+python>=3.6
+numpy
+scipy>=0.17
+gdal
+pytest
+
+
