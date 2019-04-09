@@ -24,7 +24,7 @@ Python package for Hierarchical raster data sets. Main components are:
 
 """
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 from .raster import RasterInterpolator   # NOQA
 from .raster_buffer import CreateBuffer  # NOQA
