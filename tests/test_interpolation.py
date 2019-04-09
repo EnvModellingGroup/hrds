@@ -1,8 +1,7 @@
 import unittest
 from hrds.raster import RasterInterpolator, CoordinateError, RasterInterpolatorError
-import itertools
 import os
-from numpy import arange, array, ones
+from numpy import array, ones
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,7 +18,9 @@ from numpy import arange, array, ones
 #
 # Copyright Jon Hill, University of York, jon.hill@york.ac.uk
 
-test_file_name1 = "tests/test_raster.asc"
+
+test_file_name1 = os.path.join(os.path.split(__file__)[0], "test_raster.asc")
+
 
 class TestRasterInterpolator(unittest.TestCase):
     """Tests the hrds.raster.RasterInterpolator class"""
@@ -28,15 +29,15 @@ class TestRasterInterpolator(unittest.TestCase):
 
     def tearDown(self):
         return
-    
+
     def test_simple_interpolation(self):
         """ Very simple test with a raster object like thus:
              1  2  3  4
              5  6  7  8
              9  10 11 12
              13 14 15 16
-            
-            LLC is 0,0 and upper right is 4,4. 
+
+            LLC is 0,0 and upper right is 4,4.
             The data are stored in cell centres and we ask for a few coords
             """
         rci = RasterInterpolator(test_file_name1)
@@ -48,7 +49,7 @@ class TestRasterInterpolator(unittest.TestCase):
         point6 = [0.5, 0.5] # should return 13 (llc)
         point7 = [1.0, 3.49] # should be 1.5
         self.assertRaises(RasterInterpolatorError, rci.get_val, point2)
-        rci.set_band()        
+        rci.set_band()
         self.assertEqual(rci.get_val(point2),8.0)
         self.assertAlmostEqual(rci.get_val(point3),4.5)
         self.assertAlmostEqual(rci.get_val(point5),4.5,5)
@@ -63,8 +64,8 @@ class TestRasterInterpolator(unittest.TestCase):
              5  6  7  8
              9  10 11 12
              13 14 15 16
-            
-            LLC is 0,0 and upper right is 4,4. 
+
+            LLC is 0,0 and upper right is 4,4.
             we ask for point in, outside and on boundary
             """
         rci = RasterInterpolator(test_file_name1)
@@ -102,15 +103,15 @@ class TestRasterInterpolator(unittest.TestCase):
                     ]
         for p,e in zip(points, expected):
             self.assertAlmostEqual(rci.get_val(p),e,delta=0.75)
-        
+
     def test_simple_interpolation_limits(self):
         """ Very simple test with a raster object like thus:
              1  2  3  4
              5  6  7  8
              9  10 11 12
              13 14 15 16
-            
-            LLC is 0,0 and upper right is 4,4. 
+
+            LLC is 0,0 and upper right is 4,4.
             But here we set upper and lower limits
             """
         rci = RasterInterpolator(test_file_name1,minmax=[2,10])
@@ -122,7 +123,7 @@ class TestRasterInterpolator(unittest.TestCase):
         point6 = [0.5, 0.5] # should return 13 (llc), limited to 10
         point7 = [1.0, 3.49] # should be 1.5, but limited to 2
         self.assertRaises(RasterInterpolatorError, rci.get_val, point2)
-        rci.set_band()        
+        rci.set_band()
         self.assertEqual(rci.get_val(point2),8.0)
         self.assertAlmostEqual(rci.get_val(point3),4.5)
         self.assertAlmostEqual(rci.get_val(point5),4.5,5)
