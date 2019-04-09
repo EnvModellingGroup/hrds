@@ -44,13 +44,18 @@ buffer acts. The user gives HRDS a base raster which is low resolution but cover
 the whole extent of the domain to be modelled and then a stack of other rasters in 
 priority order (typically increasing in resolution) along with a corresponding list 
 of buffer distances. ``HRDS`` then calculates the linear buffers and stores these 
-as rasters. The user can then request data at an arbitrary point which is
+as rasters. Linear buffers are used as this makes the fewest assumptions about the 
+data. Alternatives could include other functions, such as sigmoidal, which
+may be included in future releases, depending on use cases. 
+The user can then request data at an arbitrary point which is
 calculated via bilinear interpolation. There are limitations in this approach 
 in that rasters cannot be partially overlapped; all but the base raster must 
 be entirely contained within another raster. This may be resolved in future
-versions.
+versions. The software assumes all rasters are using the same coordinate
+system and datum. 
 
-This software solves a particular problem when using multiscale numerical models which use high resolution meshes: high resolution spatial data is required, but only for 
+This software solves a particular problem when using multiscale numerical models which use 
+high resolution meshes: high resolution spatial data is required, but only for 
 spatially limited regions. By blending a hierarchy of data sources, ```HRDS``` overcomes
 this problem and enables multiscale numerical problems to use spatially appropriate
 data to be used with minimal effort.
