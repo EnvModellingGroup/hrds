@@ -65,6 +65,8 @@ Functionality
 * Create buffer zones as a preprocessing step if needed
 * Obtain value at a point based on user-defined priority of rasters
 
+The software assumes all rasters are already in the same projection space and using the same datum.
+
 
 This example loads in an XYZ file and obtains data at each point, 
 replacing the Z value with that from hrds.
