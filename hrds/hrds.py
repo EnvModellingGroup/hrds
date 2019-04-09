@@ -2,6 +2,8 @@ from __future__ import print_function
 from .raster import RasterInterpolator
 from .raster_buffer import CreateBuffer
 import os
+from shutil import copyfile
+import tempfile
 try:
     from itertools import izip as zip
 except ImportError:  # will be 3.x series
@@ -33,14 +35,15 @@ class HRDSError(Exception):
 
 
 class HRDS(object):
-    """The main HRDS class. Create a raster stack and initialise:
+    """
+    The main HRDS class. Create a raster stack and initialise::
 
-    bathy = HRDS("gebco_uk.tif",
+        bathy = HRDS("gebco_uk.tif",
              rasters=("emod_utm.tif",
                       "marine_digimap.tif"),
              distances=(10000, 5000),
              minmax=None)
-    bathy.set_bands()
+        bathy.set_bands()
 
     The first argument is the base raster filename. `rasters` is a list
     of raster filenames, with corresponding `distances` over which to
@@ -48,9 +51,9 @@ class HRDS(object):
     The min/max argument allows you to specify a minimum or maximum
     (or both!) values when returning data. This is useful for ocean
     simulations where you want a minimum depth to prevent "drying".
-    To set this, do:
+    To set this, do::
 
-    bathy = HRDS("gebco_uk.tif",
+        bathy = HRDS("gebco_uk.tif",
              rasters=("emod_utm.tif",
                       "marine_digimap.tif"),
              distances=(10000, 5000),
@@ -59,29 +62,30 @@ class HRDS(object):
     which would set a maximum depth of -5m on the gebco data (-ve = below
     sea level, +ve above), maximum of -3m on the emod data and no limits
     on the marine_digimap data. You must supply the same number of min-max
-    pairs are there are total rasters.
+    pairs are there are total rasters. Temporary buffer files will be created
+    and deleted at clean up
 
     If is possible to supply the buffer rasters directly (e.g. if you want
     to use different distances on each edge of your raster, or some other
     such thing). Buffer extent must match or exceed the corresponding raster
-    extent.
+    extent::
 
-    bathy = HRDS("gebco_uk.tif",
+        bathy = HRDS("gebco_uk.tif",
              rasters=("emod_utm.tif",
                       "marine_digimap.tif"),
              buffers=(buffer1.tif,
                       buffer2.tif,
                       buffer3.tif))
-    bathy.set_bands()
+        bathy.set_bands()
 
-    Once set up, you can ask for data at any point:
+    Once set up, you can ask for data at any point::
 
-    bathy.get_val(100,100)
-
-        """
+        bathy.get_val(100,100)
+    """
     def __init__(self, baseRaster, rasters=None, distances=None,
-                 buffers=None, minmax=None):
-        """ baseRaster is the low res raster filename across whole domain.
+                 buffers=None, minmax=None, saveBuffers=False):
+        """
+        baseRaster is the low res raster filename across whole domain.
         rasters is a list of filenames of the other rasters in priority order.
         distances is the distance to create a buffer (in same units as
         corresponding raster) for each.
@@ -118,15 +122,27 @@ class HRDS(object):
             else:
                 self.raster_stack.append(RasterInterpolator(r, minmax[i+1]))
         self.buffer_stack = []
+        # the user is asking us to create the buffer files
         if buffers is None:
-            for r, d in zip(rasters, distances):
-                # create buffer file name, based on raster filename
-                buf_file = os.path.splitext(r)[0]+"_buffer.tif"
-                # create buffer
-                rbuff = CreateBuffer(r, d)
-                rbuff.make_buffer(buf_file)
-                # add to stack
-                self.buffer_stack.append(RasterInterpolator(buf_file))
+            # we create the files in a temp dir and if the user wants
+            # them afterwards we copy to a sensible name
+            with tempfile.TemporaryDirectory() as tmpdirname:
+                for r, d in zip(rasters, distances):
+                    # create buffer file name, based on raster filename
+                    keep_buf_file = os.path.splitext(r)[0]+"_buffer.tif"
+                    temp_buf_file = os.path.join(tmpdirname,
+                                                 os.path.splitext(
+                                                     os.path.basename(r))[0] +
+                                                 "_buffer.tif")
+                    # create buffer
+                    rbuff = CreateBuffer(r, d)
+                    rbuff.make_buffer(temp_buf_file)
+                    # add to stack and store in memory
+                    self.buffer_stack.append(RasterInterpolator(temp_buf_file))
+                    # does the user also want the file saving?
+                    if saveBuffers:
+                        copyfile(temp_buf_file, keep_buf_file)
+
         else:
             # create buffer stack from filenames
             for r in buffers:
@@ -137,6 +153,15 @@ class HRDS(object):
         self.raster_stack.reverse()
 
     def set_bands(self, bands=None):
+        """
+        Performs bilinear interpolation of your raster stack
+        to give a value at the requested point.
+
+        Args:
+            bands: a list of band numbers for each raster in the stack or None
+                (uses the first band in each raster). Default is None.
+
+        """
 
         if bands is None:
             self.baseRaster.set_band()
@@ -156,8 +181,20 @@ class HRDS(object):
                 counter += 1
 
     def get_val(self, point):
-        """Performs bilinear interpolation of your raster stack
+        """
+        Performs bilinear interpolation of your raster stack
         to give a value at the requested point.
+
+        Args:
+            point: a length 2 list containing x,y coordinates
+
+        Returns:
+            The value of the raster stack at that point
+
+        Raises:
+            CoordinateError: The point is outside the rasters
+            RasterInterpolatorError: Generic error interpolating
+                data at that point
         """
         # determine if we're in any of the rasters in the list,
         # starting from the last one

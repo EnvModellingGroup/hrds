@@ -24,10 +24,11 @@ from math import ceil
 
 
 class CreateBuffer(object):
-    """Implements the creation of a distance buffer from the edge of
-    a raster to the centre:
+    """
+    Implements the creation of a distance buffer from the edge of
+    a raster to the centre::
 
-    rbuff = CreateBuffer('myRaster.tif',10000.0)
+        rbuff = CreateBuffer('myRaster.tif',10000.0)
 
     Will create a buffer raster with the same extents as myRaster.tif
     with a buffer that goes from 0 at the edge to 1.0 at a distance of
@@ -43,9 +44,9 @@ class CreateBuffer(object):
     has very high resolution and you want to prevent multiple large raster
     files.
 
-    Once the object is made, write out the buffer using:
+    Once the object is made, write out the buffer using::
 
-    rbuff.make_buffer('output_buffer.tif')
+        rbuff.make_buffer('output_buffer.tif')
 
     Any GDAL-understood file format is supported for input or output.
     """
@@ -88,6 +89,17 @@ class CreateBuffer(object):
         return
 
     def extend_mask(self, array, iterations):
+        """
+        Extend the mask a number of "cells" in all directions"
+
+        Args:
+            array: the numpy aray to extend
+            iterations: integer for how many cells to extend
+
+        Returns:
+            a numpy array
+        """
+
         # function to extend a mask array.
         # Taken from: http://www.siafoo.net/snippet/82
         # Copyright 2007 Regents University of California
@@ -107,6 +119,13 @@ class CreateBuffer(object):
         return output
 
     def make_buffer(self, output_file):
+        """
+        Create a buffer raster from 0 to 1 over a set distance.
+
+        Args:
+            output_file: where to save this raster
+        """
+
         # make a raster of the same extent, but with
         # square resolution which is dependant on distance buffer
 

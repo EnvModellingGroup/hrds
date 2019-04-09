@@ -47,7 +47,8 @@ class TestHRDS(unittest.TestCase):
             We ask for points around all layers and in the buffer and check against
             those expected.
         """
-        bathy = HRDS(base_raster, rasters=(layer1, layer2), distances=(7, 5))
+
+        bathy = HRDS(base_raster, rasters=(layer1, layer2), distances=(7, 5), saveBuffers=True)
         bathy.set_bands()
         points = ([5, 5],  # 1
                   [40, 50],  # 3
@@ -58,10 +59,10 @@ class TestHRDS(unittest.TestCase):
         expected = [1.0, 3.0, 2.0, 1.5, 2.5]
         for p, e in zip(points, expected):
             self.assertAlmostEqual(bathy.get_val(p), e, delta=0.1)
+        # check that the buffer files exists
+        self.assertTrue(os.path.exists(os.path.join(test_dir, "layer1_buffer.tif")))
+        self.assertTrue(os.path.exists(os.path.join(test_dir, "layer2_buffer.tif")))
 
-
-@unittest.skipUnless(os.path.isfile("real_data/gebco_uk.tif"),
-                     "Skipping as proprietary data missing.")
 class RealDataTest(unittest.TestCase):
 
     def test_real_world(self):
@@ -69,9 +70,9 @@ class RealDataTest(unittest.TestCase):
         Norfolk coast.
         Projected to UTM 30, so everything in m.
         """
-        bathy = HRDS("real_data/gebco_uk.tif",
-                     rasters=("real_data/emod_utm.tif",
-                              "real_data/inspire_data.tif"),
+        bathy = HRDS(os.path.join(test_dir,"real_data/gebco_uk.tif"),
+                     rasters=(os.path.join(test_dir,"real_data/emod_utm.tif"),
+                              os.path.join(test_dir,"real_data/inspire_data.tif")),
                      distances=(700, 200))
         bathy.set_bands()
         """
@@ -98,7 +99,7 @@ class RealDataTest(unittest.TestCase):
                   [822634., 5848528.],
                   [822447., 5848684.],
                   )
-        expected = [-25.0,  # -21.318 - limited!
+        expected = [-21.318, #
                     -25.289,
                     -28.6,  # in the buffer, so mostly gebco
                     -5.884,
@@ -112,20 +113,16 @@ class RealDataTest(unittest.TestCase):
             self.assertAlmostEqual(bathy.get_val(p), e, delta=0.75)
 
 
-# ###############
-# FIXME: same name for test!!!!!
-@unittest.skipUnless(os.path.isfile("real_data/gebco_uk.tif"),
-                     "Skipping as proprietary data missing.")
-class RealDataTest(unittest.TestCase):
+class RealDataTest_limited(unittest.TestCase):
 
     def test_real_world_limit(self):
         """ Mix of GEBCO, EMODnet and UK Gov data just off the
         Norfolk coast.
         Projected to UTM 30, so everything in m.
         """
-        bathy = HRDS("real_data/gebco_uk.tif",
-                     rasters=("real_data/emod_utm.tif",
-                              "real_data/inspire_data.tif"),
+        bathy = HRDS(os.path.join(test_dir,"real_data/gebco_uk.tif"),
+                     rasters=(os.path.join(test_dir,"real_data/emod_utm.tif"),
+                              os.path.join(test_dir,"real_data/inspire_data.tif")),
                      distances=(700, 200),
                      minmax=[[None,-25],[None,-10],[None,None]])
         bathy.set_bands()

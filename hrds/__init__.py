@@ -14,17 +14,15 @@
 # Copyright Jon Hill, University of York, jon.hill@york.ac.uk
 
 """
-Python package for Hierarchical raster data sets. Main components are:
+hrds contains the following components:
 
-    buffer - functions to create buffer files
-
-    hdrs - the main hdrs object.
-
-    RasterInterpolator - objects to interpolate individual rasters
+    * buffer - functions to create buffer files
+    * hdrs - the main hdrs object.
+    * RasterInterpolator - objects to interpolate individual rasters
 
 """
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 from .raster import RasterInterpolator   # NOQA
 from .raster_buffer import CreateBuffer  # NOQA
