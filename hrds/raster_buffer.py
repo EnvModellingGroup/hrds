@@ -24,7 +24,8 @@ from math import ceil
 
 
 class CreateBuffer(object):
-    """Implements the creation of a distance buffer from the edge of
+    """
+    Implements the creation of a distance buffer from the edge of
     a raster to the centre:
 
     rbuff = CreateBuffer('myRaster.tif',10000.0)

@@ -219,6 +219,6 @@ class RasterInterpolator(object):
         urc = np.amax(self.extent, axis=0)-(self.dx[1]/2)
         if ((point[0] <= urc[0] and point[0] >= llc[0]) and
            (point[1] <= urc[1] and point[1] >= llc[1])):
-                return True
+            return True
         else:
-                return False
+            return False
