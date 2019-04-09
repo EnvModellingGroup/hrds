@@ -17,10 +17,10 @@ Below is a description of the functions that are available in the API.
 .. automodule:: hrds.hrds
     :members:
 
-.. automodule:: hrds.buffer
+.. automodule:: hrds.raster_buffer
     :members:
 
-.. automodule:: hrds.RasterInterpolator
+.. automodule:: hrds.raster
     :members:
 
 

@@ -17,14 +17,25 @@ Current release:
 
 Prerequisites
 ---------------
-* python 2.7 or 3.
+* python 3+
 * numpy
 * scipy
 * osgeo.gdal (pygdal) to read and write raster data
 
-These instruction assume a Debian-based Linux. HDRS should work on other systems, but is currently untested.
+hrds is available on conda-forge, so you can install easily using:
 
-To install pygdal, install the libgdal-dev packages and binaries, e.g.
+```bash
+conda config --add channels conda-forge
+conda install hrds
+```
+It is possible to list all of the versions of hrds available on your platform with:
+
+```bash
+conda search hrds --channel conda-forge
+```
+
+On Debian-based Linux you can also install manually. First  toinstall pygdal, 
+install the libgdal-dev packages and binaries, e.g.
 
 ```bash
 sudo apt-get install libgdal-dev gdal-bin
@@ -43,51 +54,26 @@ pip install pygdal==2.1.3.3
 ```
 Replace 2.1.3.3 with the output from the ``gdal-config`` command.
 
-To use this in your Firedrake environment, remember to do the last step after
-activating the Firedrake environment.
-
-You can install HRDS using the standard:
+You can install hrds using the standard:
 ```bash
 python setup.py install
 ```
+
 
 Functionality
 ---------------
 * Create buffer zones as a preprocessing step if needed
 * Obtain value at a point based on user-defined priority of rasters
 
-Example of use via [thetis](http://thetisproject.org/):
-```python
-from firedrake import *
-from thetis import *
-from firedrake import Expression
-import sys
-sys.path.insert(0,"../../")
-from hrds import HRDS
-
-mesh2d = Mesh('test_mesh.msh') # mesh file
-
-P1_2d = FunctionSpace(mesh2d, 'CG', 1)
-bathymetry2d = Function(P1_2d, name="bathymetry")
-bvector = bathymetry2d.dat.data
-bathy = HRDS("gebco_uk.tif", 
-             rasters=("emod_utm.tif", 
-                      "inspire_data.tif"), 
-             distances=(700, 200))
-bathy.set_bands()
-for i, (xy) in enumerate(mesh2d.coordinates.dat.data):
-    bvector[i] = bathy.get_val(xy)
-File('bathy.pvd').write(bathymetry2d)
-```
 
 This example loads in an XYZ file and obtains data at each point, 
-replacing the Z value with that from HRDS.
+replacing the Z value with that from hrds.
 
 ```python
 import sys
 sys.path.insert(0,"../../")
 
-from hrds import HRDS
+from hrds import hrds
 
 points = []
 with open("test_mesh.csv",'r') as f:
@@ -96,7 +82,7 @@ with open("test_mesh.csv",'r') as f:
         # grab X and Y
         points.append([float(row[0]), float(row[1])])
 
-bathy = HRDS("gebco_uk.tif", 
+bathy = hrds("gebco_uk.tif", 
              rasters=("emod_utm.tif", 
                       "inspire_data.tif"), 
              distances=(700, 200))
@@ -108,6 +94,7 @@ with open("output.xyz","w") as f:
     for p in points:
         f.write(str(p[0])+"\t"+str(p[1])+"\t"+str(bathy.get_val(p))+"\n")
 ```
+
 
 This will turn this:
 ```bash
@@ -140,6 +127,31 @@ $ head output.xyz
 807798.727678	5846559.32445	-2.401006071401176
 ```
 
+
+An example of use via [thetis](http://thetisproject.org/):
+```python
+from firedrake import *
+from thetis import *
+from firedrake import Expression
+import sys
+sys.path.insert(0,"../../")
+from hrds import hrds
+
+mesh2d = Mesh('test_mesh.msh') # mesh file
+
+P1_2d = FunctionSpace(mesh2d, 'CG', 1)
+bathymetry2d = Function(P1_2d, name="bathymetry")
+bvector = bathymetry2d.dat.data
+bathy = hrds("gebco_uk.tif", 
+             rasters=("emod_utm.tif", 
+                      "inspire_data.tif"), 
+             distances=(700, 200))
+bathy.set_bands()
+for i, (xy) in enumerate(mesh2d.coordinates.dat.data):
+    bvector[i] = bathy.get_val(xy)
+File('bathy.pvd').write(bathymetry2d)
+```
+
 These images show the original data in QGIS in the top right, with each data set using a different colour scheme (GEBCO - green-blue; EMOD - grey; UK Gov - plasma - highlighted by the black rectangle).The red line is the boundary of the mesh used (see figure below). Both the EMOD and UK Gov data has NODATA areas, which are shown as transparent here, hence the curved left edge of the EMOD data.  The figure also shows the buffer regions created around the two higher resolution datasets (top left), with black showing that data isn't used to white where it is 100% used. The effect of NODATA is clear here. The bottom panel shows a close-up of the UK Gov data with the buffer overlayed as a transparancy from white (not used) to black (100% UK Gov). The coloured polygon is the area of the high resolution mesh (see below).
 
 ![Input data](https://github.com/EnvModellingGroup/hdrs/blob/master/docs/raster_data_sml.png)
@@ -148,7 +160,7 @@ After running the code above, we produce this blended dataset. Note the coarse m
 
 ![Blended bathymetry data on the multiscale mesh](https://github.com/EnvModellingGroup/hdrs/blob/master/docs/mesh_bathy_all.png)
 
-If we then zoom-in to the high resolution area we can see the high resolution UK Giv data being used and with no obvious lines between datasets.
+If we then zoom-in to the high resolution area we can see the high resolution UK Gov data being used and with no obvious lines between datasets.
 
 ![Blended bathymetry data on the multiscale mesh](https://github.com/EnvModellingGroup/hdrs/blob/master/docs/mesh_bathy.png)
 

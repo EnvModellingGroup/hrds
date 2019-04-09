@@ -36,14 +36,14 @@ class HRDSError(Exception):
 
 class HRDS(object):
     """
-    The main HRDS class. Create a raster stack and initialise:
+    The main HRDS class. Create a raster stack and initialise::
 
-    bathy = HRDS("gebco_uk.tif",
+        bathy = HRDS("gebco_uk.tif",
              rasters=("emod_utm.tif",
                       "marine_digimap.tif"),
              distances=(10000, 5000),
              minmax=None)
-    bathy.set_bands()
+        bathy.set_bands()
 
     The first argument is the base raster filename. `rasters` is a list
     of raster filenames, with corresponding `distances` over which to
@@ -51,9 +51,9 @@ class HRDS(object):
     The min/max argument allows you to specify a minimum or maximum
     (or both!) values when returning data. This is useful for ocean
     simulations where you want a minimum depth to prevent "drying".
-    To set this, do:
+    To set this, do::
 
-    bathy = HRDS("gebco_uk.tif",
+        bathy = HRDS("gebco_uk.tif",
              rasters=("emod_utm.tif",
                       "marine_digimap.tif"),
              distances=(10000, 5000),
@@ -68,19 +68,19 @@ class HRDS(object):
     If is possible to supply the buffer rasters directly (e.g. if you want
     to use different distances on each edge of your raster, or some other
     such thing). Buffer extent must match or exceed the corresponding raster
-    extent.
+    extent::
 
-    bathy = HRDS("gebco_uk.tif",
+        bathy = HRDS("gebco_uk.tif",
              rasters=("emod_utm.tif",
                       "marine_digimap.tif"),
              buffers=(buffer1.tif,
                       buffer2.tif,
                       buffer3.tif))
-    bathy.set_bands()
+        bathy.set_bands()
 
-    Once set up, you can ask for data at any point:
+    Once set up, you can ask for data at any point::
 
-    bathy.get_val(100,100)
+        bathy.get_val(100,100)
     """
     def __init__(self, baseRaster, rasters=None, distances=None,
                  buffers=None, minmax=None, saveBuffers=False):
@@ -153,6 +153,14 @@ class HRDS(object):
         self.raster_stack.reverse()
 
     def set_bands(self, bands=None):
+        """
+        Performs bilinear interpolation of your raster stack
+        to give a value at the requested point.
+
+        Args:
+            bands: a list of band numbers for each raster in the stack or None (uses the first band in each raster). Default is None.
+        
+        """
 
         if bands is None:
             self.baseRaster.set_band()
@@ -175,6 +183,16 @@ class HRDS(object):
         """
         Performs bilinear interpolation of your raster stack
         to give a value at the requested point.
+
+        Args:
+            point: a length 2 list containing x,y coordinates
+
+        Returns:
+            The value of the raster stack at that point
+
+        Raises:
+            CoordinateError: The point is outside the rasters
+            RasterInterpolatorError: Generic error interpolating data at that point
         """
         # determine if we're in any of the rasters in the list,
         # starting from the last one
