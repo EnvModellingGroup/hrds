@@ -70,7 +70,7 @@ class Interpolator(object):
 
     def get_val(self, point):
         """
-        Get the value of this raster at the desired point via bi-linear 
+        Get the value of this raster at the desired point via bi-linear
         interpolation.
 
         Args:
@@ -81,8 +81,10 @@ class Interpolator(object):
 
         Raises:
             CoordinateError: The point is outside the rasters
-            RasterInterpolatorError: Generic error interpolating data at that point
-        """        
+            RasterInterpolatorError: Generic error interpolating data at
+                that point
+        """
+
         yhat = ((point[0]+(self.delta[0]/2.0)-self.origin[0])/self.delta[0])
         xhat = ((point[1]+(self.delta[1]/2.0)-self.origin[1])/self.delta[1])
         j = int(math.floor(yhat))-1
@@ -209,7 +211,6 @@ class RasterInterpolator(object):
         """
         Set the number of the band to be used. Usually 1, which is default
 
-        
         Args:
             band_no: an integer which is the band number to use. Default is 1.
 
@@ -251,7 +252,8 @@ class RasterInterpolator(object):
 
         Raises:
             CoordinateError: The point is outside the rasters
-            RasterInterpolatorError: Generic error interpolating data at that point
+            RasterInterpolatorError: Generic error interpolating
+                data at that point
 
         """
         if (self.interpolator is None):

@@ -158,8 +158,9 @@ class HRDS(object):
         to give a value at the requested point.
 
         Args:
-            bands: a list of band numbers for each raster in the stack or None (uses the first band in each raster). Default is None.
-        
+            bands: a list of band numbers for each raster in the stack or None
+                (uses the first band in each raster). Default is None.
+
         """
 
         if bands is None:
@@ -192,7 +193,8 @@ class HRDS(object):
 
         Raises:
             CoordinateError: The point is outside the rasters
-            RasterInterpolatorError: Generic error interpolating data at that point
+            RasterInterpolatorError: Generic error interpolating
+                data at that point
         """
         # determine if we're in any of the rasters in the list,
         # starting from the last one
