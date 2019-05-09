@@ -54,7 +54,7 @@ be entirely contained within another raster. This may be resolved in future
 versions. The software assumes all rasters are using the same coordinate
 system and datum. 
 
-![Fig. 1: Conceptual image demonstrating the blending of two data sets (coarse resolution - grey, 
+![Conceptual image demonstrating the blending of two data sets (coarse resolution - grey, 
 high resolution: black). The buffer generated
 (red line) goes from zero at the edge of the high resolution dataset to 1.0 over the user-prescribed
 distance. The resulting data can then be calculated at the requied points (black dots on x-axis) as 
