@@ -33,7 +33,7 @@ class HRDSError(Exception):
     pass
 
 
-class HRDS(object):
+class HRDS():
     """
     The main HRDS class. Create a raster stack and initialise::
 
@@ -84,12 +84,17 @@ class HRDS(object):
     def __init__(self, baseRaster, rasters=None, distances=None,
                  buffers=None, minmax=None, saveBuffers=False):
         """
-        baseRaster is the low res raster filename across whole domain.
-        rasters is a list of filenames of the other rasters in priority order.
-        distances is the distance to create a buffer (in same units as
-        corresponding raster) for each.
-        buffers is a lost of buffer filenames in the same order as rasters
-        if created already. In this case, don't supply distances.
+        Set up our hrds object
+
+        Args:
+          baseRaster: the low res raster filename across whole domain.
+          rasters: a list of filenames of the other rasters in priority order.
+          distances: the distance to create a buffer (in same units as
+            corresponding raster) for each.
+          buffers: a list of buffer filenames in the same order as rasters
+            if created already. In this case, don't supply distances.
+          minmax: list of minimum and maximum values to use
+          saveBuffers: boolean to save buffers if needed
         """
 
         if distances is None:

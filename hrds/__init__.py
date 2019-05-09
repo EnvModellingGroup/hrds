@@ -22,7 +22,7 @@ hrds contains the following components:
 
 """
 
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 
 from .raster import RasterInterpolator   # NOQA
 from .raster_buffer import CreateBuffer  # NOQA
