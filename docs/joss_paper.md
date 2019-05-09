@@ -39,7 +39,7 @@ extents and resolutions. ```HRDS``` is based on the ```GDAL``` library [@GDALOGR
 so can load all common raster formats. As these rasters are unlikely to 
 agree on the topographic/bathymetric height where they overlap, a linear distance 
 buffer is created to smoothly
-blend the two datasets together. The user can specify the distance over which this 
+blend the two datasets together (Fig. 1). The user can specify the distance over which this 
 buffer acts. The user gives HRDS a base raster which is low resolution but covers 
 the whole extent of the domain to be modelled and then a stack of other rasters in 
 priority order (typically increasing in resolution) along with a corresponding list 
@@ -53,6 +53,11 @@ in that rasters cannot be partially overlapped; all but the base raster must
 be entirely contained within another raster. This may be resolved in future
 versions. The software assumes all rasters are using the same coordinate
 system and datum. 
+
+![Fig. 1: Conceptual image demonstrating the blending of two data sets (coarse resolution - grey, 
+high resolution: black) and the resultant data (light blue thick line). The buffer generated
+(red line) goes from zero at the edge of the high resolution dataset to 1.0 over the user-prescribed
+distance. The resulting data can then be calculated as a function of the buffer and the two datasets.](buffer_figure.png)
 
 This software solves a particular problem when using multiscale numerical models which use 
 high resolution meshes: high resolution spatial data is required, but only for 
