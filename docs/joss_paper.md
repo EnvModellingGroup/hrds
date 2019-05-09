@@ -21,7 +21,7 @@ Multi-scale modelling of geophysical domains requires data, such as bathymetry
 or topography to set up the initial conditions. These data are typically in the form of GIS
 rasters and can be derived from a number of sources. A single
 data source is commonly used which has a fixed spatial resolution. 
-However, in multiscale models, e.g. [@Martin-Short2015], the spatial 
+However, in multiscale models, e.g. @Martin-Short2015, the spatial 
 scale of the model can vary by four or 
 more orders of magnitude, e.g. from kilometre- to sub-metre-scale. In order to
 use the high resolution data set in the area of highest model resolution this 
