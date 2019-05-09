@@ -1,4 +1,3 @@
-from __future__ import print_function
 from .raster import RasterInterpolator
 from .raster_buffer import CreateBuffer
 import os
