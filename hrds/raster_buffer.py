@@ -22,7 +22,7 @@ from math import ceil
 # read in a raster and create the buffer from 0 at edge, to 1 at distance
 
 
-class CreateBuffer(object):
+class CreateBuffer():
     """
     Implements the creation of a distance buffer from the edge of
     a raster to the centre::
@@ -51,7 +51,17 @@ class CreateBuffer(object):
     """
 
     def __init__(self, filename, distance, over=None):
+        """
+        Init our buffer
 
+        Args:
+            filename: filename to write to
+            distance: distance (in raster units) to extend buffer over
+            over: alter the distance to be in some other units
+
+        Returns:
+            a createBuffer object
+        """
         self.distance = distance
         self.over = over
         self.raster = RasterInterpolator(filename)
@@ -59,6 +69,19 @@ class CreateBuffer(object):
         self.extent = self.raster.get_extent()
 
     def __write_raster__(self, filename, array, dx, origin, proj):
+        """
+        Write raster to file
+
+        Args:
+            filename: filename to write to
+            array: the data. 2D numpy array
+            dx: resolution (length 2 list)
+            origin: the LLC coordinates
+            proj: Projection space for the raster (wkt)
+
+        Returns:
+            Nothing
+        """
         dst_filename = filename
         x_pixels = array.shape[1]
         y_pixels = array.shape[0]

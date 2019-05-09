@@ -47,7 +47,7 @@ class CoordinateError(RasterInterpolatorError):
                                                           self.message)
 
 
-class Interpolator(object):
+class Interpolator():
     """Implements an object to interpolate values from a Raster-type data set.
 
     Used by the RasterInterpolator. A separate object as in the future we
@@ -55,6 +55,19 @@ class Interpolator(object):
     """
 
     def __init__(self, origin, delta, val, mask=None, minmax=None):
+        """
+        Init our Interpolator
+
+        Args:
+            origin: where the raster starts (LLC)
+            delta: resolution (length 2 list [dx,dy])
+            val: 2D numpy array of data
+            mask: a land mask (not yet implemented)
+            minmax: any min/max values to adhere to (length 2 list [min,max])
+
+        Returns:
+            a Interpolator object
+        """        
         self.origin = origin
         self.delta = delta
         self.val = val
@@ -171,6 +184,16 @@ class RasterInterpolator(object):
 
     """
     def __init__(self, filename, minmax=None):
+        """
+        Init our RasterInterpolator
+
+        Args:
+            filename: Which raster to load
+            minmax: any min/max values to adhere to (length 2 list [min,max])
+
+        Returns:
+            a RasterInterpolator object
+        """     
         self.ds = gdal.Open(filename)
         if (self.ds is None):
             raise RasterInterpolatorError("Couldn't find your raster file:" +
