@@ -139,26 +139,26 @@ $ head output.xyz
 An example of use via [thetis](http://thetisproject.org/):
 
 ```python
-from firedrake import *
-from thetis import *
-from firedrake import Expression
-import sys
-sys.path.insert(0,"../../")
-from hrds import hrds
+import firedrake
+import thetis
+from hrds import HRDS
 
-mesh2d = Mesh('test_mesh.msh') # mesh file
+mesh2d = firedrake.Mesh('test_mesh.msh') # mesh file
 
-P1_2d = FunctionSpace(mesh2d, 'CG', 1)
-bathymetry2d = Function(P1_2d, name="bathymetry")
+P1_2d = firedrake.FunctionSpace(mesh2d, 'CG', 1)
+bathymetry2d = firedrake.Function(P1_2d, name="bathymetry")
 bvector = bathymetry2d.dat.data
-bathy = hrds("gebco_uk.tif",
-             rasters=("emod_utm.tif",
-                      "inspire_data.tif"),
+bathy = HRDS("gebco_uk.tif", 
+             rasters=("emod_utm.tif", 
+                      "inspire_data.tif"), 
              distances=(700, 200))
 bathy.set_bands()
-for i, xy in enumerate(mesh2d.coordinates.dat.data):
+for i, (xy) in enumerate(mesh2d.coordinates.dat.data):
     bvector[i] = bathy.get_val(xy)
-File('bathy.pvd').write(bathymetry2d)
+thetis.File('bathy.pvd').write(bathymetry2d)
+
+# rest of thetis code
+
 ```
 
 These images show the original data in QGIS in the top right, with each data set using a different colour scheme (GEBCO - green-blue; EMOD - grey; UK Gov - plasma - highlighted by the black rectangle).The red line is the boundary of the mesh used (see figure below). Both the EMOD and UK Gov data has NODATA areas, which are shown as transparent here, hence the curved left edge of the EMOD data.  The figure also shows the buffer regions created around the two higher resolution datasets (top left), with black showing that data isn't used to white where it is 100% used. The effect of NODATA is clear here. The bottom panel shows a close-up of the UK Gov data with the buffer overlayed as a transparancy from white (not used) to black (100% UK Gov). The coloured polygon is the area of the high resolution mesh (see below).
