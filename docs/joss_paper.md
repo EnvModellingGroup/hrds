@@ -55,9 +55,10 @@ versions. The software assumes all rasters are using the same coordinate
 system and datum. 
 
 ![Fig. 1: Conceptual image demonstrating the blending of two data sets (coarse resolution - grey, 
-high resolution: black) and the resultant data (light blue thick line). The buffer generated
+high resolution: black). The buffer generated
 (red line) goes from zero at the edge of the high resolution dataset to 1.0 over the user-prescribed
-distance. The resulting data can then be calculated as a function of the buffer and the two datasets.](buffer_figure.png)
+distance. The resulting data can then be calculated at the requied points (black dots on x-axis) as 
+a function of the buffer and the two datasets (light blue thick line).](buffer_figure.png)
 
 This software solves a particular problem when using multiscale numerical models which use 
 high resolution meshes: high resolution spatial data is required, but only for 
