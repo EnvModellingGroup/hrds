@@ -21,8 +21,8 @@ import math
 """
 This module contains the Interpolator class and the RasterInterpolator
 class. These RasterInterpolator class reads in a GDAL raster and
-then allows integeragation of that data at an arbitrary point using
-bi-linear interoplation.
+then allows interagation of that data at an arbitrary point using
+bi-linear interpolation.
 """
 
 
@@ -51,7 +51,7 @@ class CoordinateError(RasterInterpolatorError):
 class Interpolator(object):
     """Implements an object to interpolate values from a Raster-type data set.
 
-    Used by the RasterInterpolator. A separate object as in future we
+    Used by the RasterInterpolator. A separate object as in the future we
     may switch bands and hence have to reload the val data.
     """
 

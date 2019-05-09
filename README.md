@@ -4,7 +4,7 @@
 
 About hrds
 ===========
-hrds is a python package for obtaining points from a set of rasters at 
+hrds is a python package for obtaining points from a set of rasters at
 different resolutions.
 You can request a point and hrds will return a value based on
 the highest resolution dataset (as defined by the user) available at that point, blending
@@ -34,46 +34,52 @@ It is possible to list all of the versions of hrds available on your platform wi
 conda search hrds --channel conda-forge
 ```
 
-On Debian-based Linux you can also install manually. First  toinstall pygdal, 
-install the libgdal-dev packages and binaries, e.g.
+On Debian-based Linux you can also install manually. To install pygdal,
+first install the libgdal-dev packages and binaries:
 
 ```bash
 sudo apt-get install libgdal-dev gdal-bin
 ```
 
-To install pygdal, we neeed to check which version of gdal is installed:
+To install pygdal, first check which version of gdal is installed:
 ```bash
 gdal-config --version
 ```
 
-Install using pip, using the correct version as gleaned from the command above. Note you may need to 
-increase the minor version number, e.g. from 2.1.3 to 2.1.3.3.
+pygdal can be installed using pip, specifying the version obtained from the command above.
+Note that you may need to increase the minor version number,
+e.g. from 2.1.3 to 2.1.3.3.
 
 ```bash
 pip install pygdal==2.1.3.3
 ```
 Replace 2.1.3.3 with the output from the ``gdal-config`` command.
 
-You can install hrds using the standard:
+You can then install hrds from source using the standard:
+
 ```bash
 python setup.py install
 ```
+or from PyPi:
 
+```bash
+pip install hrds
+```
 
 Functionality
----------------
+-------------
+
 * Create buffer zones as a preprocessing step if needed
+
 * Obtain value at a point based on user-defined priority of rasters
 
 The software assumes all rasters are already in the same projection space and using the same datum.
 
 
-This example loads in an XYZ file and obtains data at each point, 
+This example loads in an XYZ file and obtains data at each point,
 replacing the Z value with that from hrds.
 
 ```python
-import sys
-sys.path.insert(0,"../../")
 
 from hrds import hrds
 
@@ -84,9 +90,9 @@ with open("test_mesh.csv",'r') as f:
         # grab X and Y
         points.append([float(row[0]), float(row[1])])
 
-bathy = hrds("gebco_uk.tif", 
-             rasters=("emod_utm.tif", 
-                      "inspire_data.tif"), 
+bathy = hrds("gebco_uk.tif",
+             rasters=("emod_utm.tif",
+                      "inspire_data.tif"),
              distances=(700, 200))
 bathy.set_bands()
 
@@ -100,7 +106,7 @@ with open("output.xyz","w") as f:
 
 This will turn this:
 ```bash
-$ head test_mesh.csv 
+$ head test_mesh.csv
 805390.592314,5864132.9269,0
 805658.162910036,5862180.30440542,0
 805925.733505999,5860227.68191137,0
@@ -116,7 +122,7 @@ $ head test_mesh.csv
 into this:
 
 ```bash
-$ head output.xyz 
+$ head output.xyz
 805390.592314	5864132.9269	-10.821567728305235
 805658.16291	5862180.30441	2.721575532084955
 805925.733506	5860227.68191	2.528217188012767
@@ -131,6 +137,7 @@ $ head output.xyz
 
 
 An example of use via [thetis](http://thetisproject.org/):
+
 ```python
 from firedrake import *
 from thetis import *
@@ -144,12 +151,12 @@ mesh2d = Mesh('test_mesh.msh') # mesh file
 P1_2d = FunctionSpace(mesh2d, 'CG', 1)
 bathymetry2d = Function(P1_2d, name="bathymetry")
 bvector = bathymetry2d.dat.data
-bathy = hrds("gebco_uk.tif", 
-             rasters=("emod_utm.tif", 
-                      "inspire_data.tif"), 
+bathy = hrds("gebco_uk.tif",
+             rasters=("emod_utm.tif",
+                      "inspire_data.tif"),
              distances=(700, 200))
 bathy.set_bands()
-for i, (xy) in enumerate(mesh2d.coordinates.dat.data):
+for i, xy in enumerate(mesh2d.coordinates.dat.data):
     bvector[i] = bathy.get_val(xy)
 File('bathy.pvd').write(bathymetry2d)
 ```

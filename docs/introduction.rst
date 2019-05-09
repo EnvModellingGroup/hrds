@@ -2,11 +2,11 @@ Introduction
 ============
 
 What is hrds?
-----------------
+-------------
 
-hrds is a python package for obtaining points from a set of rasters at different resolutions. 
-You can request a point and hrds will return a value based on the highest resolution dataset 
-(as defined by the user) available at that point, blending datasets in a buffer region to ensure 
+hrds is a python package for obtaining points from a set of rasters at different resolutions.
+You can request a point and hrds will return a value based on the highest resolution dataset
+(as defined by the user) available at that point, blending datasets in a buffer region to ensure
 consistency. The software assumes all rasters are in the same projection space and using the same datum.
 
 About this document
@@ -17,7 +17,7 @@ some examples and comprehensive API documentation.
 
 Prerequisites
 -------------
-* python 3+
+* python 3.6+
 * numpy
 * scipy
 * osgeo.gdal (pygdal) to read and write raster data
@@ -35,7 +35,7 @@ It is possible to list all of the versions of hrds available on your platform wi
 
     conda search hrds --channel conda-forge
 
-On Debian-based Linux you can also install manually. First  toinstall pygdal, 
+On Debian-based Linux you can also install manually. First  toinstall pygdal,
 install the libgdal-dev packages and binaries, e.g.
 
 .. code-block:: bash
@@ -48,7 +48,7 @@ To install pygdal, we neeed to check which version of gdal is installed:
 
     gdal-config --version
 
-Install using pip, using the correct version as gleaned from the command above. Note you may need to 
+Install using pip, using the correct version as gleaned from the command above. Note you may need to
 increase the minor version number, e.g. from 2.1.3 to 2.1.3.3.
 
 .. code-block:: bash
@@ -67,7 +67,7 @@ You can install hrds using the standard:
 Examples
 ---------------
 
-This example loads in an XYZ file and obtains data at each point, 
+This example loads in an XYZ file and obtains data at each point,
 replacing the Z value with that from hrds.
 
 .. code-block:: python
@@ -84,9 +84,9 @@ replacing the Z value with that from hrds.
             # grab X and Y
             points.append([float(row[0]), float(row[1])])
 
-    bathy = hrds("gebco_uk.tif", 
-                 rasters=("emod_utm.tif", 
-                          "inspire_data.tif"), 
+    bathy = hrds("gebco_uk.tif",
+                 rasters=("emod_utm.tif",
+                          "inspire_data.tif"),
                  distances=(700, 200))
     bathy.set_bands()
 
@@ -101,7 +101,7 @@ This will turn this:
 
 .. code-block:: none
 
-    $ head test_mesh.csv 
+    $ head test_mesh.csv
     805390.592314,5864132.9269,0
     805658.162910036,5862180.30440542,0
     805925.733505999,5860227.68191137,0
@@ -118,7 +118,7 @@ into this:
 
 .. code-block:: none
 
-    $ head output.xyz 
+    $ head output.xyz
     805390.592314	5864132.9269	-10.821567728305235
     805658.16291	5862180.30441	2.721575532084955
     805925.733506	5860227.68191	2.528217188012767
@@ -148,9 +148,9 @@ Example of use via [thetis](http://thetisproject.org/):
     P1_2d = FunctionSpace(mesh2d, 'CG', 1)
     bathymetry2d = Function(P1_2d, name="bathymetry")
     bvector = bathymetry2d.dat.data
-    bathy = hrds("gebco_uk.tif", 
-                 rasters=("emod_utm.tif", 
-                          "inspire_data.tif"), 
+    bathy = hrds("gebco_uk.tif",
+                 rasters=("emod_utm.tif",
+                          "inspire_data.tif"),
                  distances=(700, 200))
     bathy.set_bands()
     for i, (xy) in enumerate(mesh2d.coordinates.dat.data):
@@ -158,13 +158,13 @@ Example of use via [thetis](http://thetisproject.org/):
     File('bathy.pvd').write(bathymetry2d)
 
 
-These images show the original data in QGIS in the top right, with each 
-data set using a different colour scheme (GEBCO - green-blue; EMOD - grey; 
-UK Gov - plasma - highlighted by the black rectangle).The red line is the 
-boundary of the mesh used (see figure below). Both the EMOD and UK Gov data 
-has NODATA areas, which are shown as transparent here, hence the curved 
-left edge of the EMOD data.  The figure also shows the buffer regions created 
-around the two higher resolution datasets (top left), with black showing that 
+These images show the original data in QGIS in the top right, with each
+data set using a different colour scheme (GEBCO - green-blue; EMOD - grey;
+UK Gov - plasma - highlighted by the black rectangle).The red line is the
+boundary of the mesh used (see figure below). Both the EMOD and UK Gov data
+has NODATA areas, which are shown as transparent here, hence the curved
+left edge of the EMOD data.  The figure also shows the buffer regions created
+around the two higher resolution datasets (top left), with black showing that
 data isn't used to white where it is 100% used. The effect of NODATA is clear
 here. The bottom panel shows a close-up of the UK Gov data with the buffer overlayed
 as a transparancy from white (not used) to black (100% UK Gov). The coloured polygon
