@@ -67,7 +67,7 @@ class Interpolator():
 
         Returns:
             a Interpolator object
-        """        
+        """
         self.origin = origin
         self.delta = delta
         self.val = val
@@ -193,7 +193,7 @@ class RasterInterpolator(object):
 
         Returns:
             a RasterInterpolator object
-        """     
+        """
         self.ds = gdal.Open(filename)
         if (self.ds is None):
             raise RasterInterpolatorError("Couldn't find your raster file:" +
