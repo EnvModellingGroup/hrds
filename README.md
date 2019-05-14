@@ -15,6 +15,8 @@ datasets in a buffer region to ensure consistency.
 Current release:
 [![DOI](https://zenodo.org/badge/155502078.svg)](https://zenodo.org/badge/latestdoi/155502078)
 
+Paper: [![DOI](http://joss.theoj.org/papers/10.21105/joss.01112/status.svg)](https://doi.org/10.21105/joss.01112)
+
 Prerequisites
 ---------------
 * python 3+
