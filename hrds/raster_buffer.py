@@ -180,7 +180,7 @@ class CreateBuffer():
             if (nodata in orig_raster):
                 mask = np.full((ncols, nrows), False)
                 mask[dist == 0] = True
-                mask = self.extend_mask(mask, 1)
+                mask = self.extend_mask(mask, 3)
                 dist[mask] = 0
         # calc euclidian distance and convert to 0 -> 1 scale
         dist = distance_transform_edt(dist, sampling=[dx[0], dx[1]])

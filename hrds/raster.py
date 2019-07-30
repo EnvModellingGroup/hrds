@@ -296,8 +296,8 @@ class RasterInterpolator(object):
         """
 
         # does this point occur in the raster?
-        llc = np.amin(self.extent, axis=0)+(self.dx[0]/2)
-        urc = np.amax(self.extent, axis=0)-(self.dx[1]/2)
+        llc = np.amin(self.extent, axis=0)+(self.dx[0])
+        urc = np.amax(self.extent, axis=0)-(self.dx[1])
         if ((point[0] <= urc[0] and point[0] >= llc[0]) and
            (point[1] <= urc[1] and point[1] >= llc[1])):
             return True
