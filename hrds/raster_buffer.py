@@ -176,7 +176,7 @@ class CreateBuffer():
             # are the same size
             dist[orig_raster == nodata] = 0
             # they also be nan...(shouldn't as we swap it out...)
-            #dist[np.isnan(orig_raster)] = 0
+            dist[np.isnan(orig_raster)] = 0
             # Leaving the above line in, but commented out. This might need more work in future.
             # we now extend this mask - we only need to do this, if the
             # no data occurs (i.e. no contiguous data)
