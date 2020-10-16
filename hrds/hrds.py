@@ -212,7 +212,7 @@ class HRDS():
                 else:
                     for rr in self.raster_stack[i+1:]:
                         # if not, find the next raster we're in, inc. the base
-                        if rr.point_in(point):
+                        if rr.point_in(point) and not self.buffer_stack[i+1].get_val(point) == 0:
                             val = r.get_val(point)*b.get_val(point) + \
                                   rr.get_val(point)*(1-b.get_val(point))
                             return val
