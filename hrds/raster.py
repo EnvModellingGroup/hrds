@@ -241,6 +241,9 @@ class RasterInterpolator(object):
         raster = self.ds.GetRasterBand(self.band)
         self.nodata = raster.GetNoDataValue()
         self.val = np.flipud(np.array(raster.ReadAsArray()))
+        # fix any NAN with the no-data value
+        if (np.isnan(self.val).any()):
+            self.val[np.isnan(self.val)] = self.nodata
         self.extent = self.get_extent()
         origin = np.amin(self.extent, axis=0)
         transform = self.ds.GetGeoTransform()

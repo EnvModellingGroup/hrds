@@ -99,11 +99,11 @@ class CreateBuffer():
 
         dataset.SetGeoTransform((
             x_min,       # 0
-            dx[1],       # 1
+            dx[0],       # 1
             0,           # 2
             y_max,       # 3
             0,           # 4
-            -dx[0]))
+            -dx[1]))
 
         dataset.SetProjection(wkt_projection)
         dataset.GetRasterBand(1).WriteArray(array)
@@ -175,6 +175,9 @@ class CreateBuffer():
             # TODO this will only work if dist and orig_raster
             # are the same size
             dist[orig_raster == nodata] = 0
+            # they also be nan...(shouldn't as we swap it out...)
+            #dist[np.isnan(orig_raster)] = 0
+            # Leaving the above line in, but commented out. This might need more work in future.
             # we now extend this mask - we only need to do this, if the
             # no data occurs (i.e. no contiguous data)
             if (nodata in orig_raster):
