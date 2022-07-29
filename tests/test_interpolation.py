@@ -1,6 +1,9 @@
 import unittest
-from hrds.raster import RasterInterpolator, CoordinateError, RasterInterpolatorError
 import os
+import sys
+# make sure we use the devel version first
+sys.path.insert(0,os.path.dirname(os.path.realpath(__file__))+'/..')
+from hrds.raster import RasterInterpolator, CoordinateError, RasterInterpolatorError
 from numpy import array, ones
 
 # This program is free software: you can redistribute it and/or modify
@@ -72,7 +75,7 @@ class TestRasterInterpolator(unittest.TestCase):
         point1 = [0.0, 0.0] # should return False
         point2 = [2.0, 2.0] # should return True
         point3 = [-1.0, -1.0] # should return False
-        point4 = [0.5, 0.5] # should return True
+        point4 = [0.501, 0.501] # should return True
         point5 = [0.0001, 0.0001] # False - outside first cell centre
         rci.set_band()
         self.assertFalse(rci.point_in(point1))

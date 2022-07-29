@@ -1,4 +1,8 @@
 import unittest
+import os
+import sys
+# make sure we use the devel version first
+sys.path.insert(0,os.path.dirname(os.path.realpath(__file__))+'/..')
 from hrds.hrds import HRDS
 import os
 

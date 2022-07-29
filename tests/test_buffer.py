@@ -1,7 +1,10 @@
 import unittest
+import os
+import sys
+# make sure we use the devel version first
+sys.path.insert(0,os.path.dirname(os.path.realpath(__file__))+'/..')
 from hrds.raster_buffer import CreateBuffer
 from hrds.raster import RasterInterpolator, CoordinateError, RasterInterpolatorError
-import os
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -33,7 +36,7 @@ class TestBufferCreator(unittest.TestCase):
 
     def tearDown(self):
         # remove temp file
-        os.remove(temp_file)
+        #os.remove(temp_file)
         return
 
     def test_simple_distance(self):
@@ -58,11 +61,11 @@ class TestBufferCreator(unittest.TestCase):
         rbuff.make_buffer(temp_file)
         # we now read in the buffer using the rasterinterpolator class
         rci = RasterInterpolator(temp_file)
-            rci.set_band()
-            self.assertAlmostEqual(rci.get_val(point1), 0.0, delta=0.03)
-            self.assertEqual(rci.get_val(point2), 1.0)
-            self.assertEqual(rci.get_val(point3), 1.0)
-            self.assertAlmostEqual(rci.get_val(point4), 0.5, delta=0.03)
+        rci.set_band()
+        self.assertAlmostEqual(rci.get_val(point1), 0.0, delta=0.03)
+        self.assertEqual(rci.get_val(point2), 1.0)
+        self.assertEqual(rci.get_val(point3), 1.0)
+        self.assertAlmostEqual(rci.get_val(point4), 0.5, delta=0.03)
 
     def test_simple_distance_setres(self):
         """ Very simple test with a raster object like thus:
@@ -110,17 +113,17 @@ class TestBufferCreator(unittest.TestCase):
             The NaNs are in the centre, so the buffer is expanded by one pixel
             automatically to prevent interpolation issues
             """
-        rbuff = CreateBuffer(test_file_name2, 1.0)
+        rbuff = CreateBuffer(test_file_name2, 0.5)
         point1 = [0.2, 3.85]  # should return ~0
-        point2 = [0.7, 2]  # should be 0.2
+        point2 = [0.8, 2]  # should be 0.2
         point3 = [1.7, 2]  # should be 0 (in the centre)
         rbuff.make_buffer(temp_file)
         # we now read in the buffer using the rasterinterpolator class
         rci = RasterInterpolator(temp_file)
-            rci.set_band()
-            self.assertAlmostEqual(rci.get_val(point1), 0.0, delta=0.03)
-        self.assertAlmostEqual(rci.get_val(point2), 0.0, delta=0.03)
-            self.assertEqual(rci.get_val(point3), 0.0)
+        rci.set_band()
+        self.assertAlmostEqual(rci.get_val(point1), 0.0, delta=0.03)
+        self.assertAlmostEqual(rci.get_val(point2), 0.2, delta=0.03)
+        self.assertEqual(rci.get_val(point3), 0.0)
 
 
 if __name__ == '__main__':
