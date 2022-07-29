@@ -10,6 +10,8 @@ You can request a point and hrds will return a value based on
 the highest resolution dataset (as defined by the user) available at that point, blending
 datasets in a buffer region to ensure consistency.
 
+[![Python-package Actions Status](https://github.com/EnvModellingGroup/hrds/.github/workflows)/badge.svg)(https://github.com/EnvModellingGroup/hrds/actions)
+
 Current release:
 [![DOI](https://zenodo.org/badge/155502078.svg)](https://zenodo.org/badge/latestdoi/155502078)
 
