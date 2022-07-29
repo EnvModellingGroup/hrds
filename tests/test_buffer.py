@@ -58,11 +58,11 @@ class TestBufferCreator(unittest.TestCase):
         rbuff.make_buffer(temp_file)
         # we now read in the buffer using the rasterinterpolator class
         rci = RasterInterpolator(temp_file)
-        rci.set_band()
-        self.assertAlmostEqual(rci.get_val(point1), 0.0, delta=0.03)
-        self.assertEqual(rci.get_val(point2), 1.0)
-        self.assertEqual(rci.get_val(point3), 1.0)
-        self.assertAlmostEqual(rci.get_val(point4), 0.5, delta=0.03)
+            rci.set_band()
+            self.assertAlmostEqual(rci.get_val(point1), 0.0, delta=0.03)
+            self.assertEqual(rci.get_val(point2), 1.0)
+            self.assertEqual(rci.get_val(point3), 1.0)
+            self.assertAlmostEqual(rci.get_val(point4), 0.5, delta=0.03)
 
     def test_simple_distance_setres(self):
         """ Very simple test with a raster object like thus:
@@ -117,10 +117,10 @@ class TestBufferCreator(unittest.TestCase):
         rbuff.make_buffer(temp_file)
         # we now read in the buffer using the rasterinterpolator class
         rci = RasterInterpolator(temp_file)
-        rci.set_band()
-        self.assertAlmostEqual(rci.get_val(point1), 0.0, delta=0.03)
-        self.assertAlmostEqual(rci.get_val(point2), 0.2, delta=0.03)
-        self.assertEqual(rci.get_val(point3), 0.0)
+            rci.set_band()
+            self.assertAlmostEqual(rci.get_val(point1), 0.0, delta=0.03)
+        self.assertAlmostEqual(rci.get_val(point2), 0.0, delta=0.03)
+            self.assertEqual(rci.get_val(point3), 0.0)
 
 
 if __name__ == '__main__':
