@@ -10,7 +10,7 @@ You can request a point and hrds will return a value based on
 the highest resolution dataset (as defined by the user) available at that point, blending
 datasets in a buffer region to ensure consistency.
 
-[![Build Status](https://travis-ci.org/EnvModellingGroup/hrds.svg?branch=master)](https://travis-ci.org/EnvModellingGroup/hrds)
+[![Build Status](https://travis-ci.com/EnvModellingGroup/hrds.svg?branch=master)](https://travis-ci.com/EnvModellingGroup/hrds)
 
 Current release:
 [![DOI](https://zenodo.org/badge/155502078.svg)](https://zenodo.org/badge/latestdoi/155502078)
