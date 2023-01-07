@@ -183,19 +183,19 @@ class RasterInterpolator(object):
     calls of set_band().
 
     """
-    def __init__(self, filename, minmax=None):
+    def __init__(self, filename, minmax=None, bounds=None):
         """
         Init our RasterInterpolator
 
         Args:
             filename: Which raster to load
             minmax: any min/max values to adhere to (length 2 list [min,max])
+            bounds: limit reading raster to these bounds (length 4 list [x0, y0, x1, y1)
 
         Returns:
             a RasterInterpolator object
         """
         self.ds = gdal.Open(filename, gdal.GA_ReadOnly)
-        in_ds = gdal.Open(large_raster_file, gdal.GA_ReadOnly)
         if (self.ds is None):
             raise RasterInterpolatorError("Couldn't find your raster file:" +
                                           filename + ". Exiting.")
@@ -206,6 +206,7 @@ class RasterInterpolator(object):
         self.dx = 0.0
         self.nodata = None
         self.minmax = minmax
+        self.bounds = bounds
 
     def get_extent(self):
         """Return list of corner coordinates from a geotransform
@@ -239,27 +240,30 @@ class RasterInterpolator(object):
 
         """
         self.band = band_no
-        in_band = in_ds.GetRasterBand(1)
-block_xsize, block_ysize = in_band.GetBlockSize()
-print("Start reading")
-for b_y, yoff in enumerate(range(0, in_ds.RasterYSize, block_ysize)):
-    for b_x, xoff in enumerate(range(0, in_ds.RasterXSize, block_xsize)):
-        win_xsize, win_ysize = in_band.GetActualBlockSize(b_x, b_y)
-        img_arr = in_band.ReadAsArray(xoff=xoff, yoff=yoff, \
-                win_xsize=win_xsize, win_ysize=win_ysize)
-        
         raster = self.ds.GetRasterBand(self.band)
         self.nodata = raster.GetNoDataValue()
-        self.val = np.flipud(np.array(raster.ReadAsArray()))
-        # fix any NAN with the no-data value
-        if (np.isnan(self.val).any()):
-            self.val[np.isnan(self.val)] = self.nodata
         self.extent = self.get_extent()
         origin = np.amin(self.extent, axis=0)
         transform = self.ds.GetGeoTransform()
         self.dx = [transform[1], -transform[5]]
+        if self.bounds == None:
+            self.val = np.flipud(np.array(raster.ReadAsArray()))
+        else:
+            inv_geotransform = gdal.InvGeoTransform(transform)
+            _x0, _y0 = gdal.ApplyGeoTransform(inv_geotransform, self.bounds[0], self.bounds1[1])
+            _x1, _y1 = gdal.ApplyGeoTransform(inv_geotransform, self.bounds[2], self.bounds[3])
+            x0, y0 = min(_x0, _x1), min(_y0, _y1)
+            x1, y1 = max(_x0, _x1), max(_y0, _y1)
+            # extend domain by one pixel for interpolation
+            self.val = np.flipud(np.array(raster.ReadAsArray(int(x0-1), int(y0-1), int(x1-x0)+2, int(y1-y0)+2)))
+
+        # fix any NAN with the no-data value
+        if (np.isnan(self.val).any()):
+            self.val[np.isnan(self.val)] = self.nodata
+
         self.interpolator = Interpolator(origin, self.dx, self.val,
                                          self.mask, self.minmax)
+
 
     def get_array(self):
         """
