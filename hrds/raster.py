@@ -194,7 +194,8 @@ class RasterInterpolator(object):
         Returns:
             a RasterInterpolator object
         """
-        self.ds = gdal.Open(filename)
+        self.ds = gdal.Open(filename, gdal.GA_ReadOnly)
+        in_ds = gdal.Open(large_raster_file, gdal.GA_ReadOnly)
         if (self.ds is None):
             raise RasterInterpolatorError("Couldn't find your raster file:" +
                                           filename + ". Exiting.")
@@ -238,6 +239,15 @@ class RasterInterpolator(object):
 
         """
         self.band = band_no
+        in_band = in_ds.GetRasterBand(1)
+block_xsize, block_ysize = in_band.GetBlockSize()
+print("Start reading")
+for b_y, yoff in enumerate(range(0, in_ds.RasterYSize, block_ysize)):
+    for b_x, xoff in enumerate(range(0, in_ds.RasterXSize, block_xsize)):
+        win_xsize, win_ysize = in_band.GetActualBlockSize(b_x, b_y)
+        img_arr = in_band.ReadAsArray(xoff=xoff, yoff=yoff, \
+                win_xsize=win_xsize, win_ysize=win_ysize)
+        
         raster = self.ds.GetRasterBand(self.band)
         self.nodata = raster.GetNoDataValue()
         self.val = np.flipud(np.array(raster.ReadAsArray()))
