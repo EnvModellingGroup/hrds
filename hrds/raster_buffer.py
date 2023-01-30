@@ -1,7 +1,7 @@
 import numpy as np
 from osgeo import gdal
 from .raster import RasterInterpolator
-from scipy.ndimage.morphology import distance_transform_edt
+from scipy.ndimage import distance_transform_edt
 from math import ceil
 
 # This program is free software: you can redistribute it and/or modify
@@ -123,21 +123,19 @@ class CreateBuffer():
         """
 
         # function to extend a mask array.
-        # Taken from: http://www.siafoo.net/snippet/82
-        # Copyright 2007 Regents University of California
-        # Written by David Isaacson under BSD licence
-        yLen, xLen = array.shape
         output = array.copy()
         for i in range(iterations):
-            for y in range(yLen):
-                for x in range(xLen):
-                    if (y > 0 and array[y-1, x]) or \
-                       (y < yLen - 1 and array[y+1, x]) or \
-                       (x > 0 and array[y, x-1]) or \
-                       (x < xLen - 1 and array[y, x+1]):
-                        output[y, x] = True
+            output[1:, :] = np.maximum(output[1:, :], array[:-1, :])
+            output[:-1, :] = np.maximum(output[:-1, :], array[1:, :])
+            output[:, 1:] = np.maximum(output[:, 1:], array[:, :-1])
+            output[:, :-1] = np.maximum(output[:, :-1], array[:, 1:])
+            output[1:, 1:] = np.maximum(output[1:, 1:], array[:-1, :-1])
+            # Diagonals
+            output[1:, 1:] = np.maximum(output[1:, 1:], array[:-1, :-1])
+            output[1:, :-1] = np.maximum(output[1:, :-1], array[:-1, 1:])
+            output[:-1, 1:] = np.maximum(output[:-1, 1:], array[1:, :-1])
+            output[:-1, :-1] = np.maximum(output[:-1, :-1], array[1:, 1:])
             array = output.copy()
-
         return output
 
     def make_buffer(self, output_file):
