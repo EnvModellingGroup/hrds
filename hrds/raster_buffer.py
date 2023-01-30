@@ -125,16 +125,16 @@ class CreateBuffer():
         # function to extend a mask array.
         output = array.copy()
         for i in range(iterations):
-            output[1:,:] = np.maximum(output[1:,:], array[:-1,:])
-            output[:-1,:] = np.maximum(output[:-1,:], array[1:,:])
-            output[:,1:] = np.maximum(output[:,1:], array[:,:-1])
-            output[:,:-1] = np.maximum(output[:,:-1], array[:,1:])
-            output[1:,1:] = np.maximum(output[1:,1:], array[:-1,:-1])
+            output[1:, :] = np.maximum(output[1:, :], array[:-1, :])
+            output[:-1, :] = np.maximum(output[:-1, :], array[1:, :])
+            output[:, 1:] = np.maximum(output[:, 1:], array[:, :-1])
+            output[:, :-1] = np.maximum(output[:, :-1], array[:, 1:])
+            output[1:, 1:] = np.maximum(output[1:, 1:], array[:-1, :-1])
             # Diagonals
-            output[1:,1:] = np.maximum(output[1:,1:], array[:-1,:-1])
-            output[1:,:-1] = np.maximum(output[1:,:-1], array[:-1,1:])
-            output[:-1,1:] = np.maximum(output[:-1,1:], array[1:,:-1])
-            output[:-1,:-1] = np.maximum(output[:-1,:-1], array[1:,1:])
+            output[1:, 1:] = np.maximum(output[1:, 1:], array[:-1, :-1])
+            output[1:, :-1] = np.maximum(output[1:, :-1], array[:-1, 1:])
+            output[:-1, 1:] = np.maximum(output[:-1, 1:], array[1:, :-1])
+            output[:-1, :-1] = np.maximum(output[:-1, :-1], array[1:, 1:])
             array = output.copy()
         return output
 
