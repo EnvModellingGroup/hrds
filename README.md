@@ -98,7 +98,7 @@ bathy = hrds("gebco_uk.tif",
              distances=(700, 200))
 bathy.set_bands()
 
-print len(points)
+print(len(points))
 
 with open("output.xyz","w") as f:
     for p in points:
