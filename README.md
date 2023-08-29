@@ -83,7 +83,7 @@ replacing the Z value with that from hrds.
 
 ```python
 
-from hrds import hrds
+from hrds import HRDS
 
 points = []
 with open("test_mesh.csv",'r') as f:
@@ -92,7 +92,7 @@ with open("test_mesh.csv",'r') as f:
         # grab X and Y
         points.append([float(row[0]), float(row[1])])
 
-bathy = hrds("gebco_uk.tif",
+bathy = HRDS("gebco_uk.tif",
              rasters=("emod_utm.tif",
                       "inspire_data.tif"),
              distances=(700, 200))
