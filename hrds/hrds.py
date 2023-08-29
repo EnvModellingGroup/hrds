@@ -50,7 +50,7 @@ class HRDS():
     The min/max argument allows you to specify a minimum or maximum
     (or both!) values when returning data. This is useful for ocean
     simulations where you want a minimum depth to prevent "drying".
-    To set this, do::
+    To set this, do:
 
         bathy = HRDS("gebco_uk.tif",
              rasters=("emod_utm.tif",
@@ -77,9 +77,16 @@ class HRDS():
                       buffer3.tif))
         bathy.set_bands()
 
-    Once set up, you can ask for data at any point::
+    Once set up, you can ask for data at any point:
 
         bathy.get_val(100,100)
+
+    It is possible to use HRDS as an interpolator for a single raster. Simply set-up
+    the baseRaster only, e.g.
+ 
+        bathy = HRDS("gebco_uk.tif")
+        bathy.set_bands()
+
     """
     def __init__(self, baseRaster, rasters=None, distances=None,
                  buffers=None, minmax=None, saveBuffers=False):
@@ -97,37 +104,47 @@ class HRDS():
           saveBuffers: boolean to save buffers if needed
         """
 
-        if distances is None:
-            if len(rasters) != len(buffers):
-                raise HRDSError("You have "+str(len(rasters)) +
-                                "rasters and "+str(len(buffers)) +
-                                "buffers. They should match")
+        if rasters is None:
+            # single raster only, check everything else is none
+            if (distances is not None and 
+                buffers is not None and
+                minmax is not None):
+                    raise HRDSError("You have specified no rasters"+
+                                    " apart from the base, but have specified"+ 
+                                    " other elements. You can't do that.")
         else:
-            if len(rasters) != len(distances):
-                raise HRDSError("You have "+str(len(rasters)) +
-                                "rasters and "+str(len(distances)) +
-                                "distances. They should match")
+            if distances is None:
+                if len(rasters) != len(buffers):
+                    raise HRDSError("You have "+str(len(rasters)) +
+                                    "rasters and "+str(len(buffers)) +
+                                    "buffers. They should match")
+            else:
+                if len(rasters) != len(distances):
+                    raise HRDSError("You have "+str(len(rasters)) +
+                                    "rasters and "+str(len(distances)) +
+                                    "distances. They should match")
 
-        if minmax is not None:
-            if len(rasters)+1 != len(minmax):
-                raise HRDSError("Please supply same number of minmax values" +
-                                "as the total number of rasters, inc. base." +
-                                "You gave me: "+str(len(minmax))+" min/max" +
-                                "and I expected: "+str(len(rasters)+1))
+            if minmax is not None:
+                if len(rasters)+1 != len(minmax):
+                    raise HRDSError("Please supply same number of minmax values" +
+                                    "as the total number of rasters, inc. base." +
+                                    "You gave me: "+str(len(minmax))+" min/max" +
+                                    "and I expected: "+str(len(rasters)+1))
 
         if minmax is None:
             self.baseRaster = RasterInterpolator(baseRaster)
         else:
             self.baseRaster = RasterInterpolator(baseRaster, minmax[0])
         self.raster_stack = []
-        for i, r in enumerate(rasters):
-            if minmax is None:
-                self.raster_stack.append(RasterInterpolator(r))
-            else:
-                self.raster_stack.append(RasterInterpolator(r, minmax[i+1]))
+        if (rasters is not None):
+            for i, r in enumerate(rasters):
+                if minmax is None:
+                    self.raster_stack.append(RasterInterpolator(r))
+                else:
+                    self.raster_stack.append(RasterInterpolator(r, minmax[i+1]))
         self.buffer_stack = []
         # the user is asking us to create the buffer files
-        if buffers is None:
+        if buffers is None and rasters is not None:
             # we create the files in a temp dir and if the user wants
             # them afterwards we copy to a sensible name
             with tempfile.TemporaryDirectory() as tmpdirname:
@@ -147,7 +164,7 @@ class HRDS():
                     if saveBuffers:
                         copyfile(temp_buf_file, keep_buf_file)
 
-        else:
+        elif rasters is not None:
             # create buffer stack from filenames
             for r in buffers:
                 self.buffer_stack.append(RasterInterpolator(r))

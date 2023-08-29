@@ -32,14 +32,24 @@ layer2 = os.path.join(test_dir, "layer2.tif")
 
 class TestHRDS(unittest.TestCase):
     """Tests the hrds.hrds.HRDS class"""
-    def setUp(self):
-        return
 
-    def tearDown(self):
-        # remove buffer files created
-        os.remove(os.path.join(test_dir, "layer1_buffer.tif"))
-        os.remove(os.path.join(test_dir, "layer2_buffer.tif"))
-        return
+    def test_single_raster(self):
+        """ A simple single raster solution"""
+        
+        bathy = HRDS(base_raster)
+        bathy.set_bands()
+
+        expected = [1.0,1.0,1.0,1.0,1.0] # uniform raster
+        points = ([5, 5],
+                  [40, 50],
+                  [28, 32],
+                  [13.5, 20],
+                  [32.5, 45],
+                  )
+        for p, e in zip(points, expected):
+            self.assertAlmostEqual(bathy.get_val(p), e, delta=0.1)
+
+
 
     def test_simple_rasters(self):
         """ Three layer test. Base layer is 100x100 with dx of (2.5,2).
@@ -66,6 +76,10 @@ class TestHRDS(unittest.TestCase):
         # check that the buffer files exists
         self.assertTrue(os.path.exists(os.path.join(test_dir, "layer1_buffer.tif")))
         self.assertTrue(os.path.exists(os.path.join(test_dir, "layer2_buffer.tif")))
+        # delete them
+        os.remove(os.path.join(test_dir, "layer1_buffer.tif"))
+        os.remove(os.path.join(test_dir, "layer2_buffer.tif"))
+
 
 class RealDataTest(unittest.TestCase):
 
