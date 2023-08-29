@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "HRDS"
+version = "0.1.4"
+authors = [
+  { name="Jon Hill", email="jon.hill@york.ac.uk" },
+]
+description = "Read in multiple raster data files in a hierarchical fashion"
+readme = "README.md"
+requires-python = ">=3.7"
+keywords=['raster', 'gis', 'modelling']
+classifiers=[
+           'Development Status :: 4 - Beta',
+           'Intended Audience :: Science/Research',
+           'License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)',
+           'Programming Language :: Python :: 3.6',
+           'Topic :: Scientific/Engineering']
+
+[project.urls]
+"Homepage" = "https://github.com/EnvModellingGroup/hrds"
+
+
