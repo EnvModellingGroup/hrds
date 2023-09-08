@@ -175,6 +175,28 @@ If we then zoom-in to the high resolution area we can see the high resolution UK
 
 ![Blended bathymetry data on the multiscale mesh](https://github.com/EnvModellingGroup/hdrs/blob/master/docs/mesh_bathy.png)
 
+It is also possible to use HRDS as a simple interpolation routine by specifying a single raster:
+```python
+
+from hrds import HRDS
+
+points = []
+with open("test_mesh.csv",'r') as f:
+    for line in f:
+        row = line.split(",")
+        # grab X and Y
+        points.append([float(row[0]), float(row[1])])
+
+bathy = HRDS("gebco_uk.tif")
+bathy.set_bands()
+
+print(len(points))
+
+with open("output.xyz","w") as f:
+    for p in points:
+        f.write(str(p[0])+"\t"+str(p[1])+"\t"+str(bathy.get_val(p))+"\n")
+```
+
 Community
 -----------
 
