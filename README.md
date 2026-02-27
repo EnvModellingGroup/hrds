@@ -57,6 +57,15 @@ pip install pygdal==2.1.3.3
 ```
 Replace 2.1.3.3 with the output from the ``gdal-config`` command.
 
+Note that more recent GDAL install rely on 'gdal', not 'pygdal'. You may also have some issues with GDAL not 
+recognising numpy. If this is the case you will see errors like:
+
+'ImportError: cannot import name '_gdal_array' from 'osgeo''
+
+If so, try this:
+
+pip install -vvv gdal==$(gdal-config --version).* --no-build-isolation --no-cache-dir --force-reinstall
+
 You can then install hrds from source using the standard:
 
 ```bash
