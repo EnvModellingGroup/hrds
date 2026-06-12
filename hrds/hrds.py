@@ -89,7 +89,7 @@ class HRDS():
 
     """
     def __init__(self, baseRaster, rasters=None, distances=None,
-                 buffers=None, minmax=None, saveBuffers=False):
+                 buffers=None, minmax=None, saveBuffers=False, global_data=False):
         """
         Set up our hrds object
 
@@ -104,6 +104,7 @@ class HRDS():
           saveBuffers: boolean to save buffers if needed
         """
 
+        self.global_data = global_data
         if rasters is None:
             # single raster only, check everything else is none
             if (distances is not None and 
@@ -132,9 +133,9 @@ class HRDS():
                                     "and I expected: "+str(len(rasters)+1))
 
         if minmax is None:
-            self.baseRaster = RasterInterpolator(baseRaster)
+            self.baseRaster = RasterInterpolator(baseRaster, periodic=global_data)
         else:
-            self.baseRaster = RasterInterpolator(baseRaster, minmax[0])
+            self.baseRaster = RasterInterpolator(baseRaster, minmax[0], periodic=global_data)
         self.raster_stack = []
         if (rasters is not None):
             for i, r in enumerate(rasters):
